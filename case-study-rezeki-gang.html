@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rezeki Gang TikTok IP — Case Study · Elson 子洺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#4CAF50; --green-dark:#2E7D32; --green-mid:#388E3C;
+  --green-soft:#E8F5E9; --green-tint:#F1F8F2;
+  --ink:#1A1F1B; --ink-soft:#4A524C; --muted:#8A938D;
+  --line:#E8EAE7; --bg:#FDFCFA; --cream:#FBF8F3;
+  --r:20px; --rlg:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 32px}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;background:rgba(253,252,250,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:100;padding:16px 0}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:7px 15px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.back:hover{border-color:var(--green);color:var(--green-dark)}
+.back svg{transition:transform .2s}
+.back:hover svg{transform:translateX(-3px)}
+.lang-switch{display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:6px 14px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s;letter-spacing:0.05em}
+.lang-switch:hover{border-color:var(--green);color:var(--green-dark)}
+.nav-right{display:flex;align-items:center;gap:10px}
+
+/* ── HERO ── */
+.hero{padding:72px 0 0;position:relative;overflow:hidden;min-height:560px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 60%,#0d2010 100%);z-index:0}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hero-orb.a{width:400px;height:400px;background:rgba(76,175,80,.18);top:-100px;right:-80px;z-index:1}
+.hero-orb.b{width:280px;height:280px;background:rgba(46,125,50,.12);bottom:-60px;left:-60px;z-index:1}
+.hero-inner{position:relative;z-index:2;padding-bottom:64px}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600}
+.tag.g{background:rgba(76,175,80,.18);color:#81C784}
+.tag.w{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)}
+
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(38px,6vw,70px);line-height:1.05;letter-spacing:-.03em;font-weight:600;color:white;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--green)}
+.hero-meta{font-size:16px;color:rgba(255,255,255,.6);max-width:540px;line-height:1.7}
+
+/* hero divider into stats */
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.1);margin-top:56px}
+.hs{padding:24px 20px;background:#0f1a10}
+.hs-num{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,46px);font-weight:700;color:white;letter-spacing:-.03em;line-height:1}
+.hs-num span{color:var(--green)}
+.hs-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hs{padding:18px 16px}}
+
+/* ── ANIMATE ON SCROLL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal-l.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(24px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*{opacity:1;transform:none}
+.stagger.visible>*:nth-child(1){transition-delay:.05s}
+.stagger.visible>*:nth-child(2){transition-delay:.13s}
+.stagger.visible>*:nth-child(3){transition-delay:.21s}
+.stagger.visible>*:nth-child(4){transition-delay:.29s}
+.stagger.visible>*:nth-child(5){transition-delay:.37s}
+
+/* ── SECTIONS ── */
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-label{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:18px}
+.sec-label::before{content:"";width:18px;height:2px;background:var(--green);border-radius:2px}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin-bottom:16px}
+.sec-body{font-size:16.5px;color:var(--ink-soft);line-height:1.78;max-width:640px}
+.sec-body strong{color:var(--ink);font-weight:600}
+
+/* ── CHALLENGE CARDS ── */
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:36px}
+@media(max-width:580px){.ch-grid{grid-template-columns:1fr}}
+.ch-card{background:var(--cream);border-radius:var(--r);padding:24px;border:1.5px solid var(--line);transition:border-color .2s,transform .2s}
+.ch-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.ch-icon{font-size:22px;margin-bottom:12px}
+.ch-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.ch-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+
+/* ── PYRAMID ── */
+.pyramid{margin-top:40px;display:flex;flex-direction:column;gap:10px}
+.tier{border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:center;position:relative;overflow:hidden}
+.tier.edu{background:var(--green-soft)}
+.tier.ent{background:#FFF8E1}
+.tier.sale{background:#FFF3EE}
+.tier-pct{font-family:'Fraunces',serif;font-size:40px;font-weight:700;line-height:1;letter-spacing:-.04em}
+.edu .tier-pct{color:var(--green-dark)}
+.ent .tier-pct{color:#E65100}
+.sale .tier-pct{color:#BF360C}
+.tier-bar{position:absolute;right:0;top:0;bottom:0;opacity:.07}
+.edu .tier-bar{background:var(--green-dark)}
+.ent .tier-bar{background:#E65100}
+.sale .tier-bar{background:#BF360C}
+/* animated fill */
+.tier-bar{width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.tier.edu .tier-bar.filled{width:40%}
+.tier.ent .tier-bar.filled{width:40%}
+.tier.sale .tier-bar.filled{width:20%}
+
+.tier-info h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.tier-info p{font-size:13px;color:var(--ink-soft);line-height:1.55}
+
+/* ── TIMELINE ── */
+.tl{margin-top:40px;position:relative;padding-left:60px}
+.tl-line{position:absolute;left:20px;top:16px;bottom:16px;width:2px;background:var(--line);border-radius:2px}
+.tl-line-fill{position:absolute;left:20px;top:16px;width:2px;background:linear-gradient(to bottom,var(--green),var(--green-dark));border-radius:2px;height:0;transition:height 1.4s cubic-bezier(.22,1,.36,1)}
+.tl-step{position:relative;margin-bottom:32px}
+.tl-step:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-48px;top:2px;width:36px;height:36px;border-radius:50%;background:white;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .3s,background .3s}
+.tl-step:hover .tl-dot{border-color:var(--green);background:var(--green-soft)}
+.tl-content h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.tl-content p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+
+/* ── VIDEO CARDS ── */
+.videos{display:flex;flex-direction:column;gap:10px;margin-top:36px}
+.vc{display:flex;align-items:center;gap:16px;padding:16px 20px;background:white;border:1.5px solid var(--line);border-radius:14px;transition:border-color .2s,transform .2s;cursor:default}
+.vc:hover{border-color:var(--green);transform:translateX(4px)}
+.vc-rank{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--line);min-width:28px}
+.vc-info{flex:1}
+.vc-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.vc-meta{font-size:12px;color:var(--muted)}
+.vc-stat{text-align:right}
+.vc-views{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--green-dark);line-height:1}
+.vc-views-label{font-size:11px;color:var(--muted)}
+
+/* ── RESULTS STAT BOXES ── */
+.stats-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+@media(max-width:500px){.stats-g{grid-template-columns:1fr}}
+.sb{background:white;border:1.5px solid var(--line);border-radius:var(--r);padding:28px 24px;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.sb:hover{border-color:var(--green);transform:translateY(-3px)}
+.sb::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;border-radius:0 0 var(--r) var(--r)}
+.sb:hover::after{transform:scaleX(1)}
+.sb-num{font-family:'Fraunces',serif;font-size:clamp(40px,6vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:8px}
+.sb-num .acc{color:var(--green-dark)}
+.sb-label{font-size:13px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.sb-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+/* ── BREAKTHROUGH ── */
+.breakout{background:linear-gradient(135deg,#0a1a0b,#1a2e1a);border-radius:var(--rlg);padding:40px 44px;margin-top:28px;position:relative;overflow:hidden}
+.breakout::before{content:"⚡";font-size:130px;position:absolute;right:-10px;top:-20px;opacity:.05;line-height:1;pointer-events:none}
+.breakout h3{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:white;margin-bottom:12px;letter-spacing:-.02em}
+.breakout p{font-size:15px;color:rgba(255,255,255,.65);line-height:1.75;max-width:560px}
+.breakout p strong{color:var(--green)}
+@media(max-width:600px){.breakout{padding:28px 24px}}
+
+/* ── LEARNINGS ── */
+.learn-list{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.li{display:flex;gap:16px;padding:22px 24px;background:white;border:1.5px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+.li:hover{border-color:var(--green)}
+.li-num{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--green);line-height:1;flex-shrink:0;min-width:28px}
+.li h3{font-size:14.5px;font-weight:700;margin-bottom:5px}
+.li p{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+
+/* ── CTA ── */
+.cta-sec{padding:72px 0 80px;text-align:center;border-top:1px solid var(--line)}
+.cta-sec h2{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,44px);letter-spacing:-.025em;font-weight:600;margin-bottom:14px}
+.cta-sec p{font-size:16px;color:var(--ink-soft);margin-bottom:32px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:white;text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;transition:background .2s,transform .2s}
+.btn-p:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--ink);text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;border:1.5px solid var(--line);transition:all .2s}
+.btn-o:hover{border-color:var(--green);color:var(--green-dark);transform:translateY(-2px)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center}
+footer p{font-size:12px;color:var(--muted)}
+
+/* counter anim */
+.count{display:inline-block}
+
+/* ── ACCOUNT PROOF ── */
+.proof-strip{background:var(--cream);border:1.5px solid var(--line);border-radius:var(--rlg);padding:36px 40px;margin-top:36px;display:flex;align-items:center;gap:36px}
+.proof-phone{flex-shrink:0;width:200px}
+.proof-phone img{width:100%;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,0.13)}
+.proof-text h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:-.02em}
+.proof-text p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+.proof-text p+p{margin-top:10px}
+
+/* ── VIDEO ARCHIVE (bodycontent grid) ── */
+.vid-archive{margin-top:36px;border-radius:var(--rlg);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.1);border:1.5px solid var(--line)}
+.vid-archive img{width:100%;display:block}
+.vid-archive-label{padding:14px 20px;background:var(--cream);font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;border-top:1px solid var(--line)}
+
+/* ── PHONE GALLERY (8 mockups) ── */
+.phone-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+.phone-gallery img{width:100%;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.1);transition:transform .3s ease,box-shadow .3s ease}
+.phone-gallery img:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.15)}
+
+@media(max-width:640px){
+  .phone-gallery{grid-template-columns:repeat(2,1fr)}
+  .proof-strip{flex-direction:column;padding:28px 24px}
+  .proof-phone{width:100%;max-width:220px;margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-i">
+    <a href="portfolio.html" class="logo"><div class="logo-dot"></div>Elson 子洺</a>
+    <div class="nav-right">
+      <a href="case-study-rezeki-gang-zh.html" class="lang-switch">中文</a>
+      <a href="portfolio.html" class="back">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Portfolio
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO (dark) -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb a"></div>
+  <div class="hero-orb b"></div>
+  <div class="wrap hero-inner">
+    <div class="tag-row reveal">
+      <span class="tag g">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.94a8.16 8.16 0 004.77 1.52V7.01a4.85 4.85 0 01-1-.32z"/></svg>
+        @heewon_rezeki.gang
+      </span>
+      <span class="tag w">TikTok IP</span>
+      <span class="tag w">Content Strategy</span>
+      <span class="tag w">Growth</span>
+      <span class="tag w">Solo — Sept 2024 · Sept 2025</span>
+    </div>
+    <h1 class="reveal" style="transition-delay:.08s">Rezeki Gang —<br><em>0 to 367K</em><br>in 12 months.</h1>
+    <p class="hero-meta reveal" style="transition-delay:.16s">No budget. No borrowed audience. Just a clear strategy, a batch workflow, and the patience to let the algorithm work. One video hit 300万 views. 80,000 new followers in a single day.</p>
+  </div>
+  <div class="hero-stats stagger">
+    <div class="hs"><div class="hs-num"><span class="count" data-target="367">0</span><span>K</span></div><div class="hs-label">Followers</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="596">0</span><span>K</span></div><div class="hs-label">Total Likes</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="3">0</span><span>M+</span></div><div class="hs-label">Peak Video Views</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="12">0</span><span>mo</span></div><div class="hs-label">Build Time</div></div>
+  </div>
+</div>
+
+<!-- ACCOUNT PROOF -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Account</div>
+    <h2 class="sec-h2 reveal">366.9K followers. 596K likes. Built from zero.</h2>
+    <p class="sec-body reveal">Real numbers from the live account — @heewon_rezeki.gang — built organically over 12 months with no paid promotion.</p>
+    <div class="proof-strip reveal">
+      <div class="proof-phone">
+        <img src="rezeki gang/New Project.png" alt="Rezeki Gang TikTok Profile">
+      </div>
+      <div class="proof-text">
+        <h3>@heewon_rezeki.gang</h3>
+        <p>Built as a homegrown IP for HEEWON APP — a branded content channel that had to earn its audience through genuine social impact content, not advertising spend.</p>
+        <p>63 following. 366.9K followers. 596K likes. Every one of those followers found the account because the content was worth finding.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- THE CHALLENGE -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Challenge</div>
+    <h2 class="sec-h2 reveal">Starting from three zeros.</h2>
+    <p class="sec-body reveal">HEEWON APP needed marketing momentum but had no budget for top-tier influencers. Top creators like SAMLIM and PINYANG were priced out of reach. The decision: <strong>build a homegrown IP from scratch</strong> — an account with enough trust and reach to carry the brand. The target audience was predominantly Malay, which meant the content had to feel genuinely native, not branded.</p>
+    <div class="ch-grid stagger">
+      <div class="ch-card">
+        <div class="ch-icon">💸</div>
+        <h3>Zero budget for influencers</h3>
+        <p>Top creators quoted fees far above what the company could afford at the time. Every follower had to be earned organically.</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">👤</div>
+        <h3>Zero existing audience</h3>
+        <p>No existing community to seed growth. Day one was a completely blank account with no content history.</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">🎬</div>
+        <h3>Zero playbook to copy</h3>
+        <p>No proven system to follow for this specific market and content style. Every decision had to be tested and validated with data.</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">🎯</div>
+        <h3>Commercial goal from day one</h3>
+        <p>This wasn't a passion project — it needed to eventually carry brand collaborations and app promotions. Trust had to be real.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- THE STRATEGY -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Strategy</div>
+    <h2 class="sec-h2 reveal">The Content Pyramid — not a theory, a weekly schedule.</h2>
+    <p class="sec-body reveal">The 40/40/20 split wasn't a concept from a deck. It was a live weekly content calendar. Every piece of content got tagged to a tier before it was scripted. The logic: <strong>80% of content gives the audience value</strong> — useful or entertaining. Only 20% asks them for anything. When trust is high enough, that 20% converts far better than any hard sell.</p>
+    <div class="pyramid reveal">
+      <div class="tier edu">
+        <div class="tier-bar"></div>
+        <div class="tier-pct">40%</div>
+        <div class="tier-info">
+          <h3>Education — Build Trust</h3>
+          <p>Social commentary, life insights, opinion pieces. Content that positions the account as having depth — not just entertainment value. "This account makes me think."</p>
+        </div>
+      </div>
+      <div class="tier ent">
+        <div class="tier-bar"></div>
+        <div class="tier-pct">40%</div>
+        <div class="tier-info">
+          <h3>Entertainment — Build Reach</h3>
+          <p>Street experiments, comedic skits, emotional stories. The algorithm reward tier — this is what gets shared and drives new followers. "This account makes me feel."</p>
+        </div>
+      </div>
+      <div class="tier sale">
+        <div class="tier-bar"></div>
+        <div class="tier-pct">20%</div>
+        <div class="tier-info">
+          <h3>Sales — Convert Trust</h3>
+          <p>Brand integrations, app promotions, product mentions. Kept deliberately low — Malaysian TikTok users unfollow fast when content feels too commercial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- THE PROCESS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Process</div>
+    <h2 class="sec-h2 reveal">A production line, not a creative sprint.</h2>
+    <p class="sec-body reveal">One person running strategy, scripting, directing, editing, and analytics can't operate on inspiration alone. The fix was a batch workflow — everything planned and shot in bulk, so the account never ran dry and momentum never broke.</p>
+    <div class="tl reveal" id="tl-main">
+      <div class="tl-line"></div>
+      <div class="tl-line-fill" id="tl-fill"></div>
+      <div class="tl-step">
+        <div class="tl-dot">📝</div>
+        <div class="tl-content">
+          <h3>Script Day — Plan the whole week at once</h3>
+          <p>Write 5–7 scripts in one session. Review last week's data first: what had the highest completion rate? Highest share rate? Those findings shape the next batch's themes and hooks.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">🎬</div>
+        <div class="tl-content">
+          <h3>Shoot Day — 4 to 8 clips, one day</h3>
+          <p>All filming compressed into a single session. Setup locked in, on-camera roles briefed, scenes directed. A full week of content produced without context-switching to other work.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">✂️</div>
+        <div class="tl-content">
+          <h3>Edit — 2 to 5 days, batch mode</h3>
+          <p>CapCut batch rough-cut → select best takes → fine edit → sound design, captions, thumbnail pull. Prepped for scheduling, not published live — removes daily production pressure.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📅</div>
+        <div class="tl-content">
+          <h3>Schedule & Monitor — First 30 minutes matter most</h3>
+          <p>Queue at peak engagement windows. Stay active in comments for the first 30 minutes after posting — the algorithm weights early interaction signals heavily.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📊</div>
+        <div class="tl-content">
+          <h3>Data Review — Every 2 weeks</h3>
+          <p>Not likes. <strong>Completion rate and share rate</strong> — the two metrics TikTok's algorithm actually weights. Anything with 3 consecutive underperforming posts gets cut immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TOP CONTENT -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">Top Content</div>
+    <h2 class="sec-h2 reveal">The videos that built the account.</h2>
+    <p class="sec-body reveal">Each video was analysed for <em>why</em> it worked — not just celebrated. The repeatable success pattern: content that triggers emotional judgement in the viewer, not just passive watching.</p>
+    <div class="videos stagger">
+      <div class="vc">
+        <div class="vc-rank">01</div>
+        <div class="vc-info">
+          <div class="vc-title">Tangan Kakak Gigil Hati Terbaru</div>
+          <div class="vc-meta">Kindness test series · Emotional trigger · High share rate</div>
+        </div>
+        <div class="vc-stat">
+          <div class="vc-views">361万</div>
+          <div class="vc-views-label">Views</div>
+        </div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">02</div>
+        <div class="vc-info">
+          <div class="vc-title">Mall Cake Girl — Goodness Test</div>
+          <div class="vc-meta">Street social experiment · 8–10万 new followers in 24 hours</div>
+        </div>
+        <div class="vc-stat">
+          <div class="vc-views">300万+</div>
+          <div class="vc-views-label">Views</div>
+        </div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">03</div>
+        <div class="vc-info">
+          <div class="vc-title">Berdoa, Mendapat Ganjaran Kebaikan</div>
+          <div class="vc-meta">Social topic · Faith &amp; reward narrative</div>
+        </div>
+        <div class="vc-stat">
+          <div class="vc-views">126万</div>
+          <div class="vc-views-label">Views</div>
+        </div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">04</div>
+        <div class="vc-info">
+          <div class="vc-title">Phone Tercicir Abang Rider Bantu</div>
+          <div class="vc-meta">Street story · Community goodwill</div>
+        </div>
+        <div class="vc-stat">
+          <div class="vc-views">40.7万</div>
+          <div class="vc-views-label">Views</div>
+        </div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">05</div>
+        <div class="vc-info">
+          <div class="vc-title">Ikhlas tanpa Alasan</div>
+          <div class="vc-meta">Daily resonance · Values-driven content</div>
+        </div>
+        <div class="vc-stat">
+          <div class="vc-views">7.1万</div>
+          <div class="vc-views-label">Views</div>
+        </div>
+      </div>
+    </div>
+    <div class="vid-archive reveal">
+      <img src="rezeki gang/bodycontent.png" alt="Rezeki Gang — Social Impact Video Archive">
+      <div class="vid-archive-label">Social Impact Campaign Archive — 11 videos · Views ranging from 134K to 3.5M</div>
+    </div>
+  </section>
+</div>
+
+<!-- VIDEO GALLERY -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">From the Field</div>
+    <h2 class="sec-h2 reveal">The videos that moved people.</h2>
+    <p class="sec-body reveal">Each episode was a real encounter — strangers in malls, on streets, at markets. The camera captured what actually happened. No scripts for the subjects, no staged reactions.</p>
+    <div class="phone-gallery stagger">
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/1.png" alt="Episode — Tangan Kakak Gigil">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/2.png" alt="Episode — Saya nak beli susu bagi anak">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/3.png" alt="Episode — Berdoa, Mendapat Ganjaran Kebaikan">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/4.png" alt="Episode — Kakak, awak punya hati baik">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/5.png" alt="Episode — Saya tak ada petikan, saya lapar">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/6.png" alt="Episode — Every month you can mampu lah">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/7.png" alt="Episode — Negeri mana?">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/8.png" alt="Episode — Mampang duit penganggur yang sakit">
+      </a>
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener"
+         style="display:inline-flex; align-items:center; gap:10px; background:#1a1a1a; color:white; padding:14px 28px; border-radius:100px; font-size:15px; font-weight:600; text-decoration:none; letter-spacing:-0.01em; transition:transform .2s ease, box-shadow .2s ease; box-shadow:0 4px 20px rgba(0,0,0,0.18);"
+         onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(0,0,0,0.25)'"
+         onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(0,0,0,0.18)'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.19 8.19 0 0 0 4.79 1.53V6.75a4.85 4.85 0 0 1-1.02-.06z"/></svg>
+        Watch on TikTok — @heewon_rezeki.gang
+      </a>
+    </div>
+  </section>
+</div>
+
+<!-- RESULTS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">Results</div>
+    <h2 class="sec-h2 reveal">12 months. One system. No shortcuts.</h2>
+    <p class="sec-body reveal">The growth wasn't linear — it came in waves, driven by breakout content. The system made sure those waves kept coming.</p>
+    <div class="stats-g stagger">
+      <div class="sb">
+        <div class="sb-num"><span class="count" data-target="367">0</span><span class="acc">K</span></div>
+        <div class="sb-label">Followers Built</div>
+        <div class="sb-desc">From 0, organically. No paid amplification at any stage.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num"><span class="count" data-target="596">0</span><span class="acc">K</span></div>
+        <div class="sb-label">Total Likes</div>
+        <div class="sb-desc">Cumulative engagement across the account's full content library.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">3<span class="acc">M+</span></div>
+        <div class="sb-label">Peak Single Video</div>
+        <div class="sb-desc">Tangan Kakak Gigil hit 361万. The mall cake experiment hit 300万+.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">1<span class="acc">×</span></div>
+        <div class="sb-label">Solo Operation</div>
+        <div class="sb-desc">Strategy, scripting, directing, editing, analytics — one person end-to-end.</div>
+      </div>
+    </div>
+    <div class="breakout reveal">
+      <h3>The day everything changed.</h3>
+      <p>The mall cake video — testing a street vendor's willingness to give freely — triggered something the algorithm loves: <strong>emotional judgement</strong>. Viewers didn't just watch. They asked themselves "what would I do?" Comments poured in. Share rate spiked. In 24 hours, <strong>80,000–100,000 new followers</strong> joined. That's not a campaign. That's what happens when content finds a truth that resonates with a lot of people at once.</p>
+    </div>
+  </section>
+</div>
+
+<!-- LEARNINGS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">What I Learned</div>
+    <h2 class="sec-h2 reveal">The real takeaways.</h2>
+    <p class="sec-body reveal">Not for a deck. For anyone starting from zero in a market that punishes inauthenticity.</p>
+    <div class="learn-list stagger">
+      <div class="li">
+        <div class="li-num">01</div>
+        <div>
+          <h3>Share rate and completion rate > likes.</h3>
+          <p>TikTok's algorithm weighs these two signals far more than like counts. Build content to be finished and shared — not just tapped. A video with 50K views and a 60% completion rate will outperform one with 500K views and 10%.</p>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">02</div>
+        <div>
+          <h3>Virality rewards consistency — it doesn't replace it.</h3>
+          <p>The 300万 video didn't come from nowhere. It came after 3+ months of consistent posting. The algorithm had data on the account. When the right content hit, the infrastructure was there to amplify it.</p>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">03</div>
+        <div>
+          <h3>Emotional judgement is the most shareable content type.</h3>
+          <p>Viewers share content that makes them think "what would I do?" — not just content that entertains. The goodness test series worked because it triggered an internal response, not just a reaction. Build for that.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA -->
+<div class="wrap">
+  <div class="cta-sec reveal">
+    <h2>Want to see more?</h2>
+    <p>More case studies, more work that moved real numbers.</p>
+    <div class="btns">
+      <a href="portfolio.html" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Portfolio
+      </a>
+      <a href="mailto:cht8987@gmail.com" class="btn-o">
+        Get in Touch
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+<footer><p>Elson 子洺 — Brand &amp; Content Integrator</p></footer>
+
+<script>
+// ── Intersection Observer ──────────────────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // trigger counter
+      e.target.querySelectorAll('.count[data-target]').forEach(el => animateCount(el));
+      // trigger pyramid bars
+      e.target.querySelectorAll('.tier-bar').forEach(el => el.classList.add('filled'));
+      // trigger timeline fill
+      if(e.target.id === 'tl-main'){
+        setTimeout(()=>{
+          const fill = document.getElementById('tl-fill');
+          const tl = e.target;
+          fill.style.height = (tl.offsetHeight - 32) + 'px';
+        }, 100);
+      }
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.12});
+
+document.querySelectorAll('.reveal,.reveal-l,.stagger').forEach(el => io.observe(el));
+// also observe sections containing pyramid
+document.querySelectorAll('.pyramid').forEach(el => io.observe(el));
+document.getElementById('tl-main') && io.observe(document.getElementById('tl-main'));
+
+// ── Counter Animation ─────────────────────────────────────
+function animateCount(el){
+  if(el.dataset.done) return;
+  el.dataset.done = '1';
+  const target = parseFloat(el.dataset.target);
+  const duration = 1600;
+  const start = performance.now();
+  function step(now){
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(ease * target * 10) / 10;
+    el.textContent = val % 1 === 0 ? val : val.toFixed(1);
+    if(p < 1) requestAnimationFrame(step);
+    else el.textContent = target % 1 === 0 ? target : target.toFixed(1);
+  }
+  requestAnimationFrame(step);
+}
+// also trigger counts in hero stats immediately
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero-stats .count').forEach(el => animateCount(el));
+  document.querySelectorAll('.hero-stats').forEach(el => el.classList.add('visible'));
+  document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
+});
+</script>
+</body>
+</html>

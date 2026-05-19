@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Forest Bakery — Case Study · Elson 子洺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#4CAF50; --green-dark:#2E7D32; --green-mid:#388E3C;
+  --forest:#1B5E20; --sage:#81C784; --sage-soft:#E8F5E9;
+  --warm:#FBF8F3; --peach:#FFE4D1;
+  --ink:#1A1F1B; --ink-soft:#4A524C; --muted:#8A938D;
+  --line:#E8EAE7; --bg:#FDFCFA; --cream:#F9F6F0;
+  --r:20px; --rlg:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 32px}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;background:rgba(253,252,250,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:100;padding:16px 0}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:7px 15px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.back:hover{border-color:var(--green);color:var(--green-dark)}
+.back svg{transition:transform .2s}.back:hover svg{transform:translateX(-3px)}
+.lang-switch{display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:6px 14px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s;letter-spacing:0.05em}
+.lang-switch:hover{border-color:var(--green);color:var(--green-dark)}
+.nav-right{display:flex;align-items:center;gap:10px}
+
+/* ── HERO ── */
+.hero{padding:72px 0 0;position:relative;overflow:hidden;min-height:520px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(150deg,#051a07 0%,#0c2e10 50%,#071a0a 100%);z-index:0}
+/* animated floating blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;animation:blobFloat 8s ease-in-out infinite}
+.blob.a{width:360px;height:360px;background:rgba(76,175,80,.14);top:-60px;right:-80px;z-index:1;animation-delay:0s}
+.blob.b{width:220px;height:220px;background:rgba(46,125,50,.1);bottom:-40px;left:-20px;z-index:1;animation-delay:-3s}
+.blob.c{width:180px;height:180px;background:rgba(129,199,132,.08);top:40%;left:40%;z-index:1;animation-delay:-5s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(12px,-18px) scale(1.04)}66%{transform:translate(-8px,10px) scale(.97)}}
+.hero-inner{position:relative;z-index:2;padding-bottom:64px}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600}
+.tag.g{background:rgba(76,175,80,.18);color:#A5D6A7}
+.tag.w{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12)}
+
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(36px,5.5vw,64px);line-height:1.06;letter-spacing:-.03em;font-weight:600;color:white;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--sage)}
+.hero-meta{font-size:16px;color:rgba(255,255,255,.6);max-width:560px;line-height:1.7}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.07);border-top:1px solid rgba(255,255,255,.1);margin-top:56px}
+.hs{padding:22px 18px;background:#061009}
+.hs-num{font-family:'Fraunces',serif;font-size:clamp(24px,3vw,38px);font-weight:700;color:white;letter-spacing:-.03em;line-height:1}
+.hs-num .acc{color:var(--sage)}
+.hs-label{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hs{padding:16px 14px}}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-r{opacity:0;transform:translateX(30px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal-r.visible{opacity:1;transform:none}
+.fade{opacity:0;transition:opacity .8s ease}
+.fade.visible{opacity:1}
+.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*{opacity:1;transform:none}
+.stagger.visible>*:nth-child(1){transition-delay:.04s}
+.stagger.visible>*:nth-child(2){transition-delay:.12s}
+.stagger.visible>*:nth-child(3){transition-delay:.20s}
+.stagger.visible>*:nth-child(4){transition-delay:.28s}
+.stagger.visible>*:nth-child(5){transition-delay:.36s}
+
+/* ── BASE SECTION STYLES ── */
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-label{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:18px}
+.sec-label::before{content:"";width:18px;height:2px;background:var(--green);border-radius:2px}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin-bottom:16px}
+.sec-body{font-size:16px;color:var(--ink-soft);line-height:1.78;max-width:640px}
+.sec-body strong{color:var(--ink);font-weight:600}
+
+/* ── FOUNDER BADGE ── */
+.founder-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--sage-soft);border:1.5px solid rgba(76,175,80,.3);border-radius:100px;margin-bottom:24px;font-size:13px;font-weight:600;color:var(--green-dark)}
+.founder-badge::before{content:"🌱";font-size:14px}
+
+/* ── CHALLENGE CARDS ── */
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:36px}
+@media(max-width:580px){.ch-grid{grid-template-columns:1fr}}
+.ch-card{background:var(--cream);border-radius:var(--r);padding:24px;border:1.5px solid var(--line);transition:border-color .2s,transform .2s}
+.ch-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.ch-icon{font-size:22px;margin-bottom:12px}
+.ch-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.ch-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+
+/* ── LOGO SHOWCASE ── */
+.logo-block{margin-top:40px;display:grid;grid-template-columns:1fr 1.6fr;gap:28px;align-items:center}
+@media(max-width:600px){.logo-block{grid-template-columns:1fr}}
+.logo-vis{background:linear-gradient(135deg,#1B5E20,#2E7D32);border-radius:var(--rlg);aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;max-width:240px}
+.logo-vis::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.08),transparent 60%)}
+.logo-symbol{font-size:80px;color:white;font-weight:700;font-family:'Fraunces',serif;opacity:.95;letter-spacing:-.05em;animation:logoPulse 4s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.logo-ring{position:absolute;width:140px;height:140px;border:2px solid rgba(255,255,255,.2);border-radius:50%;animation:logoSpin 20s linear infinite}
+@keyframes logoSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.logo-text-arc{position:absolute;bottom:24px;font-size:9px;font-weight:700;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase}
+.logo-desc h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.02em}
+.logo-desc p{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:10px}
+.logo-desc p strong{color:var(--ink);font-weight:600}
+
+/* ── PHOTO PROCESS ── */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}
+@media(max-width:600px){.photo-grid{grid-template-columns:1fr 1fr}}
+.photo-card{background:white;border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;transition:border-color .2s,transform .2s}
+.photo-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.photo-icon{font-size:24px;margin-bottom:10px}
+.photo-card h3{font-size:13.5px;font-weight:700;margin-bottom:5px}
+.photo-card p{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+
+/* ── TIMELINE ── */
+.tl{margin-top:40px;position:relative;padding-left:56px}
+.tl-line{position:absolute;left:17px;top:16px;bottom:16px;width:2px;background:var(--line);border-radius:2px}
+.tl-fill{position:absolute;left:17px;top:16px;width:2px;background:linear-gradient(to bottom,var(--green),var(--green-dark));border-radius:2px;height:0;transition:height 1.4s cubic-bezier(.22,1,.36,1)}
+.tl-step{position:relative;margin-bottom:28px}
+.tl-step:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-44px;top:2px;width:34px;height:34px;border-radius:50%;background:white;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;transition:border-color .3s,background .3s,transform .3s}
+.tl-step:hover .tl-dot{border-color:var(--green);background:var(--sage-soft);transform:scale(1.1)}
+.tl-content h3{font-size:14.5px;font-weight:700;margin-bottom:4px}
+.tl-content p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+.tl-phase{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.tl-phase.start{background:var(--sage-soft);color:var(--green-dark)}
+.tl-phase.mid{background:#FFF8E1;color:#E65100}
+.tl-phase.end{background:#FCE4EC;color:#C62828}
+
+/* ── PLATFORM STATS ── */
+.plat-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.plat{display:flex;align-items:center;gap:12px;padding:16px 20px;background:white;border:1.5px solid var(--line);border-radius:14px;flex:1;min-width:140px;transition:border-color .2s}
+.plat:hover{border-color:var(--green)}
+.plat-icon{font-size:22px}
+.plat-name{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.plat-val{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+
+/* ── CONFLICT TABLE ── */
+.conflict{margin-top:36px;border:1.5px solid var(--line);border-radius:var(--r);overflow:hidden}
+.conflict-head{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--cream);border-bottom:1.5px solid var(--line)}
+.conflict-head div{padding:12px 18px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.conflict-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--line);transition:background .15s}
+.conflict-row:last-child{border-bottom:none}
+.conflict-row:hover{background:var(--sage-soft)}
+.conflict-row div{padding:14px 18px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.conflict-row .topic{font-weight:600;color:var(--ink)}
+.conflict-row .him{color:#2E7D32}
+.conflict-row .her{color:#8D6E63}
+@media(max-width:600px){.conflict-head,.conflict-row{grid-template-columns:1fr}.conflict-head div:not(:first-child),.conflict-row div:not(:first-child){display:none}}
+
+/* ── STAT BOXES ── */
+.stats-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+@media(max-width:500px){.stats-g{grid-template-columns:1fr}}
+.sb{background:white;border:1.5px solid var(--line);border-radius:var(--r);padding:26px 22px;position:relative;overflow:hidden;transition:all .25s}
+.sb:hover{border-color:var(--green);transform:translateY(-3px)}
+.sb::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;border-radius:0 0 var(--r) var(--r)}
+.sb:hover::after{transform:scaleX(1)}
+.sb-num{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:8px}
+.sb-num .acc{color:var(--green-dark)}
+.sb-label{font-size:12.5px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.sb-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ── HONEST SECTION ── */
+.honest-block{background:var(--cream);border-radius:var(--rlg);padding:40px 44px;margin-top:28px;border-left:4px solid var(--green);position:relative;overflow:hidden}
+.honest-block::before{content:"🌿";font-size:100px;position:absolute;right:-10px;bottom:-20px;opacity:.07;line-height:1;pointer-events:none}
+.honest-block h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.02em}
+.honest-block p{font-size:15px;color:var(--ink-soft);line-height:1.78;margin-bottom:12px}
+.honest-block p:last-child{margin-bottom:0}
+.honest-block p strong{color:var(--ink);font-weight:600}
+
+/* ── LEARNINGS ── */
+.learn-list{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.li{display:flex;gap:16px;padding:22px 24px;background:white;border:1.5px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+.li:hover{border-color:var(--green)}
+.li-num{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--green-dark);line-height:1;flex-shrink:0;min-width:28px}
+.li h3{font-size:14.5px;font-weight:700;margin-bottom:5px}
+.li p{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+.li-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;background:var(--sage-soft);color:var(--green-dark);border-radius:100px;font-size:10.5px;font-weight:600;margin-top:8px}
+
+/* ── CTA ── */
+.cta-sec{padding:72px 0 80px;text-align:center;border-top:1px solid var(--line)}
+.cta-sec h2{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,44px);letter-spacing:-.025em;font-weight:600;margin-bottom:14px}
+.cta-sec p{font-size:16px;color:var(--ink-soft);margin-bottom:32px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:white;text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;transition:all .2s}
+.btn-p:hover{background:var(--forest);transform:translateY(-2px)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--ink);text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;border:1.5px solid var(--line);transition:all .2s}
+.btn-o:hover{border-color:var(--green);color:var(--green-dark);transform:translateY(-2px)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center}
+footer p{font-size:12px;color:var(--muted)}
+.count{display:inline-block}
+/* ── PHOTO INTEGRATION ── */
+.fb-logo-strip{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
+.fb-logo-strip img{width:100%;border-radius:16px;display:block}
+.fb-print-board{margin-top:14px;border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.fb-print-board img{width:100%;display:block}
+.fb-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.fb-photo-grid img{width:100%;border-radius:14px;aspect-ratio:1/1;object-fit:cover;display:block;box-shadow:0 6px 20px rgba(0,0,0,.1);transition:transform .3s ease,box-shadow .3s}
+.fb-photo-grid img:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
+.fb-wide-img{margin-top:14px;border-radius:14px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.fb-wide-img img{width:100%;display:block}
+.fb-prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.fb-prod-grid img{width:100%;border-radius:14px;display:block;box-shadow:0 6px 20px rgba(0,0,0,.08);transition:transform .3s ease}
+.fb-prod-grid img:hover{transform:translateY(-2px)}
+.fb-duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.fb-duo img{width:100%;border-radius:14px;display:block;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.fb-web{margin-top:14px;border-radius:14px;overflow:hidden;border:1.5px solid var(--line)}
+.fb-web img{width:100%;display:block}
+@media(max-width:580px){.fb-logo-strip,.fb-duo{grid-template-columns:1fr}.fb-photo-grid,.fb-prod-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-i">
+    <a href="portfolio.html" class="logo"><div class="logo-dot"></div>Elson 子洺</a>
+    <div class="nav-right">
+      <a href="case-study-forest-bakery-zh.html" class="lang-switch">中文</a>
+      <a href="portfolio.html" class="back">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Portfolio
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+  <div class="wrap hero-inner">
+    <div class="tag-row reveal">
+      <span class="tag g">🥐 Personal Venture</span>
+      <span class="tag w">Brand Identity</span>
+      <span class="tag w">Product Photography</span>
+      <span class="tag w">Co-founder · Feb 2024 – Sep 2025</span>
+    </div>
+    <h1 class="reveal" style="transition-delay:.08s">Forest Bakery —<br><em>Built the brand.</em><br>Learned the harder lesson.</h1>
+    <p class="hero-meta reveal" style="transition-delay:.16s">A personal venture — not a client. I co-founded a small bakery brand from scratch in Semenyih, built the visual identity, shot the photography, and ran the social media. It grew steadily for 18 months. Then life got honest.</p>
+  </div>
+  <div class="hero-stats stagger">
+    <div class="hs"><div class="hs-num">1.5<span class="acc">yr</span></div><div class="hs-label">Venture Duration</div></div>
+    <div class="hs"><div class="hs-num">400<span class="acc">–900</span></div><div class="hs-label">Xiaohongshu Fans</div></div>
+    <div class="hs"><div class="hs-num">3<span class="acc">×</span></div><div class="hs-label">Platforms</div></div>
+    <div class="hs"><div class="hs-num">Ø</div><div class="hs-label">The Logo Story</div></div>
+  </div>
+</div>
+
+<!-- CONTEXT -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">Context</div>
+    <div class="founder-badge reveal">This is a founder case, not a client case.</div>
+    <h2 class="sec-h2 reveal">Started as a life decision. Became a design project. Ended as a lesson.</h2>
+    <p class="sec-body reveal">After learning pastry-making in Guangzhou, my then-partner and I decided to build something together in Semenyih. We recruited a third team member, operated out of our home, took orders through WhatsApp, sold at local markets, and slowly built a small loyal base. I handled everything that touched the brand — <strong>logo, packaging, photography, social media, and content strategy</strong>. She handled the baking and sales. For a while, it worked.</p>
+    <div class="ch-grid stagger">
+      <div class="ch-card">
+        <div class="ch-icon">💰</div>
+        <h3>Near-zero startup budget</h3>
+        <p>No VC, no startup funding. Every design decision was constrained by cost. Stickers from Shopee, off-the-shelf boxes, free fonts — and it still had to look premium.</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">🎯</div>
+        <h3>Had to look better than the budget</h3>
+        <p>A craft bakery that looks amateur loses before it even starts. The visual quality had to punch above what we were spending — or customers wouldn't pay craft prices.</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">📸</div>
+        <h3>Product photography is the sales floor</h3>
+        <p>In D2C food, the photo is the product. If the cake looks cheap in the shot, it IS cheap to the customer. Invested in a Nikon Z5 → Z63 setup because this was non-negotiable.</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">👥</div>
+        <h3>Two co-founders with different visions</h3>
+        <p>I wanted to scale. She wanted stability. That gap was manageable at first, but as money got tight it became the defining tension in the business.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- THE LOGO -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Identity</div>
+    <h2 class="sec-h2 reveal">Why the logo is a giant の.</h2>
+    <p class="sec-body reveal">The brand name came from where we lived: Semenyih Eco Forest. Green, natural, fresh. The identity had to carry that feeling — but not in a generic "trees and leaves" way. I wanted something modern and clean that still felt organic.</p>
+    <div class="logo-block reveal">
+      <div class="logo-vis">
+        <div class="logo-ring"></div>
+        <div class="logo-symbol">の</div>
+        <div class="logo-text-arc">Forest · Bakery</div>
+      </div>
+      <div class="logo-desc">
+        <h3>The の symbol — two reasons it worked.</h3>
+        <p><strong>Visually:</strong> it's a clean, modern geometric — nothing generic about it. Different from every leaf-and-wheat logo in the bakery category.</p>
+        <p><strong>Psychologically:</strong> it reads like the Japanese の character, which subconsciously signals the precision and elegance of Japanese confectionery. Our target customer — Malaysian Chinese, 20–50, interested in artisan food — picked up on that without us having to say it.</p>
+        <p>Final mark: <strong>bright green circle, white の, "FOREST" and "BAKERY" in arc formation</strong>. Printed on Shopee waterproof stickers. 100 pieces, a few dozen ringgit. Applied by hand to every box.</p>
+      </div>
+    </div>
+    <div class="fb-logo-strip stagger">
+      <img src="forest bakery/forest bakery black logo-01.png" alt="Forest Bakery primary logo on green background" onerror="this.style.display='none'">
+      <img src="forest bakery/Forest Bakery - outlined.png" alt="Forest Bakery logo variants sheet" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-print-board reveal">
+      <img src="forest bakery/Printing Board.png" alt="Forest Bakery printed brand board in the real world" onerror="this.style.display='none'">
+    </div>
+  </section>
+</div>
+
+<!-- PHOTOGRAPHY -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Photography</div>
+    <h2 class="sec-h2 reveal">The one place we didn't cut corners.</h2>
+    <p class="sec-body reveal">Everything else was bootstrapped to the edge. But photography got a real investment — <strong>Nikon Z5, upgraded to Z63</strong>, with a tripod, professional lighting, and a small home studio setup. The logic was simple: if the product photo looks cheap, the product is cheap. Craft pricing requires craft visuals.</p>
+    <div class="photo-grid stagger">
+      <div class="photo-card">
+        <div class="photo-icon">📷</div>
+        <h3>Nikon Z5 → Z63</h3>
+        <p>Deliberate upgrade mid-project. Full-frame sensor for the food texture detail we needed.</p>
+      </div>
+      <div class="photo-card">
+        <div class="photo-icon">💡</div>
+        <h3>Home studio setup</h3>
+        <p>Tripod, professional lighting, white background. Shot in our own space to keep costs zero per session.</p>
+      </div>
+      <div class="photo-card">
+        <div class="photo-icon">🖥️</div>
+        <h3>PS post-processing</h3>
+        <p>Retouched for clarity, not perfection. The goal: sharp enough to show texture, real enough to look honest.</p>
+      </div>
+      <div class="photo-card">
+        <div class="photo-icon">📐</div>
+        <h3>5–10 angles per product</h3>
+        <p>Overhead, cross-section, detail close-up, lifestyle. Enough variety to power weeks of social content.</p>
+      </div>
+      <div class="photo-card">
+        <div class="photo-icon">🎨</div>
+        <h3>Consistent art direction</h3>
+        <p>Warm tones, clean backgrounds, minimal props. The visual language stayed consistent across all products and platforms.</p>
+      </div>
+      <div class="photo-card">
+        <div class="photo-icon">📱</div>
+        <h3>Built for Xiaohongshu first</h3>
+        <p>Target audience was Malaysian Chinese — small RED was their platform. Content formatted for 3:4 ratio, edited for that feed aesthetic.</p>
+      </div>
+    </div>
+    <div class="fb-photo-grid stagger">
+      <img src="forest bakery/case/1.png" alt="Original & Earl Grey Basque cheesecake cards" onerror="this.style.display='none'">
+      <img src="forest bakery/case/3.png" alt="Pistachio & Roasted Durian Basque" onerror="this.style.display='none'">
+      <img src="forest bakery/case/4.png" alt="Matcha & Chocolate Basque cheesecake" onerror="this.style.display='none'">
+      <img src="forest bakery/case/5.png" alt="Egg Mayo hot press sandwich" onerror="this.style.display='none'">
+      <img src="forest bakery/case/6.png" alt="Crabby Island hot press sandwich" onerror="this.style.display='none'">
+      <img src="forest bakery/case/7.png" alt="Matcha basque close-up texture" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-wide-img reveal">
+      <img src="forest bakery/case/16.png" alt="Tuna Temptation, Egg Mayo, Crabby Island — full sandwich lineup" onerror="this.style.display='none'">
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Products</div>
+    <h2 class="sec-h2 reveal">Japanese-inspired desserts. All shot in-house.</h2>
+    <p class="sec-body reveal">Beyond Basque cakes and hot press sandwiches, Forest Bakery offered a Japanese-style mochi and dessert range — all designed, named, and photographed in-house. Seasonal items like mooncakes extended the calendar reach and gave repeat customers a reason to return.</p>
+    <div class="fb-prod-grid stagger">
+      <img src="forest bakery/case/8.png" alt="Chicken Floss 雪媚娘" onerror="this.style.display='none'">
+      <img src="forest bakery/case/9.png" alt="Taro Box — 6-layer taro mochi dessert" onerror="this.style.display='none'">
+      <img src="forest bakery/case/10.png" alt="Chocolate Papermini & Taro Floss 雪媚娘" onerror="this.style.display='none'">
+      <img src="forest bakery/case/12.png" alt="Fresh Kiwi & MSK Durian 雪媚娘" onerror="this.style.display='none'">
+      <img src="forest bakery/case/13.png" alt="Mochi Chocolate 福团生巧" onerror="this.style.display='none'">
+      <img src="forest bakery/case/14.png" alt="Mochi Strawberry 草莓红豆大福" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-duo stagger">
+      <img src="forest bakery/case/19.png" alt="Mooncake gift box — seasonal mid-autumn offering" onerror="this.style.display='none'">
+      <img src="forest bakery/case/20.png" alt="Mooncake premium box with assorted flavours" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-web reveal">
+      <img src="forest bakery/websITE.png" alt="Forest Bakery website — Strawberry Mochi hero" onerror="this.style.display='none'">
+    </div>
+  </section>
+</div>
+
+<!-- JOURNEY TIMELINE -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Journey</div>
+    <h2 class="sec-h2 reveal">18 months in three honest chapters.</h2>
+    <div class="tl reveal" id="tl-forest">
+      <div class="tl-line"></div>
+      <div class="tl-fill" id="tl-forest-fill"></div>
+      <div class="tl-step">
+        <div class="tl-dot">🌱</div>
+        <div class="tl-content">
+          <span class="tl-phase start">Feb 2024 · Launch</span>
+          <h3>Built the brand from scratch</h3>
+          <p>Named the brand, designed the logo, set up the home studio, printed the first stickers. Opened the Xiaohongshu, IG, and FB accounts. First orders from friends and family. Posted 2–3 times a week.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📈</div>
+        <div class="tl-content">
+          <span class="tl-phase start">Mid 2024 · Growing</span>
+          <h3>Steady growth, expanding product range</h3>
+          <p>Low-sugar cakes, pastries, and specialty items. Tried local markets — I pushed for it, she was hesitant. Follower base grew organically on Xiaohongshu. WhatsApp orders became regular. The brand started to feel real.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">⚡</div>
+        <div class="tl-content">
+          <span class="tl-phase mid">Late 2024 · Tension</span>
+          <h3>Strategic disagreements started to surface</h3>
+          <p>I wanted to push into wholesale channels, develop new products, invest in marketing. She wanted to keep the model stable and conservative. The same business — two completely different ambitions. Hard to reconcile when money is tight.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">💸</div>
+        <div class="tl-content">
+          <span class="tl-phase end">Early 2025 · Pressure</span>
+          <h3>The financial reality changed everything</h3>
+          <p>My Lokes income — which was partially funding Forest Bakery — ended when that project closed. I could no longer supplement the bakery's operating costs. Forest Bakery's monthly revenue covered one person's living expenses. Not two.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">🚪</div>
+        <div class="tl-content">
+          <span class="tl-phase end">Sep 2025 · End</span>
+          <h3>Decided to stop. Painful. Clear.</h3>
+          <p>Economic pressure plus unresolved strategic disagreement plus relationship changes. Three forces at once. The decision to close was painful but the logic was clean: this needed a full-time committed founder, and neither of us could give it that.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- NUMBERS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Numbers</div>
+    <h2 class="sec-h2 reveal">What the brand built in 18 months.</h2>
+    <div class="plat-row stagger">
+      <div class="plat">
+        <div class="plat-icon">📕</div>
+        <div><div class="plat-name">Xiaohongshu</div><div class="plat-val">400–900</div></div>
+      </div>
+      <div class="plat">
+        <div class="plat-icon">📷</div>
+        <div><div class="plat-name">Instagram</div><div class="plat-val">@forestbakery93</div></div>
+      </div>
+      <div class="plat">
+        <div class="plat-icon">👥</div>
+        <div><div class="plat-name">Facebook</div><div class="plat-val">Active</div></div>
+      </div>
+      <div class="plat">
+        <div class="plat-icon">📦</div>
+        <div><div class="plat-name">Orders via</div><div class="plat-val">WhatsApp</div></div>
+      </div>
+    </div>
+    <div class="stats-g stagger" style="margin-top:14px">
+      <div class="sb">
+        <div class="sb-num">2<span class="acc">–3</span></div>
+        <div class="sb-label">Posts / Week</div>
+        <div class="sb-desc">Consistent cadence across Xiaohongshu, IG, and FB. Product showcase + process + order highlight.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">3<span class="acc">×</span></div>
+        <div class="sb-label">Platforms Active</div>
+        <div class="sb-desc">Xiaohongshu was the primary growth channel. IG and FB for reach and order inquiries.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">0<span class="acc">$</span></div>
+        <div class="sb-label">Paid Ads</div>
+        <div class="sb-desc">100% organic growth. Every follower was earned through content and word-of-mouth.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num"><span class="acc">✓</span>VI</div>
+        <div class="sb-label">Full Brand System</div>
+        <div class="sb-desc">Logo, sticker packaging, photography, social templates — all designed and produced in-house.</div>
+      </div>
+    </div>
+
+    <div class="honest-block reveal">
+      <h3>The honest version of why it ended.</h3>
+      <p>Forest Bakery didn't fail because the brand was weak or the product was bad. It failed because <strong>two co-founders had fundamentally different ambitions for what it should become</strong> — and we didn't resolve that tension early enough.</p>
+      <p>I wanted growth, scale, new channels. She wanted stability, consistency, the same thing done reliably. Neither is wrong. But they're incompatible operating modes when resources are thin and pressure is high. <strong>The biggest lesson wasn't about branding or photography or social media. It was that co-founder alignment isn't a nice-to-have — it's load-bearing structure.</strong></p>
+      <p>The brand I built still exists in screenshots and sticker files. The craft was real. The effort was real. The ending was just honest.</p>
+    </div>
+  </section>
+</div>
+
+<!-- STRATEGIC DISAGREEMENT TABLE -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Friction</div>
+    <h2 class="sec-h2 reveal">The same business. Two different companies in our heads.</h2>
+    <p class="sec-body reveal">Documenting this because it's more useful than pretending it was all smooth. These were the actual recurring debates.</p>
+    <div class="conflict reveal">
+      <div class="conflict-head">
+        <div>Decision</div>
+        <div>My position</div>
+        <div>Her position</div>
+      </div>
+      <div class="conflict-row">
+        <div class="topic">Sell at local markets</div>
+        <div class="him">Yes — exposure, new customers</div>
+        <div class="her">No — too much effort, uncertain ROI</div>
+      </div>
+      <div class="conflict-row">
+        <div class="topic">Develop new products</div>
+        <div class="him">Yes — test market response, find breakout item</div>
+        <div class="her">No — higher production cost and risk</div>
+      </div>
+      <div class="conflict-row">
+        <div class="topic">Invest more in marketing</div>
+        <div class="him">Yes — growth requires visibility spend</div>
+        <div class="her">No — keep costs as low as possible</div>
+      </div>
+      <div class="conflict-row">
+        <div class="topic">Scale ambition</div>
+        <div class="him">Brand project worth growing into something bigger</div>
+        <div class="her">Stable side income, not a startup</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LEARNINGS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">What I Learned</div>
+    <h2 class="sec-h2 reveal">The things worth keeping from this.</h2>
+    <div class="learn-list stagger">
+      <div class="li">
+        <div class="li-num">01</div>
+        <div>
+          <h3>Co-founder alignment is the foundation, not the finish line.</h3>
+          <p>The brand was strong. The product was quality. What wasn't aligned were the answers to "what are we trying to build, and what are we willing to sacrifice for it?" Those questions need to be answered before launch — not resolved under pressure mid-crisis.</p>
+          <span class="li-tag">Applies to every partnership</span>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">02</div>
+        <div>
+          <h3>Investing in photography was correct. Not doing data was a mistake.</h3>
+          <p>The visual quality was right. But I never built basic tracking: which products had the best repeat purchase rate, which posts drove the most WhatsApp inquiries, which markets converted. Small business doesn't mean no data — it means simpler data, tracked consistently.</p>
+          <span class="li-tag">Should have started from month one</span>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">03</div>
+        <div>
+          <h3>Part-time attention produces part-time results.</h3>
+          <p>I had the skills and could see exactly what Forest Bakery needed to scale. But my time and income were primarily committed elsewhere. The brand suffered from never having one person fully invested in it as their primary thing. That gap doesn't close with effort — only with commitment.</p>
+          <span class="li-tag">The real cost of split focus</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA -->
+<div class="wrap">
+  <div class="cta-sec reveal">
+    <h2>Want to see more?</h2>
+    <p>More work — some that scaled, some that taught me more by not scaling.</p>
+    <div class="btns">
+      <a href="portfolio.html" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Portfolio
+      </a>
+      <a href="mailto:cht8987@gmail.com" class="btn-o">
+        Get in Touch
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+<footer><p>Elson 子洺 — Brand &amp; Content Integrator</p></footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    // timeline fill
+    if(e.target.id === 'tl-forest'){
+      setTimeout(()=>{
+        const fill = document.getElementById('tl-forest-fill');
+        fill.style.height = (e.target.offsetHeight - 32) + 'px';
+      }, 150);
+    }
+    io.unobserve(e.target);
+  });
+}, {threshold:0.1});
+
+document.querySelectorAll('.reveal,.reveal-r,.fade,.stagger').forEach(el => io.observe(el));
+const tl = document.getElementById('tl-forest');
+if(tl) io.observe(tl);
+
+// Stagger delay on children
+document.querySelectorAll('.stagger').forEach(parent => {
+  [...parent.children].forEach((child, i) => {
+    child.style.transitionDelay = `${0.04 + i * 0.08}s`;
+  });
+});
+
+// Hero immediate reveal
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero .reveal, .hero-stats').forEach(el => {
+    el.classList.add('visible');
+  });
+});
+</script>
+</body>
+</html>

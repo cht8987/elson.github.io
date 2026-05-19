@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rezeki Gang TikTok IP — 案例研究 · Elson 子洺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#4CAF50; --green-dark:#2E7D32; --green-mid:#388E3C;
+  --green-soft:#E8F5E9; --green-tint:#F1F8F2;
+  --ink:#1A1F1B; --ink-soft:#4A524C; --muted:#8A938D;
+  --line:#E8EAE7; --bg:#FDFCFA; --cream:#FBF8F3;
+  --r:20px; --rlg:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 32px}
+
+nav{position:sticky;top:0;background:rgba(253,252,250,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:100;padding:16px 0}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:7px 15px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.back:hover{border-color:var(--green);color:var(--green-dark)}
+.back svg{transition:transform .2s}.back:hover svg{transform:translateX(-3px)}
+.lang-switch{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 12px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.lang-switch:hover{border-color:var(--green);color:var(--green-dark)}
+
+.hero{padding:72px 0 0;position:relative;overflow:hidden;min-height:560px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 60%,#0d2010 100%);z-index:0}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hero-orb.a{width:400px;height:400px;background:rgba(76,175,80,.18);top:-100px;right:-80px;z-index:1}
+.hero-orb.b{width:280px;height:280px;background:rgba(46,125,50,.12);bottom:-60px;left:-60px;z-index:1}
+.hero-inner{position:relative;z-index:2;padding-bottom:64px}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600}
+.tag.g{background:rgba(76,175,80,.18);color:#81C784}
+.tag.w{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)}
+
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(38px,6vw,70px);line-height:1.05;letter-spacing:-.03em;font-weight:600;color:white;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--green)}
+.hero-meta{font-size:16px;color:rgba(255,255,255,.6);max-width:540px;line-height:1.7}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.1);margin-top:56px}
+.hs{padding:24px 20px;background:#0f1a10}
+.hs-num{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,46px);font-weight:700;color:white;letter-spacing:-.03em;line-height:1}
+.hs-num span{color:var(--green)}
+.hs-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hs{padding:18px 16px}}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(24px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*{opacity:1;transform:none}
+.stagger.visible>*:nth-child(1){transition-delay:.05s}
+.stagger.visible>*:nth-child(2){transition-delay:.13s}
+.stagger.visible>*:nth-child(3){transition-delay:.21s}
+.stagger.visible>*:nth-child(4){transition-delay:.29s}
+.stagger.visible>*:nth-child(5){transition-delay:.37s}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-label{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:18px}
+.sec-label::before{content:"";width:18px;height:2px;background:var(--green);border-radius:2px}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin-bottom:16px}
+.sec-body{font-size:16.5px;color:var(--ink-soft);line-height:1.78;max-width:640px}
+.sec-body strong{color:var(--ink);font-weight:600}
+
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:36px}
+@media(max-width:580px){.ch-grid{grid-template-columns:1fr}}
+.ch-card{background:var(--cream);border-radius:var(--r);padding:24px;border:1.5px solid var(--line);transition:border-color .2s,transform .2s}
+.ch-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.ch-icon{font-size:22px;margin-bottom:12px}
+.ch-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.ch-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+
+.pyramid{margin-top:40px;display:flex;flex-direction:column;gap:10px}
+.tier{border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:center;position:relative;overflow:hidden}
+.tier.edu{background:var(--green-soft)}
+.tier.ent{background:#FFF8E1}
+.tier.sale{background:#FFF3EE}
+.tier-pct{font-family:'Fraunces',serif;font-size:40px;font-weight:700;line-height:1;letter-spacing:-.04em}
+.edu .tier-pct{color:var(--green-dark)}
+.ent .tier-pct{color:#E65100}
+.sale .tier-pct{color:#BF360C}
+.tier-bar{position:absolute;right:0;top:0;bottom:0;opacity:.07}
+.edu .tier-bar{background:var(--green-dark)}
+.ent .tier-bar{background:#E65100}
+.sale .tier-bar{background:#BF360C}
+.tier-bar{width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.tier.edu .tier-bar.filled{width:40%}
+.tier.ent .tier-bar.filled{width:40%}
+.tier.sale .tier-bar.filled{width:20%}
+.tier-info h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.tier-info p{font-size:13px;color:var(--ink-soft);line-height:1.55}
+
+.tl{margin-top:40px;position:relative;padding-left:60px}
+.tl-line{position:absolute;left:20px;top:16px;bottom:16px;width:2px;background:var(--line);border-radius:2px}
+.tl-line-fill{position:absolute;left:20px;top:16px;width:2px;background:linear-gradient(to bottom,var(--green),var(--green-dark));border-radius:2px;height:0;transition:height 1.4s cubic-bezier(.22,1,.36,1)}
+.tl-step{position:relative;margin-bottom:32px}
+.tl-step:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-48px;top:2px;width:36px;height:36px;border-radius:50%;background:white;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .3s,background .3s}
+.tl-step:hover .tl-dot{border-color:var(--green);background:var(--green-soft)}
+.tl-content h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.tl-content p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+
+.videos{display:flex;flex-direction:column;gap:10px;margin-top:36px}
+.vc{display:flex;align-items:center;gap:16px;padding:16px 20px;background:white;border:1.5px solid var(--line);border-radius:14px;transition:border-color .2s,transform .2s;cursor:default}
+.vc:hover{border-color:var(--green);transform:translateX(4px)}
+.vc-rank{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--line);min-width:28px}
+.vc-info{flex:1}
+.vc-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.vc-meta{font-size:12px;color:var(--muted)}
+.vc-stat{text-align:right}
+.vc-views{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--green-dark);line-height:1}
+.vc-views-label{font-size:11px;color:var(--muted)}
+
+.stats-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+@media(max-width:500px){.stats-g{grid-template-columns:1fr}}
+.sb{background:white;border:1.5px solid var(--line);border-radius:var(--r);padding:28px 24px;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.sb:hover{border-color:var(--green);transform:translateY(-3px)}
+.sb::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;border-radius:0 0 var(--r) var(--r)}
+.sb:hover::after{transform:scaleX(1)}
+.sb-num{font-family:'Fraunces',serif;font-size:clamp(40px,6vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:8px}
+.sb-num .acc{color:var(--green-dark)}
+.sb-label{font-size:13px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.sb-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+.breakout{background:linear-gradient(135deg,#0a1a0b,#1a2e1a);border-radius:var(--rlg);padding:40px 44px;margin-top:28px;position:relative;overflow:hidden}
+.breakout::before{content:"⚡";font-size:130px;position:absolute;right:-10px;top:-20px;opacity:.05;line-height:1;pointer-events:none}
+.breakout h3{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:white;margin-bottom:12px;letter-spacing:-.02em}
+.breakout p{font-size:15px;color:rgba(255,255,255,.65);line-height:1.75;max-width:560px}
+.breakout p strong{color:var(--green)}
+@media(max-width:600px){.breakout{padding:28px 24px}}
+
+.learn-list{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.li{display:flex;gap:16px;padding:22px 24px;background:white;border:1.5px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+.li:hover{border-color:var(--green)}
+.li-num{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--green);line-height:1;flex-shrink:0;min-width:28px}
+.li h3{font-size:14.5px;font-weight:700;margin-bottom:5px}
+.li p{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+
+.cta-sec{padding:72px 0 80px;text-align:center;border-top:1px solid var(--line)}
+.cta-sec h2{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,44px);letter-spacing:-.025em;font-weight:600;margin-bottom:14px}
+.cta-sec p{font-size:16px;color:var(--ink-soft);margin-bottom:32px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:white;text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;transition:background .2s,transform .2s}
+.btn-p:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--ink);text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;border:1.5px solid var(--line);transition:all .2s}
+.btn-o:hover{border-color:var(--green);color:var(--green-dark);transform:translateY(-2px)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center}
+footer p{font-size:12px;color:var(--muted)}
+.count{display:inline-block}
+
+/* ── ACCOUNT PROOF ── */
+.proof-strip{background:var(--cream);border:1.5px solid var(--line);border-radius:var(--rlg);padding:36px 40px;margin-top:36px;display:flex;align-items:center;gap:36px}
+.proof-phone{flex-shrink:0;width:200px}
+.proof-phone img{width:100%;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,0.13)}
+.proof-text h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:-.02em}
+.proof-text p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+.proof-text p+p{margin-top:10px}
+
+/* ── VIDEO ARCHIVE ── */
+.vid-archive{margin-top:36px;border-radius:var(--rlg);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.1);border:1.5px solid var(--line)}
+.vid-archive img{width:100%;display:block}
+.vid-archive-label{padding:14px 20px;background:var(--cream);font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;border-top:1px solid var(--line)}
+
+/* ── PHONE GALLERY ── */
+.phone-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+.phone-gallery img{width:100%;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.1);transition:transform .3s ease,box-shadow .3s ease}
+.phone-gallery img:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.15)}
+
+@media(max-width:640px){
+  .phone-gallery{grid-template-columns:repeat(2,1fr)}
+  .proof-strip{flex-direction:column;padding:28px 24px}
+  .proof-phone{width:100%;max-width:220px;margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-i">
+    <a href="portfolio.html" class="logo"><div class="logo-dot"></div>Elson 子洺</a>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a href="case-study-rezeki-gang.html" class="lang-switch">EN</a>
+      <a href="portfolio.html" class="back">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        返回作品集
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb a"></div>
+  <div class="hero-orb b"></div>
+  <div class="wrap hero-inner">
+    <div class="tag-row reveal">
+      <span class="tag g">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.94a8.16 8.16 0 004.77 1.52V7.01a4.85 4.85 0 01-1-.32z"/></svg>
+        @heewon_rezeki.gang
+      </span>
+      <span class="tag w">TikTok IP 打造</span>
+      <span class="tag w">内容策略</span>
+      <span class="tag w">增长运营</span>
+      <span class="tag w">Solo — 2024年9月 至 2025年9月</span>
+    </div>
+    <h1 class="reveal" style="transition-delay:.08s">Rezeki Gang —<br><em>从 0 到 367K</em><br>用了12个月。</h1>
+    <p class="hero-meta reveal" style="transition-delay:.16s">零预算，零借力，只有清晰的策略、批量生产工作流，以及让算法自然运转的耐心。一条视频收获300万播放，单日新增粉丝8万。</p>
+  </div>
+  <div class="hero-stats stagger">
+    <div class="hs"><div class="hs-num"><span class="count" data-target="367">0</span><span>K</span></div><div class="hs-label">粉丝数</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="596">0</span><span>K</span></div><div class="hs-label">总点赞数</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="3">0</span><span>M+</span></div><div class="hs-label">单视频峰值播放</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="12">0</span><span>mo</span></div><div class="hs-label">建设周期</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">账号实况</div>
+    <h2 class="sec-h2 reveal">36.69万粉丝，59.6万点赞，从零开始。</h2>
+    <p class="sec-body reveal">来自真实账号 @heewon_rezeki.gang 的真实数据——12个月内纯有机增长，零付费推广。</p>
+    <div class="proof-strip reveal">
+      <div class="proof-phone">
+        <img src="rezeki gang/New Project.png" alt="Rezeki Gang TikTok 主页">
+      </div>
+      <div class="proof-text">
+        <h3>@heewon_rezeki.gang</h3>
+        <p>作为 HEEWON APP 的自有 IP 渠道而打造——一个必须靠真实社会影响力内容赢得受众的品牌内容账号，而非广告投放。</p>
+        <p>关注 63 人，粉丝 36.69 万，点赞 59.6 万。每一个粉丝，都是因为内容值得被找到而来的。</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">挑战所在</div>
+    <h2 class="sec-h2 reveal">三个零的起点。</h2>
+    <p class="sec-body reveal">HEEWON APP 急需营销声量，但没有预算邀请头部网红。当时 SAMLIM、PINYANG 等头部创作者的报价远超预算。决策由此而来：<strong>从零打造一个属于自己的IP账号</strong>——一个足够有信任感与影响力的账号，能真正带动品牌。目标受众以马来族为主，这意味着内容必须真正本土，而非品牌感太强。</p>
+    <div class="ch-grid stagger">
+      <div class="ch-card">
+        <div class="ch-icon">💸</div>
+        <h3>没有网红预算</h3>
+        <p>头部创作者的报价远超当时公司可承受的范围。每一个粉丝都必须靠内容有机积累。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">👤</div>
+        <h3>没有原有受众</h3>
+        <p>没有现成社群可以借力，第一天就是一个完全空白的新账号，没有任何内容历史。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">🎬</div>
+        <h3>没有现成打法</h3>
+        <p>针对这一特定市场与内容风格，没有可以直接套用的成熟方法论，每一个决定都需要测试与验证。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-icon">🎯</div>
+        <h3>从第一天起就有商业目标</h3>
+        <p>这不是兴趣项目——最终需要承载品牌合作与应用推广。信任感必须是真实的。</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">策略设计</div>
+    <h2 class="sec-h2 reveal">内容金字塔——不是理论，是每周日历。</h2>
+    <p class="sec-body reveal">40/40/20 的内容比例不是PPT里的概念，而是一份真实执行的每周内容排期表。每条内容在脚本阶段就已打好层级标签。底层逻辑是：<strong>80%的内容为受众创造价值</strong>——有用或有趣。只有20%在"要求"他们做什么。当信任足够深，那20%的转化效率远超任何硬推销。</p>
+    <div class="pyramid reveal">
+      <div class="tier edu">
+        <div class="tier-bar"></div>
+        <div class="tier-pct">40%</div>
+        <div class="tier-info">
+          <h3>教育类 — 建立信任</h3>
+          <p>社会评论、生活洞察、观点输出。让账号有深度而不只是娱乐价值的内容——"这个账号让我思考。"</p>
+        </div>
+      </div>
+      <div class="tier ent">
+        <div class="tier-bar"></div>
+        <div class="tier-pct">40%</div>
+        <div class="tier-info">
+          <h3>娱乐类 — 扩大覆盖</h3>
+          <p>街头实验、喜剧小品、情感故事。算法奖励层——这是被转发、带来新粉丝的内容。"这个账号让我有感觉。"</p>
+        </div>
+      </div>
+      <div class="tier sale">
+        <div class="tier-bar"></div>
+        <div class="tier-pct">20%</div>
+        <div class="tier-info">
+          <h3>销售类 — 转化信任</h3>
+          <p>品牌合作、应用推广、产品提及。刻意保持低比例——马来西亚TikTok用户对商业感太重的内容取关速度极快。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">执行过程</div>
+    <h2 class="sec-h2 reveal">流水线生产，而非灵感爆发。</h2>
+    <p class="sec-body reveal">一个人负责策略、脚本、导演、剪辑和数据分析，靠的不能是灵感。解决方案是批量工作流——所有内容提前规划、集中拍摄，让账号永远不断更，势头不中断。</p>
+    <div class="tl reveal" id="tl-main">
+      <div class="tl-line"></div>
+      <div class="tl-line-fill" id="tl-fill"></div>
+      <div class="tl-step">
+        <div class="tl-dot">📝</div>
+        <div class="tl-content">
+          <h3>脚本日 — 一次规划整周内容</h3>
+          <p>一次性写完5–7条脚本。先复盘上周数据：哪条完播率最高？哪条分享率最高？这些发现决定下一批内容的主题与钩子。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">🎬</div>
+        <div class="tl-content">
+          <h3>拍摄日 — 一天完成4到8条素材</h3>
+          <p>所有拍摄压缩在一个时间段完成。场景固定、镜头前角色简报到位、现场统一导演。一周的内容不需要每天分心拍摄。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">✂️</div>
+        <div class="tl-content">
+          <h3>剪辑 — 2至5天，批量模式</h3>
+          <p>CapCut批量初剪 → 挑选最佳镜头 → 精剪 → 音效、字幕、封面截取。提前排好队列而非即时发布——消除每日生产的心理压力。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📅</div>
+        <div class="tl-content">
+          <h3>排期与监控 — 发布后前30分钟最关键</h3>
+          <p>在互动峰值时间段发布内容。发布后前30分钟主动在评论区互动——算法对早期互动信号的权重极高。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📊</div>
+        <div class="tl-content">
+          <h3>数据复盘 — 每两周一次</h3>
+          <p>不看点赞。看<strong>完播率和分享率</strong>——TikTok算法真正重视的两个指标。连续3条表现不佳的内容立刻停止同类型输出。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">爆款内容</div>
+    <h2 class="sec-h2 reveal">撑起这个账号的视频。</h2>
+    <p class="sec-body reveal">每条视频都被拆解分析——不只是庆祝，而是找出<em>为什么奏效</em>。可复制的成功规律：触发观众情感判断的内容，而非单纯被动观看。</p>
+    <div class="videos stagger">
+      <div class="vc">
+        <div class="vc-rank">01</div>
+        <div class="vc-info">
+          <div class="vc-title">Tangan Kakak Gigil Hati Terbaru</div>
+          <div class="vc-meta">善意测试系列 · 情感触发 · 高分享率</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">361万</div><div class="vc-views-label">播放量</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">02</div>
+        <div class="vc-info">
+          <div class="vc-title">商场蛋糕女孩 — 善良测试</div>
+          <div class="vc-meta">街头社会实验 · 单日新增粉丝8–10万</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">300万+</div><div class="vc-views-label">播放量</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">03</div>
+        <div class="vc-info">
+          <div class="vc-title">Berdoa, Mendapat Ganjaran Kebaikan</div>
+          <div class="vc-meta">社会议题 · 信仰与善报叙事</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">126万</div><div class="vc-views-label">播放量</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">04</div>
+        <div class="vc-info">
+          <div class="vc-title">Phone Tercicir Abang Rider Bantu</div>
+          <div class="vc-meta">街头故事 · 社区温情</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">40.7万</div><div class="vc-views-label">播放量</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">05</div>
+        <div class="vc-info">
+          <div class="vc-title">Ikhlas tanpa Alasan</div>
+          <div class="vc-meta">日常共鸣 · 价值观驱动内容</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">7.1万</div><div class="vc-views-label">播放量</div></div>
+      </div>
+    </div>
+    <div class="vid-archive reveal">
+      <img src="rezeki gang/bodycontent.png" alt="Rezeki Gang — 社会影响力视频档案">
+      <div class="vid-archive-label">社会影响力内容档案 — 11 条视频 · 播放量 13.4万 至 350万</div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">街头现场</div>
+    <h2 class="sec-h2 reveal">让人动容的视频。</h2>
+    <p class="sec-body reveal">每一集都是真实相遇——商场里、街头、菜市场的陌生人。镜头记录的，是真实发生的一切。被拍的人没有剧本，反应没有排练。</p>
+    <div class="phone-gallery stagger">
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/1.png" alt="第一集 — Tangan Kakak Gigil">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/2.png" alt="第二集 — 我要买奶给孩子">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/3.png" alt="第三集 — 祈祷，得善报">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/4.png" alt="第四集 — 姐姐，你有一颗好心">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/5.png" alt="第五集 — 我没有零钱，我饿了两天">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/6.png" alt="第六集 — 每个月你都做得到的">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/7.png" alt="第七集 — 你从哪里来？">
+      </a>
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener" style="display:block;">
+        <img src="rezeki gang/CASE/8.png" alt="第八集 — 给生病流浪者的钱">
+      </a>
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <a href="https://www.tiktok.com/@heewon_rezeki.gang" target="_blank" rel="noopener"
+         style="display:inline-flex; align-items:center; gap:10px; background:#1a1a1a; color:white; padding:14px 28px; border-radius:100px; font-size:15px; font-weight:600; text-decoration:none; letter-spacing:-0.01em; box-shadow:0 4px 20px rgba(0,0,0,0.18);"
+         onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(0,0,0,0.25)'"
+         onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(0,0,0,0.18)'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.19 8.19 0 0 0 4.79 1.53V6.75a4.85 4.85 0 0 1-1.02-.06z"/></svg>
+        在 TikTok 观看 — @heewon_rezeki.gang
+      </a>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">最终成果</div>
+    <h2 class="sec-h2 reveal">12个月，一套系统，没有捷径。</h2>
+    <p class="sec-body reveal">增长不是线性的——它以波浪形式涌来，由爆款内容驱动。系统确保了这些浪头持续出现。</p>
+    <div class="stats-g stagger">
+      <div class="sb">
+        <div class="sb-num"><span class="count" data-target="367">0</span><span class="acc">K</span></div>
+        <div class="sb-label">粉丝积累</div>
+        <div class="sb-desc">从零开始，完全有机增长，全程无付费推广。</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num"><span class="count" data-target="596">0</span><span class="acc">K</span></div>
+        <div class="sb-label">总点赞数</div>
+        <div class="sb-desc">账号全部内容的累计互动数据。</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">3<span class="acc">M+</span></div>
+        <div class="sb-label">单视频峰值</div>
+        <div class="sb-desc">Tangan Kakak Gigil 达到361万，商场蛋糕实验达到300万+。</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">1<span class="acc">×</span></div>
+        <div class="sb-label">单人运营</div>
+        <div class="sb-desc">策略、脚本、导演、剪辑、数据分析——一人全流程。</div>
+      </div>
+    </div>
+    <div class="breakout reveal">
+      <h3>一切改变的那一天。</h3>
+      <p>商场蛋糕视频——测试一位街边小贩是否愿意无私给予——触发了算法最喜欢的东西：<strong>情感判断</strong>。观众不只是在看，他们在问自己"换成我会怎么做？"评论涌入，分享率飙升。24小时内，<strong>8万至10万新粉丝</strong>涌入。这不是一次campaign的效果，这是内容触达某种普遍真相时自然发生的事。</p>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">核心收获</div>
+    <h2 class="sec-h2 reveal">真正值得的东西。</h2>
+    <p class="sec-body reveal">不是为了演讲稿，而是写给任何市场里从零开始的人。</p>
+    <div class="learn-list stagger">
+      <div class="li">
+        <div class="li-num">01</div>
+        <div>
+          <h3>分享率和完播率 > 点赞数。</h3>
+          <p>TikTok 算法对这两个信号的权重远高于点赞数。做内容要让人看完、愿意转发——而非单纯被点赞。一条50K播放、60%完播率的视频，胜过一条500K播放、10%完播率的。</p>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">02</div>
+        <div>
+          <h3>爆款奖励的是持续性，而非替代它。</h3>
+          <p>那条300万的视频不是凭空出现的。它出现在连续3个多月稳定发布之后。算法已经积累了对这个账号的数据。当对的内容出现时，基础设施已经在位，可以将其放大。</p>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">03</div>
+        <div>
+          <h3>情感判断是最容易被分享的内容类型。</h3>
+          <p>观众分享的内容，是那种让他们思考"换成我怎么做？"的——而非单纯娱乐类内容。善良测试系列奏效，是因为它触发了观者的内在反应，而非仅仅引发一个反应。为此而创作。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="cta-sec reveal">
+    <h2>想看更多？</h2>
+    <p>更多案例，更多真实数字背后的故事。</p>
+    <div class="btns">
+      <a href="portfolio.html" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        返回作品集
+      </a>
+      <a href="mailto:cht8987@gmail.com" class="btn-o">
+        联系我
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+<footer><p>Elson 子洺 — 品牌 &amp; 内容整合</p></footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.count[data-target]').forEach(el => animateCount(el));
+      e.target.querySelectorAll('.tier-bar').forEach(el => el.classList.add('filled'));
+      if(e.target.id === 'tl-main'){
+        setTimeout(()=>{
+          const fill = document.getElementById('tl-fill');
+          const tl = e.target;
+          fill.style.height = (tl.offsetHeight - 32) + 'px';
+        }, 100);
+      }
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.12});
+
+document.querySelectorAll('.reveal,.stagger').forEach(el => io.observe(el));
+document.querySelectorAll('.pyramid').forEach(el => io.observe(el));
+document.getElementById('tl-main') && io.observe(document.getElementById('tl-main'));
+
+function animateCount(el){
+  if(el.dataset.done) return;
+  el.dataset.done = '1';
+  const target = parseFloat(el.dataset.target);
+  const duration = 1600;
+  const start = performance.now();
+  function step(now){
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(ease * target * 10) / 10;
+    el.textContent = val % 1 === 0 ? val : val.toFixed(1);
+    if(p < 1) requestAnimationFrame(step);
+    else el.textContent = target % 1 === 0 ? target : target.toFixed(1);
+  }
+  requestAnimationFrame(step);
+}
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero-stats .count').forEach(el => animateCount(el));
+  document.querySelectorAll('.hero-stats').forEach(el => el.classList.add('visible'));
+  document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
+});
+</script>
+</body>
+</html>

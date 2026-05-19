@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Mask · Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F59E0B;
+    --gold-light: #FCD34D;
+    --gold-dark: #B45309;
+    --gold-dim: rgba(245,158,11,0.12);
+    --gold-border: rgba(245,158,11,0.25);
+    --bg: #0a0800;
+    --bg2: #110e00;
+    --bg3: #1a1500;
+    --surface: rgba(255,255,255,0.04);
+    --surface2: rgba(255,255,255,0.07);
+    --text: #f5f0e8;
+    --text-muted: rgba(245,240,232,0.5);
+    --text-dim: rgba(245,240,232,0.3);
+    --red: #EF4444;
+    --red-dim: rgba(239,68,68,0.12);
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.12);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,8,0,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,158,11,0.1);
+  }
+  nav .back { color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+  nav .back:hover { opacity: 0.7; }
+  nav .tag { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .lang { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border: 1px solid rgba(245,158,11,0.2); border-radius: 100px; transition: all 0.2s; }
+  nav .lang:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 8rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a1200 0%, #0a0800 70%);
+  }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+    animation: blobFloat 8s ease-in-out infinite;
+  }
+  .blob1 { width: 500px; height: 500px; background: radial-gradient(circle, #F59E0B, transparent); top: -10%; left: -15%; animation-delay: 0s; }
+  .blob2 { width: 400px; height: 400px; background: radial-gradient(circle, #D97706, transparent); bottom: 0; right: -10%; animation-delay: -3s; }
+  .blob3 { width: 300px; height: 300px; background: radial-gradient(circle, #FCD34D, transparent); top: 30%; right: 20%; animation-delay: -6s; }
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -30px) scale(1.05); }
+    66% { transform: translate(-15px, 15px) scale(0.97); }
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2rem; position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease 0.15s both;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero .subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); max-width: 600px; margin: 1.5rem auto 3rem;
+    position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.45s both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .hero-stat .num .unit { font-size: 1.4rem; }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .scroll-hint .arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: arrowPulse 2s ease-in-out infinite; }
+  @keyframes arrowPulse { 0%, 100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 0.8; transform: scaleY(1.1); } }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── LAYOUT ── */
+  .section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; padding: 0.3rem 0.8rem;
+    background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 4px;
+  }
+  h2 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.75rem; }
+  p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--gold-border), transparent); margin: 5rem 0; }
+
+  /* ── CONTEXT STRIP ── */
+  .context-strip {
+    background: var(--surface); border: 1px solid var(--gold-border); border-radius: 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0;
+    overflow: hidden; margin-bottom: 3rem;
+  }
+  .context-item {
+    padding: 1.2rem 1.5rem; border-right: 1px solid rgba(245,158,11,0.1);
+  }
+  .context-item:last-child { border-right: none; }
+  .context-item .ci-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .context-item .ci-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;
+    padding: 1.8rem; transition: border-color 0.3s;
+  }
+  .card:hover { border-color: var(--gold-border); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+
+  /* ── 3-WEEK TIMELINE ── */
+  .build-timeline { position: relative; padding-left: 2.5rem; }
+  .build-timeline::before {
+    content: ''; position: absolute; left: 0.7rem; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
+    transform-origin: top; transform: scaleY(0); transition: transform 1.2s ease;
+  }
+  .build-timeline.animated::before { transform: scaleY(1); }
+  .build-step { position: relative; margin-bottom: 2rem; }
+  .build-step::before {
+    content: ''; position: absolute; left: -2.1rem; top: 0.3rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 4px var(--gold-dim);
+  }
+  .build-step .week { font-size: 0.7rem; color: var(--gold); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .build-step h4 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+  .build-step p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+
+  /* ── AGENT SYSTEM ── */
+  .pyramid { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 2rem 0; }
+  .pyramid-tier {
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; position: relative; overflow: hidden;
+    font-size: 0.85rem; font-weight: 600; color: var(--bg);
+    height: 52px; width: 0%; transition: width 1s ease;
+  }
+  .pyramid-tier.animated { width: 100%; }
+  .pyramid-tier:nth-child(1) { width: 40%; background: var(--gold-light); }
+  .pyramid-tier:nth-child(2) { width: 60%; background: var(--gold); }
+  .pyramid-tier:nth-child(3) { width: 80%; background: #D97706; }
+  .pyramid-tier:nth-child(4) { width: 100%; background: var(--gold-dark); color: var(--text); }
+  .pyramid-tier.animated:nth-child(1) { width: 40%; }
+  .pyramid-tier.animated:nth-child(2) { width: 60%; }
+  .pyramid-tier.animated:nth-child(3) { width: 80%; }
+  .pyramid-tier.animated:nth-child(4) { width: 100%; }
+  .pyramid-tier span { position: relative; z-index: 1; text-align: center; padding: 0 1rem; }
+
+  /* ── BETRAYAL SECTION ── */
+  .betrayal-card {
+    background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px;
+    padding: 2.5rem; margin: 2rem 0;
+  }
+  .betrayal-card h3 { color: var(--red); margin-bottom: 1rem; font-size: 1.4rem; }
+  .betrayal-steps { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+  .betrayal-step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem 1.2rem; background: rgba(239,68,68,0.05); border-radius: 8px;
+    border-left: 3px solid rgba(239,68,68,0.4);
+  }
+  .betrayal-step .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .betrayal-step .text { font-size: 0.9rem; color: var(--text-muted); }
+  .betrayal-step .text strong { color: var(--text); }
+
+  /* ── RESULTS GRID ── */
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+  .result-card {
+    background: var(--surface2); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px;
+    padding: 1.4rem; text-align: center;
+  }
+  .result-card .r-num { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.3rem; }
+  .result-card .r-label { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ── LESSONS ── */
+  .lesson-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .lesson-col { background: var(--surface); border-radius: 10px; padding: 1.5rem; }
+  .lesson-col.good { border-top: 2px solid var(--green); }
+  .lesson-col.bad { border-top: 2px solid var(--red); }
+  .lesson-col h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lesson-col.good h4 { color: var(--green); }
+  .lesson-col.bad h4 { color: var(--red); }
+  .lesson-item { display: flex; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-muted); align-items: flex-start; }
+  .lesson-item .dot { flex-shrink: 0; margin-top: 0.35rem; width: 6px; height: 6px; border-radius: 50%; }
+  .lesson-col.good .dot { background: var(--green); }
+  .lesson-col.bad .dot { background: var(--red); }
+
+  /* ── TAKEAWAY ── */
+  .takeaway {
+    background: var(--gold-dim); border: 1px solid var(--gold-border); border-left: 4px solid var(--gold);
+    border-radius: 8px; padding: 1.5rem 2rem; margin-top: 2rem;
+  }
+  .takeaway p { color: var(--text); font-size: 1rem; line-height: 1.7; margin: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(245,158,11,0.1);
+    color: var(--text-dim); font-size: 0.8rem;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { opacity: 0.7; }
+
+  /* ── ANIMATION CLASSES ── */
+  .reveal, .reveal-r, .stagger, .fade {
+    opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal { transform: translateY(30px); }
+  .reveal-r { transform: translateX(30px); }
+  .stagger { transform: translateY(20px); }
+  .fade { transform: none; }
+  .reveal.visible, .reveal-r.visible, .stagger.visible, .fade.visible {
+    opacity: 1; transform: none;
+  }
+  .stagger:nth-child(1) { transition-delay: 0.05s; }
+  .stagger:nth-child(2) { transition-delay: 0.15s; }
+  .stagger:nth-child(3) { transition-delay: 0.25s; }
+  .stagger:nth-child(4) { transition-delay: 0.35s; }
+
+  @media (max-width: 600px) {
+    .lesson-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .context-strip { grid-template-columns: 1fr 1fr; }
+  }
+  /* ── PHOTO INTEGRATION ── */
+  .gm-logo-pill { display: flex; justify-content: center; margin-bottom: 2rem; position: relative; z-index: 1; }
+  .gm-logo-pill img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold-border); box-shadow: 0 0 40px rgba(245,158,11,0.25); }
+  .gm-catalog { margin-top: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--gold-border); }
+  .gm-catalog img { width: 100%; display: block; }
+  .gm-color-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 1.5rem; }
+  .gm-color-grid img { width: 100%; border-radius: 10px; display: block; transition: transform .3s ease, box-shadow .3s; }
+  .gm-color-grid img:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(245,158,11,0.15); }
+  .gm-model-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 1.5rem; }
+  .gm-model-grid img { width: 100%; border-radius: 12px; display: block; aspect-ratio: 1/1; object-fit: cover; }
+  .gm-banner { margin-top: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--gold-border); }
+  .gm-banner img { width: 100%; display: block; }
+  .gm-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1.5rem; }
+  .gm-duo img { width: 100%; border-radius: 12px; display: block; }
+  .gm-fb-strip { display: flex; justify-content: center; margin-top: 1.5rem; }
+  .gm-fb-strip img { width: 260px; border-radius: 20px; box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
+  @media (max-width: 600px) { .gm-color-grid { grid-template-columns: repeat(2,1fr); } .gm-model-grid { grid-template-columns: repeat(2,1fr); } .gm-duo { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="portfolio.html" class="back">← Back to Portfolio</a>
+  <div class="nav-right">
+    <a href="case-study-golden-mask-zh.html" class="lang">中文</a>
+    <span class="tag">Case Study · 2021</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="gm-logo-pill">
+    <img src="golden mask/logo-profile-NEW.jpg" alt="Golden New Generation — brand emblem" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-badge">⚡ Brand · E-commerce · Sales</div>
+  <h1>Golden<br><span class="accent">Mask</span></h1>
+  <p class="subtitle">Built a COVID mask brand from scratch in 3 weeks — RM200K peak monthly revenue, 50–100 agents, then a partner betrayal that took 4 years to unravel.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num"><span class="counter" data-target="200" data-prefix="RM" data-suffix="K">RM200K</span></div>
+      <div class="label">Peak Monthly Revenue</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num"><span class="counter" data-target="100" data-prefix="" data-suffix="+">100+</span></div>
+      <div class="label">Agents Recruited</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num"><span class="counter" data-target="3" data-prefix="" data-suffix=" Wks">3 Wks</span></div>
+      <div class="label">To Full System Launch</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="arrow"></div>
+    Scroll to read
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="section">
+  <div class="context-strip reveal">
+    <div class="context-item"><div class="ci-label">Year</div><div class="ci-val">2021</div></div>
+    <div class="context-item"><div class="ci-label">Duration</div><div class="ci-val">8–10 months</div></div>
+    <div class="context-item"><div class="ci-label">Company</div><div class="ci-val">Golden Quality Trading</div></div>
+    <div class="context-item"><div class="ci-label">Role</div><div class="ci-val">Brand + Tech + Sales</div></div>
+    <div class="context-item"><div class="ci-label">Team</div><div class="ci-val">3 partners</div></div>
+  </div>
+
+  <div class="section-label reveal">The Setup</div>
+  <h2 class="reveal">A market window. A bold bet. A race against time.</h2>
+  <p class="reveal">During COVID-19, I was working with my father's factory on mask wholesale — selling other brands. I learned the supply chain, the buyers, the pricing, the margins. By 2021, I understood this market better than most people. When a business contact invited me to co-found a premium mask brand, I said yes immediately.</p>
+  <p class="reveal">We established <strong>Golden Quality Trading</strong> and prepared to launch <strong>GOLDEN MASK</strong> — a high-end but affordable medical mask brand. The positioning: gold-quality reliability, accessible pricing. Three-layer and four-layer masks at RM20–30 per box.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SPEED BUILD -->
+<section class="section">
+  <div class="section-label reveal">The Build</div>
+  <h2 class="reveal">3 weeks. Complete brand + e-commerce + agent system. Solo.</h2>
+  <p class="reveal">There was no time to be slow. The market window was open and competition was already flooding in. I had to build everything — alone — as fast as humanly possible.</p>
+
+  <div class="build-timeline reveal" id="timeline1">
+    <div class="build-step stagger">
+      <div class="week">Week 1</div>
+      <h4>Brand Identity & Visual System</h4>
+      <p>Designed the GOLDEN MASK logo, packaging, and complete visual identity. Gold colour palette + premium aesthetic that stood out in a sea of generic medical masks.</p>
+    </div>
+    <div class="build-step stagger">
+      <div class="week">Week 2</div>
+      <h4>WordPress E-commerce + Agent Portal</h4>
+      <p>Built the entire site from scratch — product pages, checkout flow, and a custom multi-tier agent system. Agents could sign up, track their tier, place orders, and view profit margins automatically.</p>
+    </div>
+    <div class="build-step stagger">
+      <div class="week">Week 3</div>
+      <h4>Sales Channel Launch</h4>
+      <p>Opened agent recruitment, set pricing tiers, began outreach. Used my existing contacts from the wholesale days. Word-of-mouth spread fast — people could see the brand looked premium and the numbers made sense.</p>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:2rem;">
+    <div class="card stagger">
+      <h3>🏆 Why WordPress Was Smart</h3>
+      <p>Not custom dev — fast, flexible, low cost. The agent tier system was built using existing plugins, customised to auto-calculate profit splits. The whole stack was up before competitors could even brief an agency.</p>
+    </div>
+    <div class="card stagger">
+      <h3>💡 The Pricing Strategy</h3>
+      <p>RM20–30/box hit the sweet spot — high enough to signal quality, low enough to be accessible. Agents could earn meaningful margins at scale, which made recruitment organic.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label reveal">Brand Photography</div>
+  <h2 class="reveal">Premium masks deserve premium visuals.</h2>
+  <p class="reveal">Every SKU was shot and designed to match the gold-standard brand promise. Clean product photography + colour variant sheets that made agents proud to share, and customers confident to buy.</p>
+  <div class="gm-catalog reveal">
+    <img src="golden mask/Shooting&design/1.png" alt="Golden Mask — full KF94 & KF99 product range overview" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-color-grid stagger">
+    <img src="golden mask/Shooting&design/6.png" alt="KF99 Morandi Hunter Green" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/8.png" alt="KF99 Morandi Pure White" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/9.png" alt="KF99 Moonlight Yellow" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/10.png" alt="KF99 Twilight Green" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/11.png" alt="KF99 Cool Grey" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/12.png" alt="KF99 Dream Blue" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/13.png" alt="KF99 Caramel Orange" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/19.png" alt="Premium surgical mask — blue" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-duo stagger">
+    <img src="golden mask/Shooting&design/20.png" alt="Premium surgical mask — pink" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/21.png" alt="Premium surgical mask — gold" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AGENT SYSTEM -->
+<section class="section">
+  <div class="section-label reveal">The Agent System</div>
+  <h2 class="reveal">50–100 agents. No sales team. Just a well-designed system.</h2>
+  <p class="reveal">The agent pyramid wasn't just a structure — it was an incentive machine. Each tier unlocked better pricing and higher margins. Agents were motivated to recruit sub-agents. The system grew itself.</p>
+
+  <div class="pyramid fade" id="pyramid1" style="max-width:500px; margin: 2rem auto;">
+    <div class="pyramid-tier" style="width:40%; background:#FCD34D; color:#1a1500;">
+      <span>Top Agents (Elite Tier)</span>
+    </div>
+    <div class="pyramid-tier" style="width:60%; background:#F59E0B; color:#1a1500;">
+      <span>Mid-Tier Agents</span>
+    </div>
+    <div class="pyramid-tier" style="width:80%; background:#D97706; color:#f5f0e8;">
+      <span>Base Agents</span>
+    </div>
+    <div class="pyramid-tier" style="width:100%; background:#B45309; color:#f5f0e8;">
+      <span>Direct Consumers</span>
+    </div>
+  </div>
+
+  <div class="results-grid reveal">
+    <div class="result-card">
+      <div class="r-num"><span class="counter2" data-target="60" data-prefix="RM" data-suffix="K+">RM60K+</span></div>
+      <div class="r-label">Month 1 Revenue</div>
+    </div>
+    <div class="result-card">
+      <div class="r-num"><span class="counter2" data-target="200" data-prefix="RM" data-suffix="K">RM200K</span></div>
+      <div class="r-label">Peak Monthly Revenue</div>
+    </div>
+    <div class="result-card">
+      <div class="r-num"><span class="counter2" data-target="100" data-prefix="" data-suffix="">~100</span></div>
+      <div class="r-label">Active Agents</div>
+    </div>
+    <div class="result-card">
+      <div class="r-num"><span class="counter2" data-target="8" data-prefix="" data-suffix=" Mo">8 Mo</span></div>
+      <div class="r-label">Until Collapse</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label reveal">Campaign Shooting</div>
+  <h2 class="reveal">Models, locations, and a brand that looked the part.</h2>
+  <p class="reveal">To compete in a saturated mask market, we invested in professional model shoots — giving the brand a lifestyle identity that went well beyond competitors still using product-only stock photos.</p>
+  <div class="gm-model-grid stagger">
+    <img src="golden mask/Shooting&design/3.png" alt="Model wearing Golden Mask Slim Face at luxury mall" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/4.png" alt="Close-up model shot — Slim Face mask" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/5.png" alt="Two models wearing Golden Mask in luxury setting" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/7.png" alt="Male model holding KF99 gold box" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/14.png" alt="Female model wearing Twilight Green mask, holding gold box" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/16.png" alt="Campaign trio — formal studio shoot" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-banner reveal">
+    <img src="golden mask/Shooting&design/17.png" alt="New Arrival KF94 campaign banner — 3 models" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-banner reveal" style="margin-top:12px">
+    <img src="golden mask/Shooting&design/18.png" alt="Morandi Series New Arrival — couple campaign" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-fb-strip reveal">
+    <img src="golden mask/Shooting&design/25.png" alt="Golden Malaysia Facebook page — 1,836 followers" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BETRAYAL -->
+<section class="section">
+  <div class="section-label reveal" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:var(--red);">The Turning Point</div>
+  <h2 class="reveal">I built the brand. He stole it.</h2>
+
+  <div class="betrayal-card reveal">
+    <h3>⚠ What I Discovered</h3>
+    <p style="color: var(--text-muted);">Around month 8–10, I started noticing things didn't add up. Then the full picture emerged.</p>
+    <div class="betrayal-steps">
+      <div class="betrayal-step stagger">
+        <div class="icon">🕵️</div>
+        <div class="text"><strong>Secret operations:</strong> The majority shareholder was manufacturing and selling masks under the GOLDEN MASK brand name — without telling the other partners, without sharing profits.</div>
+      </div>
+      <div class="betrayal-step stagger">
+        <div class="icon">📊</div>
+        <div class="text"><strong>Accounting black hole:</strong> Company accounts showed clear discrepancies. We hired an accountant to audit. The numbers didn't reconcile. Hundreds of thousands in transactions couldn't be explained.</div>
+      </div>
+      <div class="betrayal-step stagger">
+        <div class="icon">⚖️</div>
+        <div class="text"><strong>4-year lawsuit:</strong> We engaged lawyers and sued. The case dragged from 2021 to 2025. In 2025, I made the decision to drop the case — the legal costs and time no longer justified the outcome.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="reveal">He used the brand I designed, the system I built, the reputation I cultivated — to run a parallel business that never showed up in our shared accounts. The brand was real. The partnership wasn't.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- LESSONS -->
+<section class="section">
+  <div class="section-label reveal">What I Learned</div>
+  <h2 class="reveal">The brand was built right. The partnership was built wrong.</h2>
+  <p class="reveal">In 3 weeks I had a fully operational brand, e-commerce, and agent system. In 3 months I had RM200K monthly revenue. But the company dissolved because of something no amount of execution skill can protect you from — a partner who operates in bad faith without proper legal frameworks to stop them.</p>
+
+  <div class="lesson-row">
+    <div class="lesson-col good reveal">
+      <h4>✓ What Worked</h4>
+      <div class="lesson-item"><div class="dot"></div> Identified and captured a real market window at the right moment</div>
+      <div class="lesson-item"><div class="dot"></div> Clear brand positioning: premium feel, accessible price</div>
+      <div class="lesson-item"><div class="dot"></div> WordPress agent system — fast, scalable, low-cost</div>
+      <div class="lesson-item"><div class="dot"></div> Month 1 revenue RM60–100K exceeded all expectations</div>
+      <div class="lesson-item"><div class="dot"></div> Agent incentive design drove organic network growth</div>
+    </div>
+    <div class="lesson-col bad reveal">
+      <h4>✗ What Failed</h4>
+      <div class="lesson-item"><div class="dot"></div> No binding partner agreement — only verbal commitments</div>
+      <div class="lesson-item"><div class="dot"></div> No monthly financial transparency mechanism</div>
+      <div class="lesson-item"><div class="dot"></div> All critical systems ran through one person (me)</div>
+      <div class="lesson-item"><div class="dot"></div> Missed early signals of partner misconduct</div>
+      <div class="lesson-item"><div class="dot"></div> Chose litigation — which is almost always a loss even when you win</div>
+    </div>
+  </div>
+
+  <div class="takeaway reveal">
+    <p>"Even if you're the smartest person in the room, 33% ownership with no legal safeguards means someone else controls your work. The brand lives or dies not by your skill — but by whether you can trust the people who hold the keys."</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:0.5rem;">← <a href="portfolio.html">Back to all cases</a></p>
+  <p>Elson 子洺 · Brand & Content Strategist · Malaysia</p>
+</footer>
+
+<script>
+  // IntersectionObserver for .reveal / .reveal-r / .stagger / .fade
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .reveal-r, .stagger, .fade').forEach(el => obs.observe(el));
+
+  // Timeline animation
+  const timelineObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('animated');
+        timelineObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.build-timeline').forEach(el => timelineObs.observe(el));
+
+  // Counter animation helper
+  function animateCounter(el) {
+    if (el.dataset.done) return;
+    el.dataset.done = '1';
+    const target = parseInt(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const val = Math.round(ease * target);
+      el.textContent = prefix + val + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.counter, .counter2').forEach(animateCounter);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.hero-stats, .results-grid').forEach(el => counterObs.observe(el));
+</script>
+</body>
+</html>

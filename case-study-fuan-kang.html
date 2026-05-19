@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福安康食品 · Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #DC2626;
+    --red-light: #F87171;
+    --red-dark: #991B1B;
+    --red-dim: rgba(220,38,38,0.1);
+    --red-border: rgba(220,38,38,0.22);
+    --gold: #F59E0B;
+    --gold-dim: rgba(245,158,11,0.1);
+    --bg: #0a0000;
+    --bg2: #110000;
+    --bg3: #1a0000;
+    --surface: rgba(255,255,255,0.04);
+    --surface2: rgba(255,255,255,0.07);
+    --text: #f5efef;
+    --text-muted: rgba(245,239,239,0.5);
+    --text-dim: rgba(245,239,239,0.3);
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.1);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,0,0,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(220,38,38,0.1);
+  }
+  nav .back { color: var(--red-light); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+  nav .back:hover { opacity: 0.7; }
+  nav .tag { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .lang { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border: 1px solid rgba(220,38,38,0.2); border-radius: 100px; transition: all 0.2s; }
+  nav .lang:hover { border-color: var(--red-light); color: var(--red-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 8rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a0000 0%, #0a0000 70%);
+  }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.3; animation: blobFloat 9s ease-in-out infinite; }
+  .blob1 { width: 500px; height: 500px; background: radial-gradient(circle, #DC2626, transparent); top: -20%; left: -10%; animation-delay: 0s; }
+  .blob2 { width: 350px; height: 350px; background: radial-gradient(circle, #F59E0B, transparent); bottom: 10%; right: -5%; animation-delay: -4s; }
+  .blob3 { width: 250px; height: 250px; background: radial-gradient(circle, #991B1B, transparent); top: 40%; right: 25%; animation-delay: -7s; }
+  @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(25px,-25px) scale(1.04)} 66%{transform:translate(-15px,20px) scale(0.97)} }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; border-radius: 100px;
+    background: var(--red-dim); border: 1px solid var(--red-border);
+    font-size: 0.75rem; color: var(--red-light); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2rem; position: relative; z-index: 1; animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.15s both;
+  }
+  .hero h1 .accent { color: var(--red-light); }
+  .hero .zh { font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--text-muted); font-family: 'Fraunces', serif; font-style: italic; margin-top: 0.3rem; animation: fadeUp 0.8s ease 0.25s both; position: relative; z-index: 1; }
+  .hero .subtitle {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--text-muted); max-width: 580px; margin: 1.5rem auto 3rem;
+    position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.35s both;
+  }
+  .hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.5s both; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--red-light); line-height: 1; }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .scroll-hint .arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--red-light), transparent); animation: arrowPulse 2s ease-in-out infinite; }
+  @keyframes arrowPulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* LAYOUT */
+  .section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--red-light); margin-bottom: 1rem; padding: 0.3rem 0.8rem;
+    background: var(--red-dim); border: 1px solid var(--red-border); border-radius: 4px;
+  }
+  h2 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.6rem; }
+  p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--red-border), transparent); margin: 5rem 0; }
+
+  /* CONTEXT STRIP */
+  .context-strip {
+    background: var(--surface); border: 1px solid var(--red-border); border-radius: 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; overflow: hidden; margin-bottom: 3rem;
+  }
+  .context-item { padding: 1.2rem 1.5rem; border-right: 1px solid rgba(220,38,38,0.1); }
+  .context-item:last-child { border-right: none; }
+  .context-item .ci-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .context-item .ci-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* CARDS */
+  .card { background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.8rem; transition: border-color 0.3s; }
+  .card:hover { border-color: var(--red-border); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+
+  /* PRODUCT LINE BARS */
+  .product-lines { display: flex; flex-direction: column; gap: 0.8rem; margin: 2rem 0; }
+  .pl-row { display: flex; align-items: center; gap: 1rem; }
+  .pl-name { width: 140px; font-size: 0.85rem; color: var(--text); font-weight: 500; flex-shrink: 0; }
+  .pl-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+  .pl-bar { height: 100%; border-radius: 4px; background: var(--red); width: 0%; transition: width 1s ease; }
+  .pl-bar.animated { width: var(--w); }
+  .pl-tag { font-size: 0.7rem; color: var(--text-muted); width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* OPS GRID */
+  .ops-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+  .ops-card {
+    background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 1.4rem;
+    border-top: 2px solid var(--red); transition: transform 0.2s;
+  }
+  .ops-card:hover { transform: translateY(-2px); }
+  .ops-card .ops-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .ops-card h4 { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+  .ops-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+
+  /* WHY FLAT */
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 1.5rem; }
+  .why-card {
+    padding: 1.2rem; background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.15);
+    border-radius: 8px; font-size: 0.85rem; color: var(--text-muted);
+  }
+  .why-card .why-num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--red-light); font-weight: 700; margin-bottom: 0.3rem; }
+
+  /* LESSONS */
+  .lesson-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .lesson-col { background: var(--surface); border-radius: 10px; padding: 1.5rem; }
+  .lesson-col.good { border-top: 2px solid var(--green); }
+  .lesson-col.bad { border-top: 2px solid var(--red); }
+  .lesson-col h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lesson-col.good h4 { color: var(--green); }
+  .lesson-col.bad h4 { color: var(--red-light); }
+  .lesson-item { display: flex; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-muted); align-items: flex-start; }
+  .lesson-item .dot { flex-shrink: 0; margin-top: 0.35rem; width: 6px; height: 6px; border-radius: 50%; }
+  .lesson-col.good .dot { background: var(--green); }
+  .lesson-col.bad .dot { background: var(--red-light); }
+
+  /* SEASON BAR */
+  .season-chart { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; margin: 2rem 0; }
+  .s-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .s-bar-track { width: 100%; height: 80px; display: flex; align-items: flex-end; }
+  .s-bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 1s ease; height: 0; }
+  .s-bar.animated { height: var(--h); }
+  .s-label { font-size: 0.55rem; color: var(--text-dim); text-align: center; }
+  .s-bar.peak { background: var(--red); }
+  .s-bar.mid { background: rgba(220,38,38,0.4); }
+  .s-bar.low { background: rgba(220,38,38,0.15); }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: var(--red-dim); border: 1px solid var(--red-border); border-left: 4px solid var(--red);
+    border-radius: 8px; padding: 1.5rem 2rem; margin-top: 2rem;
+  }
+  .takeaway p { color: var(--text); font-size: 1rem; line-height: 1.7; margin: 0; }
+
+  footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(220,38,38,0.1); color: var(--text-dim); font-size: 0.8rem; }
+  footer a { color: var(--red-light); text-decoration: none; }
+  footer a:hover { opacity: 0.7; }
+
+  .reveal, .reveal-r, .stagger, .fade { opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal { transform: translateY(30px); }
+  .reveal-r { transform: translateX(30px); }
+  .stagger { transform: translateY(20px); }
+  .fade { transform: none; }
+  .reveal.visible, .reveal-r.visible, .stagger.visible, .fade.visible { opacity: 1; transform: none; }
+  .stagger:nth-child(1){transition-delay:0.05s} .stagger:nth-child(2){transition-delay:0.15s} .stagger:nth-child(3){transition-delay:0.25s} .stagger:nth-child(4){transition-delay:0.35s} .stagger:nth-child(5){transition-delay:0.45s}
+
+  @media(max-width:600px){.lesson-row{grid-template-columns:1fr}.ops-grid{grid-template-columns:1fr}.hero-stats{gap:1.5rem}.season-chart{grid-template-columns:repeat(6,1fr)}.s-label:nth-child(n+7){display:none}}
+
+  /* ── FUAN KANG PHOTO STYLES ── */
+  .fk-photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:2rem}
+  .fk-photo-grid img{width:100%;height:auto;border-radius:12px;display:block;border:1px solid var(--red-border);transition:transform .3s ease,box-shadow .3s}
+  .fk-photo-grid img:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(220,38,38,0.2)}
+  .fk-product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:1.5rem}
+  .fk-product-grid img{width:100%;border-radius:14px;display:block;border:1px solid var(--red-border);transition:transform .3s ease}
+  .fk-product-grid img:hover{transform:translateY(-3px)}
+  .fk-pack-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:1.5rem}
+  .fk-pack-row img{width:100%;border-radius:12px;display:block;border:1px solid var(--red-border)}
+  .fk-poster{margin-top:1.5rem;border-radius:14px;overflow:hidden;border:1px solid var(--red-border);max-width:420px;margin-left:auto;margin-right:auto}
+  .fk-poster img{width:100%;display:block}
+  @media(max-width:600px){.fk-photo-grid,.fk-pack-row{grid-template-columns:repeat(2,1fr)}.fk-product-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="portfolio.html" class="back">← Back to Portfolio</a>
+  <div class="nav-right">
+    <a href="case-study-fuan-kang-zh.html" class="lang">中文</a>
+    <span class="tag">Case Study · 2022–2023</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-badge">🧧 Brand · Food · Full-Ops CEO</div>
+  <h1><span class="accent">福安康</span><br>Food Brand</h1>
+  <div class="zh">Fuan Kang Foods — CNY Seasonal Brand</div>
+  <p class="subtitle">Ran a full-stack CNY food brand under a parent company — from supply chain to shelf. A real test of what it means to operate alone across every function.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">5+</div>
+      <div class="label">Product Lines</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">1 Yr</div>
+      <div class="label">Full Operations</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">CEO</div>
+      <div class="label">Solo Role</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="arrow"></div>
+    Scroll to read
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="section">
+  <div class="context-strip reveal">
+    <div class="context-item"><div class="ci-label">Year</div><div class="ci-val">2022–2023</div></div>
+    <div class="context-item"><div class="ci-label">Duration</div><div class="ci-val">~1 year</div></div>
+    <div class="context-item"><div class="ci-label">Parent Co.</div><div class="ci-val">Evoluc Marketing</div></div>
+    <div class="context-item"><div class="ci-label">Role</div><div class="ci-val">CEO (Full-ops)</div></div>
+    <div class="context-item"><div class="ci-label">Team</div><div class="ci-val">2–3 people</div></div>
+  </div>
+
+  <div class="section-label reveal">Background</div>
+  <h2 class="reveal">One brand. Five product lines. One person running all of it.</h2>
+  <p class="reveal">Under Evoluc Marketing, I took full ownership of 福安康食品 — a CNY food brand covering bak kwa, nuts & dried fruits, meat floss biscuits, and offering items. My mandate as CEO wasn't just strategy — it was literally everything: procurement, inventory, accounts, sales, and distribution coordination.</p>
+  <p class="reveal">No big team. No division of labour. This was a lean operation where I wore every hat every day for a year.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUCT LINES -->
+<section class="section">
+  <div class="section-label reveal">The Brand</div>
+  <h2 class="reveal">A one-stop CNY purchase — 5 lines, one brand</h2>
+  <p class="reveal">The positioning: quality-assured, price-accessible, all-in-one CNY shopping. Instead of competing with century-old brands on prestige, we offered variety and reliability under one roof.</p>
+
+  <div class="product-lines fade" id="pl-section">
+    <div class="pl-row">
+      <div class="pl-name">肉干 Bak Kwa</div>
+      <div class="pl-bar-track"><div class="pl-bar" style="--w: 90%"></div></div>
+      <div class="pl-tag">Core SKU</div>
+    </div>
+    <div class="pl-row">
+      <div class="pl-name">坚果 Nuts & Dried Fruit</div>
+      <div class="pl-bar-track"><div class="pl-bar" style="--w: 75%"></div></div>
+      <div class="pl-tag">Mid SKU</div>
+    </div>
+    <div class="pl-row">
+      <div class="pl-name">肉松饼 Meat Floss Biscuit</div>
+      <div class="pl-bar-track"><div class="pl-bar" style="--w: 60%"></div></div>
+      <div class="pl-tag">Growing</div>
+    </div>
+    <div class="pl-row">
+      <div class="pl-name">贡品 Offering Items</div>
+      <div class="pl-bar-track"><div class="pl-bar" style="--w: 50%"></div></div>
+      <div class="pl-tag">Niche</div>
+    </div>
+    <div class="pl-row">
+      <div class="pl-name">Annual Gift Sets</div>
+      <div class="pl-bar-track"><div class="pl-bar" style="--w: 45%"></div></div>
+      <div class="pl-tag">Seasonal</div>
+    </div>
+  </div>
+
+  <p class="reveal" style="margin-top:1.5rem;">The one-stop appeal was real. But 5 lines also meant <strong>no single product could be a breakout star</strong> — resources spread thin, no hero SKU to drive brand memory.</p>
+
+  <!-- Product Photography -->
+  <div class="section-label reveal" style="margin-top:3rem;">Product Photography</div>
+  <div class="fk-photo-grid reveal">
+    <img src="fuankang/1.png" alt="福安康 捞生 Yusheng" onerror="this.style.display='none'">
+    <img src="fuankang/2.png" alt="福安康 捞生 Yusheng" onerror="this.style.display='none'">
+    <img src="fuankang/3.png" alt="福安康 捞生 Yusheng" onerror="this.style.display='none'">
+    <img src="fuankang/4.png" alt="福安康 捞生 Yusheng" onerror="this.style.display='none'">
+  </div>
+  <div class="fk-product-grid reveal">
+    <img src="fuankang/5.png" alt="福安康 产品" onerror="this.style.display='none'">
+    <img src="fuankang/6.png" alt="福安康 产品" onerror="this.style.display='none'">
+    <img src="fuankang/7.png" alt="福安康 产品" onerror="this.style.display='none'">
+    <img src="fuankang/8.png" alt="福安康 产品" onerror="this.style.display='none'">
+    <img src="fuankang/10.png" alt="福安康 肉干 Bak Kwa" onerror="this.style.display='none'">
+    <img src="fuankang/17.png" alt="福安康 产品" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OPERATIONS -->
+<section class="section">
+  <div class="section-label reveal">Full Operations</div>
+  <h2 class="reveal">What "CEO of a food brand" actually looks like</h2>
+  <p class="reveal">This wasn't a strategy role. It was ground-level operations. I managed every function that keeps a physical product brand running.</p>
+
+  <div class="ops-grid">
+    <div class="ops-card stagger">
+      <div class="ops-icon">📦</div>
+      <h4>Procurement & Supply Chain</h4>
+      <p>Negotiated with multiple suppliers on price, quality standards, and lead times. Coordinated seasonal bulk purchasing 1–2 months before CNY.</p>
+    </div>
+    <div class="ops-card stagger">
+      <div class="ops-icon">🏭</div>
+      <h4>Inventory Management</h4>
+      <p>Managed inbound & outbound stock, warehouse coordination with Evoluc's system, and demand forecasting to avoid overstocking in low season.</p>
+    </div>
+    <div class="ops-card stagger">
+      <div class="ops-icon">📊</div>
+      <h4>Financial Accounting</h4>
+      <p>Tracked COGS, sales revenue, margins by product line. Monthly reconciliation with the parent company. Every ringgit in and out documented.</p>
+    </div>
+    <div class="ops-card stagger">
+      <div class="ops-icon">🚚</div>
+      <h4>B2B Distribution</h4>
+      <p>Primary channel was Evoluc's distributor network. Coordinated agent orders, delivery scheduling, and channel support. No direct-to-consumer play.</p>
+    </div>
+  </div>
+
+  <!-- Packaging & Campaign -->
+  <div class="section-label reveal" style="margin-top:3rem;">Packaging & Campaign Materials</div>
+  <div class="fk-pack-row reveal">
+    <img src="fuankang/12.png" alt="福安康 礼品包装" onerror="this.style.display='none'">
+    <img src="fuankang/15.png" alt="福安康 红色礼袋" onerror="this.style.display='none'">
+    <img src="fuankang/16.png" alt="福安康 包装" onerror="this.style.display='none'">
+    <img src="fuankang/18.png" alt="福安康 产品" onerror="this.style.display='none'">
+  </div>
+  <div class="fk-poster reveal">
+    <img src="fuankang/14.png" alt="福安康 贡品海报" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SEASONALITY -->
+<section class="section">
+  <div class="section-label reveal">The Seasonality Problem</div>
+  <h2 class="reveal">12 months of work. 2 months of sales.</h2>
+  <p class="reveal">CNY food brands live and die by seasonal spikes. The reality of running 福安康: two months of intense demand (Jan–Feb), then near-total silence the rest of the year. This is not a theory — it shapes every decision from procurement to cashflow.</p>
+
+  <div class="season-chart fade" id="season-chart">
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:8%"></div></div>
+      <div class="s-label">Jan</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar peak" style="--h:100%"></div></div>
+      <div class="s-label">Feb</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar peak" style="--h:80%"></div></div>
+      <div class="s-label">Mar</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:10%"></div></div>
+      <div class="s-label">Apr</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:8%"></div></div>
+      <div class="s-label">May</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:6%"></div></div>
+      <div class="s-label">Jun</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:5%"></div></div>
+      <div class="s-label">Jul</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:5%"></div></div>
+      <div class="s-label">Aug</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar low" style="--h:6%"></div></div>
+      <div class="s-label">Sep</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar mid" style="--h:20%"></div></div>
+      <div class="s-label">Oct</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar mid" style="--h:40%"></div></div>
+      <div class="s-label">Nov</div>
+    </div>
+    <div class="s-bar-wrap">
+      <div class="s-bar-track"><div class="s-bar mid" style="--h:55%"></div></div>
+      <div class="s-label">Dec</div>
+    </div>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-card stagger">
+      <div class="why-num">1</div>
+      Seasonal ceiling — without a "famous" brand name, there's no way to grow the CNY category itself.
+    </div>
+    <div class="why-card stagger">
+      <div class="why-num">2</div>
+      B2B only — no D2C channel means no brand equity buildup with end consumers.
+    </div>
+    <div class="why-card stagger">
+      <div class="why-num">3</div>
+      5 SKUs spread thin — energy divided, no hero product to anchor brand memory.
+    </div>
+    <div class="why-card stagger">
+      <div class="why-num">4</div>
+      Parallel projects — under Evoluc, I couldn't give 福安康 full attention. It was one of many.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT ENDED -->
+<section class="section">
+  <div class="section-label reveal">How It Ended</div>
+  <h2 class="reveal">Not a crash. A slow fade.</h2>
+  <p class="reveal">福安康食品 didn't fail dramatically. It just… stopped receiving attention. As Evoluc's strategy shifted and other projects demanded more focus (eventually the Heewon APP), the food brand was quietly deprioritized.</p>
+  <p class="reveal">There was no shutdown moment — just a gradual withdrawal of time, investment, and energy. The business returned its costs without a major loss. It was a <strong>warm, quiet exit</strong>.</p>
+
+  <div class="card reveal">
+    <h3>Honest Assessment</h3>
+    <p>The sales were moderate — enough to justify the operation, not enough to call it a success. The real issue wasn't execution — it was the business model. A seasonal B2B brand with no social presence, no hero product, and no focused attention is structurally limited no matter how well it's operated.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LESSONS -->
+<section class="section">
+  <div class="section-label reveal">What I Learned</div>
+  <h2 class="reveal">Full-ops solo teaches things that strategy jobs never will.</h2>
+
+  <div class="lesson-row">
+    <div class="lesson-col good reveal">
+      <h4>✓ What I Built</h4>
+      <div class="lesson-item"><div class="dot"></div> End-to-end product operations: procurement → inventory → accounts → sales</div>
+      <div class="lesson-item"><div class="dot"></div> Real experience with multi-SKU management and seasonal forecasting</div>
+      <div class="lesson-item"><div class="dot"></div> B2B distribution relationships and channel negotiation</div>
+      <div class="lesson-item"><div class="dot"></div> Financial literacy under real P&L pressure</div>
+    </div>
+    <div class="lesson-col bad reveal">
+      <h4>✗ What Was Missing</h4>
+      <div class="lesson-item"><div class="dot"></div> No brand differentiation — in a commodity category without a USP</div>
+      <div class="lesson-item"><div class="dot"></div> No D2C — relying only on B2B meant no consumer brand equity</div>
+      <div class="lesson-item"><div class="dot"></div> Too many SKUs — diluted focus, no breakout product</div>
+      <div class="lesson-item"><div class="dot"></div> Divided attention — one of 5+ Evoluc projects running in parallel</div>
+    </div>
+  </div>
+
+  <div class="takeaway reveal">
+    <p>"Seasonal products have a hard ceiling unless you're a legacy brand. The first instinct should be to pick one product, go deep, build a story around it, and win D2C before worrying about distribution. We did it backwards — and paid the price in forgettability."</p>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">← <a href="portfolio.html">Back to all cases</a></p>
+  <p>Elson 子洺 · Brand & Content Strategist · Malaysia</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal,.reveal-r,.stagger,.fade').forEach(el=>obs.observe(el));
+
+  // Product line bars
+  const plObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.pl-bar').forEach(b=>b.classList.add('animated'));
+        plObs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.3});
+  const plSection = document.getElementById('pl-section');
+  if(plSection) plObs.observe(plSection);
+
+  // Season chart bars
+  const seasonObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.s-bar').forEach((b,i)=>{
+          setTimeout(()=>b.classList.add('animated'), i*60);
+        });
+        seasonObs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.3});
+  const sc = document.getElementById('season-chart');
+  if(sc) seasonObs.observe(sc);
+</script>
+</body>
+</html>

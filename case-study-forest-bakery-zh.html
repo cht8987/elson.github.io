@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Forest Bakery — 案例研究 · Elson 子洺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#4CAF50;--green-dark:#2E7D32;--green-mid:#388E3C;--forest:#1B5E20;--sage:#81C784;--sage-soft:#E8F5E9;--warm:#FBF8F3;--peach:#FFE4D1;--ink:#1A1F1B;--ink-soft:#4A524C;--muted:#8A938D;--line:#E8EAE7;--bg:#FDFCFA;--cream:#F9F6F0;--r:20px;--rlg:28px;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 32px}
+nav{position:sticky;top:0;background:rgba(253,252,250,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:100;padding:16px 0}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:7px 15px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.back:hover{border-color:var(--green);color:var(--green-dark)}
+.back svg{transition:transform .2s}.back:hover svg{transform:translateX(-3px)}
+.lang-switch{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 12px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.lang-switch:hover{border-color:var(--green);color:var(--green-dark)}
+.hero{padding:72px 0 0;position:relative;overflow:hidden;min-height:520px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(150deg,#051a07 0%,#0c2e10 50%,#071a0a 100%);z-index:0}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;animation:blobFloat 8s ease-in-out infinite}
+.blob.a{width:360px;height:360px;background:rgba(76,175,80,.14);top:-60px;right:-80px;z-index:1;animation-delay:0s}
+.blob.b{width:220px;height:220px;background:rgba(46,125,50,.1);bottom:-40px;left:-20px;z-index:1;animation-delay:-3s}
+.blob.c{width:180px;height:180px;background:rgba(129,199,132,.08);top:40%;left:40%;z-index:1;animation-delay:-5s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(12px,-18px) scale(1.04)}66%{transform:translate(-8px,10px) scale(.97)}}
+.hero-inner{position:relative;z-index:2;padding-bottom:64px}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600}
+.tag.g{background:rgba(76,175,80,.18);color:#A5D6A7}
+.tag.w{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(36px,5.5vw,64px);line-height:1.06;letter-spacing:-.03em;font-weight:600;color:white;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--sage)}
+.hero-meta{font-size:16px;color:rgba(255,255,255,.6);max-width:560px;line-height:1.7}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.07);border-top:1px solid rgba(255,255,255,.1);margin-top:56px}
+.hs{padding:22px 18px;background:#061009}
+.hs-num{font-family:'Fraunces',serif;font-size:clamp(24px,3vw,38px);font-weight:700;color:white;letter-spacing:-.03em;line-height:1}
+.hs-num .acc{color:var(--sage)}
+.hs-label{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hs{padding:16px 14px}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*{opacity:1;transform:none}
+.stagger.visible>*:nth-child(1){transition-delay:.04s}.stagger.visible>*:nth-child(2){transition-delay:.12s}.stagger.visible>*:nth-child(3){transition-delay:.20s}.stagger.visible>*:nth-child(4){transition-delay:.28s}.stagger.visible>*:nth-child(5){transition-delay:.36s}
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-label{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-dark);margin-bottom:18px}
+.sec-label::before{content:"";width:18px;height:2px;background:var(--green);border-radius:2px}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin-bottom:16px}
+.sec-body{font-size:16px;color:var(--ink-soft);line-height:1.78;max-width:640px}
+.sec-body strong{color:var(--ink);font-weight:600}
+.founder-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--sage-soft);border:1.5px solid rgba(76,175,80,.3);border-radius:100px;margin-bottom:24px;font-size:13px;font-weight:600;color:var(--green-dark)}
+.founder-badge::before{content:"🌱";font-size:14px}
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:36px}
+@media(max-width:580px){.ch-grid{grid-template-columns:1fr}}
+.ch-card{background:var(--cream);border-radius:var(--r);padding:24px;border:1.5px solid var(--line);transition:border-color .2s,transform .2s}
+.ch-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.ch-icon{font-size:22px;margin-bottom:12px}
+.ch-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.ch-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+.logo-block{margin-top:40px;display:grid;grid-template-columns:1fr 1.6fr;gap:28px;align-items:center}
+@media(max-width:600px){.logo-block{grid-template-columns:1fr}}
+.logo-vis{background:linear-gradient(135deg,#1B5E20,#2E7D32);border-radius:var(--rlg);aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;max-width:240px}
+.logo-vis::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.08),transparent 60%)}
+.logo-symbol{font-size:80px;color:white;font-weight:700;font-family:'Fraunces',serif;opacity:.95;letter-spacing:-.05em;animation:logoPulse 4s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.logo-ring{position:absolute;width:140px;height:140px;border:2px solid rgba(255,255,255,.2);border-radius:50%;animation:logoSpin 20s linear infinite}
+@keyframes logoSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.logo-text-arc{position:absolute;bottom:24px;font-size:9px;font-weight:700;letter-spacing:.18em;color:rgba(255,255,255,.5);text-transform:uppercase}
+.logo-desc h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.02em}
+.logo-desc p{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:10px}
+.logo-desc p strong{color:var(--ink);font-weight:600}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}
+@media(max-width:600px){.photo-grid{grid-template-columns:1fr 1fr}}
+.photo-card{background:white;border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;transition:border-color .2s,transform .2s}
+.photo-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.photo-icon{font-size:24px;margin-bottom:10px}
+.photo-card h3{font-size:13.5px;font-weight:700;margin-bottom:5px}
+.photo-card p{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+.tl{margin-top:40px;position:relative;padding-left:56px}
+.tl-line{position:absolute;left:17px;top:16px;bottom:16px;width:2px;background:var(--line);border-radius:2px}
+.tl-fill{position:absolute;left:17px;top:16px;width:2px;background:linear-gradient(to bottom,var(--green),var(--green-dark));border-radius:2px;height:0;transition:height 1.4s cubic-bezier(.22,1,.36,1)}
+.tl-step{position:relative;margin-bottom:28px}.tl-step:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-44px;top:2px;width:34px;height:34px;border-radius:50%;background:white;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;transition:border-color .3s,background .3s,transform .3s}
+.tl-step:hover .tl-dot{border-color:var(--green);background:var(--sage-soft);transform:scale(1.1)}
+.tl-content h3{font-size:14.5px;font-weight:700;margin-bottom:4px}
+.tl-content p{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+.tl-phase{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.tl-phase.start{background:var(--sage-soft);color:var(--green-dark)}
+.tl-phase.mid{background:#FFF8E1;color:#E65100}
+.tl-phase.end{background:#FCE4EC;color:#C62828}
+.plat-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.plat{display:flex;align-items:center;gap:12px;padding:16px 20px;background:white;border:1.5px solid var(--line);border-radius:14px;flex:1;min-width:140px;transition:border-color .2s}
+.plat:hover{border-color:var(--green)}.plat-icon{font-size:22px}
+.plat-name{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.plat-val{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.conflict{margin-top:36px;border:1.5px solid var(--line);border-radius:var(--r);overflow:hidden}
+.conflict-head{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--cream);border-bottom:1.5px solid var(--line)}
+.conflict-head div{padding:12px 18px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.conflict-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--line);transition:background .15s}
+.conflict-row:last-child{border-bottom:none}.conflict-row:hover{background:var(--sage-soft)}
+.conflict-row div{padding:14px 18px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.conflict-row .topic{font-weight:600;color:var(--ink)}.conflict-row .him{color:#2E7D32}.conflict-row .her{color:#8D6E63}
+@media(max-width:600px){.conflict-head,.conflict-row{grid-template-columns:1fr}.conflict-head div:not(:first-child),.conflict-row div:not(:first-child){display:none}}
+.stats-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+@media(max-width:500px){.stats-g{grid-template-columns:1fr}}
+.sb{background:white;border:1.5px solid var(--line);border-radius:var(--r);padding:26px 22px;position:relative;overflow:hidden;transition:all .25s}
+.sb:hover{border-color:var(--green);transform:translateY(-3px)}
+.sb::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;border-radius:0 0 var(--r) var(--r)}
+.sb:hover::after{transform:scaleX(1)}
+.sb-num{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:8px}
+.sb-num .acc{color:var(--green-dark)}
+.sb-label{font-size:12.5px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.sb-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.honest-block{background:var(--cream);border-radius:var(--rlg);padding:40px 44px;margin-top:28px;border-left:4px solid var(--green);position:relative;overflow:hidden}
+.honest-block::before{content:"🌿";font-size:100px;position:absolute;right:-10px;bottom:-20px;opacity:.07;line-height:1;pointer-events:none}
+.honest-block h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.02em}
+.honest-block p{font-size:15px;color:var(--ink-soft);line-height:1.78;margin-bottom:12px}
+.honest-block p:last-child{margin-bottom:0}
+.honest-block p strong{color:var(--ink);font-weight:600}
+.learn-list{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.li{display:flex;gap:16px;padding:22px 24px;background:white;border:1.5px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+.li:hover{border-color:var(--green)}
+.li-num{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--green-dark);line-height:1;flex-shrink:0;min-width:28px}
+.li h3{font-size:14.5px;font-weight:700;margin-bottom:5px}
+.li p{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+.li-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;background:var(--sage-soft);color:var(--green-dark);border-radius:100px;font-size:10.5px;font-weight:600;margin-top:8px}
+.cta-sec{padding:72px 0 80px;text-align:center;border-top:1px solid var(--line)}
+.cta-sec h2{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,44px);letter-spacing:-.025em;font-weight:600;margin-bottom:14px}
+.cta-sec p{font-size:16px;color:var(--ink-soft);margin-bottom:32px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:white;text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;transition:all .2s}
+.btn-p:hover{background:var(--forest);transform:translateY(-2px)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--ink);text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;border:1.5px solid var(--line);transition:all .2s}
+.btn-o:hover{border-color:var(--green);color:var(--green-dark);transform:translateY(-2px)}
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center}
+footer p{font-size:12px;color:var(--muted)}
+/* ── PHOTO INTEGRATION ── */
+.fb-logo-strip{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
+.fb-logo-strip img{width:100%;border-radius:16px;display:block}
+.fb-print-board{margin-top:14px;border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.fb-print-board img{width:100%;display:block}
+.fb-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.fb-photo-grid img{width:100%;border-radius:14px;aspect-ratio:1/1;object-fit:cover;display:block;box-shadow:0 6px 20px rgba(0,0,0,.1);transition:transform .3s ease,box-shadow .3s}
+.fb-photo-grid img:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
+.fb-wide-img{margin-top:14px;border-radius:14px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.fb-wide-img img{width:100%;display:block}
+.fb-prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.fb-prod-grid img{width:100%;border-radius:14px;display:block;box-shadow:0 6px 20px rgba(0,0,0,.08);transition:transform .3s ease}
+.fb-prod-grid img:hover{transform:translateY(-2px)}
+.fb-duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.fb-duo img{width:100%;border-radius:14px;display:block;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.fb-web{margin-top:14px;border-radius:14px;overflow:hidden;border:1.5px solid var(--line)}
+.fb-web img{width:100%;display:block}
+@media(max-width:580px){.fb-logo-strip,.fb-duo{grid-template-columns:1fr}.fb-photo-grid,.fb-prod-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-i">
+    <a href="portfolio.html" class="logo"><div class="logo-dot"></div>Elson 子洺</a>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a href="case-study-forest-bakery.html" class="lang-switch">EN</a>
+      <a href="portfolio.html" class="back">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        返回作品集
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+  <div class="wrap hero-inner">
+    <div class="tag-row reveal">
+      <span class="tag g">🥐 个人创业</span>
+      <span class="tag w">品牌识别</span>
+      <span class="tag w">产品摄影</span>
+      <span class="tag w">联合创始人 · 2024年2月至2025年9月</span>
+    </div>
+    <h1 class="reveal" style="transition-delay:.08s">Forest Bakery —<br><em>建起了品牌。</em><br>学到了更难的一课。</h1>
+    <p class="hero-meta reveal" style="transition-delay:.16s">个人创业，不是客户项目。我在双溪毛糯联合创立了一个小型烘焙品牌，从零搭建视觉识别、拍摄产品照片、运营社交媒体。稳定增长了18个月。然后生活变得诚实了。</p>
+  </div>
+  <div class="hero-stats stagger">
+    <div class="hs"><div class="hs-num">1.5<span class="acc">年</span></div><div class="hs-label">创业时长</div></div>
+    <div class="hs"><div class="hs-num">400<span class="acc">–900</span></div><div class="hs-label">小红书粉丝</div></div>
+    <div class="hs"><div class="hs-num">3<span class="acc">×</span></div><div class="hs-label">运营平台数</div></div>
+    <div class="hs"><div class="hs-num">Ø</div><div class="hs-label">Logo的故事</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">背景</div>
+    <div class="founder-badge reveal">这是创始人案例，不是客户案例。</div>
+    <h2 class="sec-h2 reveal">从一个人生决定开始，成为一个设计项目，以一个教训结束。</h2>
+    <p class="sec-body reveal">在广州学习西点制作后，我和当时的伴侣决定在双溪毛糯共同建立一番事业。我们招募了第三位成员，在家中运营，通过WhatsApp接单，在本地市集摆摊，慢慢积累了一批忠实客户。我负责所有触碰品牌的部分——<strong>标志、包装、摄影、社交媒体和内容策略</strong>。她负责烘焙和销售。一段时间内，这一切都行得通。</p>
+    <div class="ch-grid stagger">
+      <div class="ch-card"><div class="ch-icon">💰</div><h3>近乎零的启动预算</h3><p>没有融资，没有外部资金。每一个设计决策都受成本约束。Shopee的贴纸、现成纸盒、免费字体——还必须看起来高端。</p></div>
+      <div class="ch-card"><div class="ch-icon">🎯</div><h3>必须比预算看起来更好</h3><p>看起来业余的手工烘焙品牌在起跑线就输了。视觉质量必须远超实际花费——否则顾客不会为手工品价格买单。</p></div>
+      <div class="ch-card"><div class="ch-icon">📸</div><h3>产品摄影就是销售现场</h3><p>在D2C食品领域，照片就是产品。蛋糕在镜头里看起来便宜，在顾客眼里它就是便宜。投资了尼康Z5→Z63套装，因为这一点不能妥协。</p></div>
+      <div class="ch-card"><div class="ch-icon">👥</div><h3>两位愿景不同的联合创始人</h3><p>我想扩张，她想稳定。这个差距一开始还能管理，但随着资金紧张，它变成了这段生意中决定性的张力。</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">品牌识别</div>
+    <h2 class="sec-h2 reveal">为什么Logo是一个大写的の。</h2>
+    <p class="sec-body reveal">品牌名来自我们居住的地方：双溪毛糯生态森林。绿色、自然、清新。识别系统必须传递这种感觉——但不能用那种"树叶与麦穗"的俗套方式。我想要现代、干净，同时又有机感。</p>
+    <div class="logo-block reveal">
+      <div class="logo-vis">
+        <div class="logo-ring"></div>
+        <div class="logo-symbol">の</div>
+        <div class="logo-text-arc">Forest · Bakery</div>
+      </div>
+      <div class="logo-desc">
+        <h3>の符号——两个奏效的原因。</h3>
+        <p><strong>视觉上：</strong>它是干净、现代的几何形——在烘焙品类里没有任何雷同。与所有叶子和麦穗Logo截然不同。</p>
+        <p><strong>心理上：</strong>它读起来像日文の字，潜意识里传递日式甜品的精致与匠心。目标客群——对精品食品感兴趣的马来西亚华人，20–50岁——不需要解释就能感受到。</p>
+        <p>最终标识：<strong>亮绿色圆形，白色の，弧形排列"FOREST"和"BAKERY"</strong>。印在Shopee防水贴纸上，100张，几十令吉。每个盒子手工贴上。</p>
+      </div>
+    </div>
+    <div class="fb-logo-strip stagger">
+      <img src="forest bakery/forest bakery black logo-01.png" alt="森林烘焙坊主标识——绿底黑色标志" onerror="this.style.display='none'">
+      <img src="forest bakery/Forest Bakery - outlined.png" alt="森林烘焙坊标志变体展示" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-print-board reveal">
+      <img src="forest bakery/Printing Board.png" alt="森林烘焙坊实体印刷品牌展板" onerror="this.style.display='none'">
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">产品摄影</div>
+    <h2 class="sec-h2 reveal">我们唯一没有偷工减料的地方。</h2>
+    <p class="sec-body reveal">其他一切都压到了极限。但摄影获得了真实投入——<strong>尼康Z5，升级至Z63</strong>，配三脚架、专业灯光和小型家庭摄影棚。逻辑很简单：产品照片看起来便宜，产品就是便宜。手工定价需要手工级别的视觉。</p>
+    <div class="photo-grid stagger">
+      <div class="photo-card"><div class="photo-icon">📷</div><h3>尼康Z5 → Z63</h3><p>中途刻意升级。全画幅传感器，捕捉食物质感所需的细节。</p></div>
+      <div class="photo-card"><div class="photo-icon">💡</div><h3>家庭摄影棚</h3><p>三脚架、专业灯光、白色背景。在自家拍摄，每次拍摄成本为零。</p></div>
+      <div class="photo-card"><div class="photo-icon">🖥️</div><h3>PS后期处理</h3><p>修图为清晰，不为完美。目标：质感够锐，真实感够强。</p></div>
+      <div class="photo-card"><div class="photo-icon">📐</div><h3>每个产品5–10个角度</h3><p>俯拍、截面、细节特写、生活场景。足够的素材变化支撑数周社交内容。</p></div>
+      <div class="photo-card"><div class="photo-icon">🎨</div><h3>一致的视觉方向</h3><p>暖色调、干净背景、极简道具。视觉语言在所有产品和平台上保持统一。</p></div>
+      <div class="photo-card"><div class="photo-icon">📱</div><h3>首先为小红书优化</h3><p>目标受众是马来西亚华人——小红书是他们的平台。内容格式化为3:4比例，按该平台的美学调色。</p></div>
+    </div>
+    <div class="fb-photo-grid stagger">
+      <img src="forest bakery/case/1.png" alt="原味 & 伯爵红茶巴斯克芝士蛋糕" onerror="this.style.display='none'">
+      <img src="forest bakery/case/3.png" alt="开心果 & 烤榴莲巴斯克" onerror="this.style.display='none'">
+      <img src="forest bakery/case/4.png" alt="抹茶 & 巧克力巴斯克芝士蛋糕" onerror="this.style.display='none'">
+      <img src="forest bakery/case/5.png" alt="蛋黄酱热压三明治" onerror="this.style.display='none'">
+      <img src="forest bakery/case/6.png" alt="螃蟹岛热压三明治" onerror="this.style.display='none'">
+      <img src="forest bakery/case/7.png" alt="抹茶巴斯克质感特写" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-wide-img reveal">
+      <img src="forest bakery/case/16.png" alt="金枪鱼诱惑、蛋黄酱、螃蟹岛——完整三明治系列" onerror="this.style.display='none'">
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">产品系列</div>
+    <h2 class="sec-h2 reveal">日系甜品系列，全部自主拍摄。</h2>
+    <p class="sec-body reveal">巴斯克蛋糕和热压三明治之外，森林烘焙坊还推出了日式大福和甜品系列——全部自主设计、命名、拍摄。月饼等季节性产品延长了销售周期，也给老客户增加了回购理由。</p>
+    <div class="fb-prod-grid stagger">
+      <img src="forest bakery/case/8.png" alt="肉松雪媚娘" onerror="this.style.display='none'">
+      <img src="forest bakery/case/9.png" alt="芋泥盒子蛋糕——六层芋泥甜品" onerror="this.style.display='none'">
+      <img src="forest bakery/case/10.png" alt="薄荷巧克力迷你 & 芋泥肉松雪媚娘" onerror="this.style.display='none'">
+      <img src="forest bakery/case/12.png" alt="奇异果 & 猫山王雪媚娘" onerror="this.style.display='none'">
+      <img src="forest bakery/case/13.png" alt="福团生巧 Mochi Chocolate" onerror="this.style.display='none'">
+      <img src="forest bakery/case/14.png" alt="草莓红豆大福 Mochi Strawberry" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-duo stagger">
+      <img src="forest bakery/case/19.png" alt="中秋月饼礼盒——季节限定" onerror="this.style.display='none'">
+      <img src="forest bakery/case/20.png" alt="高端月饼礼盒多口味装" onerror="this.style.display='none'">
+    </div>
+    <div class="fb-web reveal">
+      <img src="forest bakery/websITE.png" alt="森林烘焙坊网站——草莓大福主视觉" onerror="this.style.display='none'">
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">创业历程</div>
+    <h2 class="sec-h2 reveal">18个月，三个诚实的章节。</h2>
+    <div class="tl reveal" id="tl-forest">
+      <div class="tl-line"></div>
+      <div class="tl-fill" id="tl-forest-fill"></div>
+      <div class="tl-step">
+        <div class="tl-dot">🌱</div>
+        <div class="tl-content">
+          <span class="tl-phase start">2024年2月 · 启动</span>
+          <h3>从零搭建品牌</h3>
+          <p>命名品牌，设计标志，布置家庭摄影棚，印制第一批贴纸。开通小红书、IG和FB账号。第一批订单来自朋友和家人。每周发布2–3次。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📈</div>
+        <div class="tl-content">
+          <span class="tl-phase start">2024年中期 · 成长</span>
+          <h3>稳步增长，产品线扩展</h3>
+          <p>低糖蛋糕、西点和特色产品。尝试本地市集——我力推，她有所保留。小红书粉丝有机增长，WhatsApp订单趋于稳定。品牌开始有了真实感。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">⚡</div>
+        <div class="tl-content">
+          <span class="tl-phase mid">2024年末 · 张力</span>
+          <h3>战略分歧开始浮现</h3>
+          <p>我想拓展批发渠道，开发新品，加大营销投入。她想保持模式稳定保守。同一个生意——两种截然不同的抱负。资源紧张时很难调和。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">💸</div>
+        <div class="tl-content">
+          <span class="tl-phase end">2025年初 · 压力</span>
+          <h3>财务现实改变了一切</h3>
+          <p>我从Lokes获得的收入——部分用于支撑Forest Bakery——在那个项目结束后中断了。我无法再补贴烘焙坊的运营成本。Forest Bakery的月营收只够一个人生活，不够两个人。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">🚪</div>
+        <div class="tl-content">
+          <span class="tl-phase end">2025年9月 · 结束</span>
+          <h3>决定停止。痛苦。清醒。</h3>
+          <p>经济压力加上未解决的战略分歧加上关系的变化——三股力量同时袭来。关闭的决定很痛苦，但逻辑是清晰的：这需要一位全身心投入的创始人，而我们两个都做不到。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">数据</div>
+    <h2 class="sec-h2 reveal">品牌在18个月内建立的东西。</h2>
+    <div class="plat-row stagger">
+      <div class="plat"><div class="plat-icon">📕</div><div><div class="plat-name">小红书</div><div class="plat-val">400–900</div></div></div>
+      <div class="plat"><div class="plat-icon">📷</div><div><div class="plat-name">Instagram</div><div class="plat-val">@forestbakery93</div></div></div>
+      <div class="plat"><div class="plat-icon">👥</div><div><div class="plat-name">Facebook</div><div class="plat-val">活跃中</div></div></div>
+      <div class="plat"><div class="plat-icon">📦</div><div><div class="plat-name">接单方式</div><div class="plat-val">WhatsApp</div></div></div>
+    </div>
+    <div class="stats-g stagger" style="margin-top:14px">
+      <div class="sb"><div class="sb-num">2<span class="acc">–3</span></div><div class="sb-label">每周发帖数</div><div class="sb-desc">在小红书、IG和FB保持稳定节奏。产品展示+制作过程+订单亮点。</div></div>
+      <div class="sb"><div class="sb-num">3<span class="acc">×</span></div><div class="sb-label">活跃平台数</div><div class="sb-desc">小红书是主要增长渠道，IG和FB用于扩大覆盖和接收订单咨询。</div></div>
+      <div class="sb"><div class="sb-num">0<span class="acc">$</span></div><div class="sb-label">付费广告</div><div class="sb-desc">100%有机增长，每一个粉丝都靠内容和口碑赚来。</div></div>
+      <div class="sb"><div class="sb-num"><span class="acc">✓</span>VI</div><div class="sb-label">完整品牌体系</div><div class="sb-desc">标志、贴纸包装、摄影、社交模板——全部自主设计制作。</div></div>
+    </div>
+    <div class="honest-block reveal">
+      <h3>诚实说明为什么它结束了。</h3>
+      <p>Forest Bakery的终结不是因为品牌薄弱或产品不好。它结束是因为<strong>两位联合创始人对它应该成为什么，有着根本不同的愿景</strong>——而我们没有足够早地解决这个张力。</p>
+      <p>我想要增长、规模、新渠道。她想要稳定、一致、可靠地重复同样的事。两种想法都没有错，但在资源匮乏、压力高涨时，它们是不相容的运营模式。<strong>最大的教训不是关于品牌、摄影或社交媒体，而是联合创始人的价值观对齐不是加分项——它是承重结构。</strong></p>
+      <p>我建立的品牌还活在截图和贴纸文件里。手艺是真实的，努力是真实的，结局只是诚实的。</p>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">分歧所在</div>
+    <h2 class="sec-h2 reveal">同一个生意。两家不同的公司，各自活在脑子里。</h2>
+    <p class="sec-body reveal">把这些记录下来，因为它比假装一切顺利更有价值。以下是真实反复发生的争论。</p>
+    <div class="conflict reveal">
+      <div class="conflict-head"><div>决策事项</div><div>我的立场</div><div>她的立场</div></div>
+      <div class="conflict-row"><div class="topic">在本地市集摆摊</div><div class="him">是——曝光、新客户</div><div class="her">否——精力太大，ROI不确定</div></div>
+      <div class="conflict-row"><div class="topic">开发新产品</div><div class="him">是——测试市场反应，找到爆款</div><div class="her">否——生产成本和风险更高</div></div>
+      <div class="conflict-row"><div class="topic">加大营销投入</div><div class="him">是——增长需要可见度投入</div><div class="her">否——尽量压低成本</div></div>
+      <div class="conflict-row"><div class="topic">规模野心</div><div class="him">值得做大的品牌项目</div><div class="her">稳定的副业，不是创业公司</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">核心收获</div>
+    <h2 class="sec-h2 reveal">值得从中带走的东西。</h2>
+    <div class="learn-list stagger">
+      <div class="li"><div class="li-num">01</div><div>
+        <h3>联合创始人对齐是地基，不是终点线。</h3>
+        <p>品牌够强，产品有质量。没有对齐的是对这个问题的回答："我们在建什么，愿意为此牺牲什么？"这些问题需要在启动前回答——而不是在危机中压力下解决。</p>
+        <span class="li-tag">适用于所有合伙关系</span>
+      </div></div>
+      <div class="li"><div class="li-num">02</div><div>
+        <h3>投资摄影是对的。没做数据是错误。</h3>
+        <p>视觉质量是对的。但我从未建立基础追踪：哪些产品复购率最高，哪些帖子带来最多WhatsApp咨询，哪些市集最有转化。小生意不意味着不需要数据——而是更简单的数据，持续追踪。</p>
+        <span class="li-tag">应该从第一个月开始</span>
+      </div></div>
+      <div class="li"><div class="li-num">03</div><div>
+        <h3>兼顾的投入只带来兼顾的结果。</h3>
+        <p>我有能力，也清楚看到Forest Bakery需要什么才能扩张。但我的时间和收入主要投在其他地方。品牌的代价是从来没有一个人把它当成主要的事来做。这个差距不能靠努力弥补——只能靠承诺。</p>
+        <span class="li-tag">分心的真实代价</span>
+      </div></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="cta-sec reveal">
+    <h2>想看更多？</h2>
+    <p>更多作品——有些成功扩张，有些通过不扩张教会了我更多。</p>
+    <div class="btns">
+      <a href="portfolio.html" class="btn-p"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>返回作品集</a>
+      <a href="mailto:cht8987@gmail.com" class="btn-o">联系我<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</div>
+<footer><p>Elson 子洺 — 品牌 &amp; 内容整合</p></footer>
+<script>
+const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('visible');if(e.target.id==='tl-forest'){setTimeout(()=>{const fill=document.getElementById('tl-forest-fill');fill.style.height=(e.target.offsetHeight-32)+'px';},150);}io.unobserve(e.target);});},{threshold:0.1});
+document.querySelectorAll('.reveal,.stagger').forEach(el=>io.observe(el));
+const tl=document.getElementById('tl-forest');if(tl)io.observe(tl);
+window.addEventListener('load',()=>{document.querySelectorAll('.hero .reveal,.hero-stats').forEach(el=>el.classList.add('visible'));});
+</script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lokes Ice Cream — 案例研究</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #4CAF50;
+    --green-dark: #388E3C;
+    --green-soft: #E8F5E9;
+    --orange: #FF8A65;
+    --orange-dark: #D84315;
+    --orange-soft: #FFF3EE;
+    --orange-mid: #FFE0CC;
+    --cream: #FBF8F3;
+    --peach: #FFE4D1;
+    --ink: #1A1F1B;
+    --ink-soft: #4A524C;
+    --muted: #8A938D;
+    --line: #E8EAE7;
+    --bg: #FDFCFA;
+    --radius: 20px;
+    --radius-lg: 28px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(253,252,250,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    padding: 18px 0;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .logo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 100px;
+    transition: all .2s;
+    letter-spacing: 0.05em;
+  }
+  .lang-switch:hover { border-color: var(--orange); color: var(--orange-dark); }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 100px;
+    transition: all .2s;
+  }
+  .back-btn:hover { border-color: var(--orange); color: var(--orange-dark); }
+  .back-btn svg { transition: transform .2s; }
+  .back-btn:hover svg { transform: translateX(-3px); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: var(--orange-soft);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.8;
+    z-index: 0;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 260px; height: 260px;
+    background: var(--peach);
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.5;
+    z-index: 0;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: var(--orange-soft);
+    color: var(--orange-dark);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .tag.outline {
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', 'PingFang SC', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--orange);
+  }
+
+  .hero-meta {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 600px;
+    line-height: 1.65;
+  }
+
+  .hero-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 48px 0;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: "";
+    width: 20px;
+    height: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+
+  .section-h2 {
+    font-family: 'Fraunces', 'PingFang SC', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .section-body {
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    max-width: 640px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+
+  /* CHALLENGE CARD */
+  .challenge-card {
+    margin-top: 36px;
+    background: var(--cream);
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    border-left: 4px solid var(--orange);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .challenge-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+  .challenge-item strong { color: var(--ink); font-weight: 600; }
+  .challenge-icon {
+    width: 32px;
+    height: 32px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  /* BRAND PILLARS */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  @media (max-width: 600px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+  .pillar {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: border-color .2s, transform .2s;
+  }
+  .pillar:hover { border-color: var(--orange); transform: translateY(-3px); }
+  .pillar-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+  .pillar h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pillar p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--line);
+    border-radius: 2px;
+  }
+
+  .tl-step {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 16px 0;
+  }
+  .tl-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+    transition: border-color .2s;
+  }
+  .tl-step:hover .tl-dot { border-color: var(--orange); }
+  .tl-content { padding-top: 8px; }
+  .tl-content h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .tl-content p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* RESULTS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  @media (max-width: 560px) {
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+
+  .stat-box {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .25s, transform .25s;
+  }
+  .stat-box:hover {
+    border-color: var(--orange);
+    transform: translateY(-3px);
+  }
+  .stat-box::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s ease;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .stat-box:hover::after { transform: scaleX(1); }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(44px, 7vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .stat-num .accent { color: var(--orange); }
+  .stat-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .stat-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* QUOTE BANNER */
+  .quote-banner {
+    margin-top: 32px;
+    background: linear-gradient(135deg, #FFB088 0%, #FF8A65 100%);
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-banner::before {
+    content: "🍦";
+    font-size: 100px;
+    position: absolute;
+    right: 0px; top: -10px;
+    opacity: 0.12;
+    line-height: 1;
+  }
+  .quote-banner p {
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    line-height: 1.65;
+    max-width: 560px;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .quote-banner .source {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* LEARNINGS */
+  .learnings-list {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .learning-item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 24px 28px;
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color .2s;
+  }
+  .learning-item:hover { border-color: var(--orange); }
+  .learning-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--orange);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 32px;
+  }
+  .learning-text h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .learning-text p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 72px 0 80px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  .cta-section h2 {
+    font-family: 'Fraunces', 'PingFang SC', serif;
+    font-size: clamp(30px, 5vw, 48px);
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .cta-section p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: white;
+    text-decoration: none;
+    padding: 14px 26px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background .2s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 14px 26px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1.5px solid var(--line);
+    transition: border-color .2s, transform .2s;
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange-dark); transform: translateY(-2px); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+    .challenge-card { padding: 24px 20px; }
+    .quote-banner { padding: 28px 24px; }
+    .quote-banner p { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="portfolio.html" class="logo">
+      <div class="logo-dot"></div>
+      Elson 子洺
+    </a>
+    <div class="nav-right">
+      <a href="case-study-lokes-ice-cream.html" class="lang-switch">EN</a>
+      <a href="portfolio.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        返回作品集
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="tag-row">
+        <span class="tag">🍦 餐饮</span>
+        <span class="tag outline">品牌视觉</span>
+        <span class="tag outline">D2C 上线</span>
+        <span class="tag outline">内容策略</span>
+      </div>
+
+      <h1>Lokes Ice Cream —<br><em>打造一个</em><br>本地人自愿帮你传播的品牌。</h1>
+
+      <div class="hero-divider"></div>
+
+      <p class="hero-meta">
+        一个新兴 D2C 冰淇淋品牌，进入一个充斥着噪音的市场。<br>
+        这份工作不只是让它「好看」——而是让人对它产生感觉，<br>然后忍不住告诉朋友。以下是我们做到的过程。
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- 挑战 -->
+<div class="wrap">
+  <section>
+    <div class="section-label">挑战</div>
+    <h2 class="section-h2">在一个拥挤的冰柜里脱颖而出。</h2>
+    <p class="section-body">
+      冰淇淋是餐饮品类中情感驱动最强的品类之一——但也是竞争最激烈的品类之一。
+      Lokes 有一款很棒的产品，但缺少的是一个让人在乎它的理由。
+      <strong>简报的核心：打造一个能让人选择 Lokes、而不是其他任何选项的品牌认同。</strong>
+    </p>
+
+    <div class="challenge-card">
+      <div class="challenge-item">
+        <div class="challenge-icon">🏪</div>
+        <div><strong>零品牌知名度。</strong>从零起步，进入一个消费者早有偏好品牌的市场。</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">📦</div>
+        <div><strong>包装即第一印象。</strong>在 D2C 模式下，送到消费者门口的那个盒子就是完整体验。它必须在对方还没尝到之前，就赢得第二次购买的意愿。</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">📱</div>
+        <div><strong>社交媒体必须承担所有重量。</strong>没有实体货架，没有人流量——每一次品牌被发现都必须通过线上渠道发生。</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">🎯</div>
+        <div><strong>产品需要一个性格。</strong>不只是口味和原料——而是一种声音、一种感觉，以及一个值得分享的理由。</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 策略 -->
+<div class="wrap">
+  <section>
+    <div class="section-label">策略</div>
+    <h2 class="section-h2">品牌优先，内容其次，销售第三。</h2>
+    <p class="section-body">
+      面对新食品品牌，大多数人的第一反应是主打产品图和折扣促销。
+      更聪明的做法，是先建构一个人们想要融入的世界，然后再邀请他们进来。
+      Lokes 需要同时做对三件事。
+    </p>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pillar-icon">🎨</div>
+        <h3>品牌视觉系统</h3>
+        <p>视觉语言、色彩体系、字体规范与品牌资产——建立一套能在包装、社交媒体与各接触点之间无缝延伸的设计系统。</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">📦</div>
+        <h3>包装设计方向</h3>
+        <p>开箱体验必须成为一个值得记录的时刻。设计目标：让人忍不住拍下来分享——将口碑传播内建于产品体验本身。</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🗣️</div>
+        <h3>品牌语调</h3>
+        <p>温暖、有趣，带点促狭。一种让 Lokes 听起来像一个「恰好会做很棒冰淇淋的朋友」的声音——而不是一个努力显得接地气的品牌。</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 流程 -->
+<div class="wrap">
+  <section>
+    <div class="section-label">执行流程</div>
+    <h2 class="section-h2">从空白页到上线内容。</h2>
+    <p class="section-body">
+      品牌上线不是一个单一交付物，而是一系列有序的步骤。
+      每一步必须按顺序完成，因为后续所有决策都建立在前一步的基础上。
+    </p>
+
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-dot">🔍</div>
+        <div class="tl-content">
+          <h3>品牌探索</h3>
+          <p>深入了解创始人愿景、产品故事与目标消费者。在任何设计决策落地之前，先搞清楚 Lokes 之所以是 Lokes 的核心是什么。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">🎨</div>
+        <div class="tl-content">
+          <h3>视觉识别系统</h3>
+          <p>品牌字标、色彩体系、字体规范与品牌资产——打造一套能在数字与实体场景中同步延展的系统。温暖、高级、平易近人。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">📦</div>
+        <div class="tl-content">
+          <h3>包装设计方向</h3>
+          <p>为产品包装提供艺术指导——附带完整品牌语境交付给生产方执行。设计目标是开箱体验的那个时刻，而不只是货架展示。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">✍️</div>
+        <div class="tl-content">
+          <h3>品牌语调指南</h3>
+          <p>Lokes 怎么说话——文案、回复、Stories、广告标语。一份团队真正能用起来的实用指南，而不是没人翻阅的 40 页品牌圣经。</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">🚀</div>
+        <div class="tl-content">
+          <h3>上线内容系列</h3>
+          <p>预热预告、上线周内容与首月社交日历。脚本、拍摄方向与执行一手包办——专为品牌亮相与第一批订单转化而打造。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 成果 -->
+<div class="wrap">
+  <section>
+    <div class="section-label">成果</div>
+    <h2 class="section-h2">每个月，都在增长。</h2>
+    <p class="section-body">
+      品牌上线的真正考验不是第一周——而是人们是否还会回来。
+      Lokes 通过了这个考验。
+    </p>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-num"><span class="accent">+</span>50<span class="accent">%</span></div>
+        <div class="stat-label">月环比销售增长</div>
+        <div class="stat-desc">上线后保持月环比销售提升——不是脉冲式波动，而是一条持续向上的增长曲线。</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-num">D<span class="accent">2</span>C</div>
+        <div class="stat-label">100% 线上渠道</div>
+        <div class="stat-desc">无实体货架。每一笔订单都依赖内容驱动、品牌信任与口碑传播。</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-num"><span class="accent">0</span>→<span style="font-size: 0.7em;">粉丝</span></div>
+        <div class="stat-label">社群从零建立</div>
+        <div class="stat-desc">从零粉丝到一群忠实支持者，他们主动向朋友推荐 Lokes，无需任何引导。</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-num">1<span class="accent">×</span></div>
+        <div class="stat-label">全程独立完成</div>
+        <div class="stat-desc">视觉、包装方向、语调、内容——端到端全包。一位创意总监，零缺口。</div>
+      </div>
+    </div>
+
+    <div class="quote-banner">
+      <p>「有人开始在帖子里 @ 我们，而那些帖子我们根本不知道存在。就是那一刻，我们知道品牌已经有了自己的生命。」</p>
+      <div class="source">— 品牌开始自己运转的那个时刻</div>
+    </div>
+  </section>
+</div>
+
+<!-- 收获 -->
+<div class="wrap">
+  <section>
+    <div class="section-label">学到了什么</div>
+    <h2 class="section-h2">餐饮品牌真正需要的是什么。</h2>
+    <p class="section-body">
+      Lokes 让我深刻理解了人们与食品品牌的情感连接方式——
+      以及让人忠实回购的品牌与「只买一次」的品牌之间，差异到底在哪里。
+    </p>
+
+    <div class="learnings-list">
+      <div class="learning-item">
+        <div class="learning-num">01</div>
+        <div class="learning-text">
+          <h3>包装，是你最大的内容载体。</h3>
+          <p>在 D2C 模式下，消费者收到的那个盒子，是他们与品牌的第一次实体接触。
+          当它被设计成值得拍照的样子，你的顾客就成了你的分发渠道。
+          如果产品本身值得被记录，你根本不需要高额的网红预算。</p>
+        </div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-num">02</div>
+        <div class="learning-text">
+          <h3>品牌语调，是大多数品牌严重低估的竞争优势。</h3>
+          <p>当产品品质旗鼓相当时，那个「听起来像个真实的人」的品牌会赢。
+          一致而有辨识度的声音，比任何 Logo 重设计都能更快建立亲近感。
+          而且这恰恰是小品牌能和大玩家真正竞争的地方。</p>
+        </div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-num">03</div>
+        <div class="learning-text">
+          <h3>上线内容是一套叙事序列，不是一条帖子。</h3>
+          <p>很多品牌把上线当作一个「时刻」。真正能持续增长的品牌，
+          把它当作一段叙事——预热、揭幕、佐证、社群、再循环。
+          每一条内容都在为下一条建立语境。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA -->
+<div class="wrap">
+  <div class="cta-section">
+    <h2>想看更多？</h2>
+    <p>更多项目、更多案例、更多从零打造的品牌故事。</p>
+    <div class="cta-buttons">
+      <a href="portfolio.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        返回作品集
+      </a>
+      <a href="mailto:cht8987@gmail.com" class="btn-outline">
+        联系我
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Elson 子洺 — 品牌与内容整合师</p>
+</footer>
+
+</body>
+</html>

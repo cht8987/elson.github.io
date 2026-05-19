@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Double Bells TikTok — Case Study · Elson 子洺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange:#FF8A65; --orange-dark:#E64A19; --orange-mid:#FF7043;
+  --orange-soft:#FFF3EE; --orange-tint:#FFF8F5;
+  --green:#4CAF50; --green-dark:#388E3C;
+  --ink:#1A1F1B; --ink-soft:#4A524C; --muted:#8A938D;
+  --line:#E8EAE7; --bg:#FDFCFA; --cream:#FBF8F3;
+  --r:20px; --rlg:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 32px}
+
+nav{position:sticky;top:0;background:rgba(253,252,250,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:100;padding:16px 0}
+.nav-i{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:7px 15px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s}
+.back:hover{border-color:var(--orange);color:var(--orange-dark)}
+.back svg{transition:transform .2s}.back:hover svg{transform:translateX(-3px)}
+.lang-switch{display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:6px 14px;border:1.5px solid var(--line);border-radius:100px;transition:all .2s;letter-spacing:0.05em}
+.lang-switch:hover{border-color:var(--orange);color:var(--orange-dark)}
+.nav-right{display:flex;align-items:center;gap:10px}
+
+/* ── HERO ── */
+.hero{padding:72px 0 0;position:relative;overflow:hidden;min-height:540px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a0800 0%,#2d1000 50%,#1a1208 100%);z-index:0}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hero-orb.a{width:380px;height:380px;background:rgba(255,138,101,.15);top:-80px;right:-60px;z-index:1}
+.hero-orb.b{width:260px;height:260px;background:rgba(255,112,67,.1);bottom:-40px;left:-40px;z-index:1}
+.hero-inner{position:relative;z-index:2;padding-bottom:64px}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600}
+.tag.o{background:rgba(255,138,101,.2);color:#FFAB91}
+.tag.w{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)}
+
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(36px,5.5vw,64px);line-height:1.06;letter-spacing:-.03em;font-weight:600;color:white;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--orange)}
+.hero-meta{font-size:16px;color:rgba(255,255,255,.6);max-width:540px;line-height:1.7}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.1);margin-top:56px}
+.hs{padding:24px 20px;background:#180a00}
+.hs-num{font-family:'Fraunces',serif;font-size:clamp(28px,3.5vw,42px);font-weight:700;color:white;letter-spacing:-.03em;line-height:1}
+.hs-num span{color:var(--orange)}
+.hs-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+@media(max-width:600px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hs{padding:18px 16px}}
+
+/* scroll reveals */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1)}
+.stagger.visible>*{opacity:1;transform:none}
+.stagger.visible>*:nth-child(1){transition-delay:.04s}
+.stagger.visible>*:nth-child(2){transition-delay:.11s}
+.stagger.visible>*:nth-child(3){transition-delay:.18s}
+.stagger.visible>*:nth-child(4){transition-delay:.25s}
+.stagger.visible>*:nth-child(5){transition-delay:.32s}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-label{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-dark);margin-bottom:18px}
+.sec-label::before{content:"";width:18px;height:2px;background:var(--orange);border-radius:2px}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.12;margin-bottom:16px}
+.sec-body{font-size:16px;color:var(--ink-soft);line-height:1.78;max-width:640px}
+.sec-body strong{color:var(--ink);font-weight:600}
+
+/* ── BEFORE / AFTER ── */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px}
+@media(max-width:560px){.ba{grid-template-columns:1fr}}
+.ba-card{border-radius:var(--r);padding:28px 24px}
+.ba-card.before{background:#F5F5F5;border:1.5px solid var(--line)}
+.ba-card.after{background:var(--orange-tint);border:1.5px solid rgba(255,138,101,.3)}
+.ba-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.before .ba-label{color:var(--muted)}
+.after .ba-label{color:var(--orange-dark)}
+.ba-pill{display:inline-block;padding:2px 9px;border-radius:100px;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.before .ba-pill{background:#E0E0E0;color:#757575}
+.after .ba-pill{background:rgba(255,138,101,.2);color:var(--orange-dark)}
+.ba-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ba-card li{font-size:14px;color:var(--ink-soft);padding-left:20px;position:relative;line-height:1.5}
+.ba-card li::before{content:"·";position:absolute;left:6px;color:var(--muted)}
+.after li::before{content:"→";color:var(--orange);font-size:11px;top:2px}
+
+/* ── STRATEGY CARDS ── */
+.strat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}
+@media(max-width:640px){.strat-grid{grid-template-columns:1fr}}
+.sc{background:white;border:1.5px solid var(--line);border-radius:var(--r);padding:26px 22px;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+.sc:hover{border-color:var(--orange);transform:translateY(-3px)}
+.sc::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.sc:hover::after{transform:scaleX(1)}
+.sc-icon{font-size:26px;margin-bottom:14px}
+.sc h3{font-size:14.5px;font-weight:700;margin-bottom:7px}
+.sc p{font-size:13px;color:var(--ink-soft);line-height:1.6}
+.sc-tag{display:inline-flex;margin-top:12px;padding:3px 10px;background:var(--orange-soft);color:var(--orange-dark);border-radius:100px;font-size:11px;font-weight:600}
+
+/* ── TEAM ── */
+.team-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.tm{display:flex;align-items:center;gap:10px;padding:14px 18px;background:white;border:1.5px solid var(--line);border-radius:14px;transition:border-color .2s}
+.tm:hover{border-color:var(--orange)}
+.tm-avi{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--orange-soft);flex-shrink:0}
+.tm-info .name{font-size:13.5px;font-weight:700}
+.tm-info .role{font-size:12px;color:var(--muted)}
+.tm-me{background:var(--ink);}
+.tm-me .tm-avi{background:rgba(255,138,101,.2)}
+.tm-me .tm-info .name,.tm-me .tm-info .role{color:white}
+.tm-me .tm-info .role{color:rgba(255,255,255,.5)}
+
+/* ── VIDEOS ── */
+.videos{display:flex;flex-direction:column;gap:10px;margin-top:32px}
+.vc{display:flex;align-items:center;gap:14px;padding:15px 20px;background:white;border:1.5px solid var(--line);border-radius:14px;transition:all .2s;cursor:default}
+.vc:hover{border-color:var(--orange);transform:translateX(4px)}
+.vc-rank{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--line);min-width:26px}
+.vc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.vc-dot.high{background:#4CAF50}
+.vc-dot.mid{background:var(--orange)}
+.vc-dot.low{background:var(--line)}
+.vc-info{flex:1}
+.vc-title{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.vc-meta{font-size:12px;color:var(--muted)}
+.vc-stat{text-align:right;flex-shrink:0}
+.vc-views{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--orange-dark);line-height:1}
+.vc-sub{font-size:11px;color:var(--muted)}
+
+/* ── STAT BOXES ── */
+.stats-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+@media(max-width:500px){.stats-g{grid-template-columns:1fr}}
+.sb{background:white;border:1.5px solid var(--line);border-radius:var(--r);padding:28px 24px;position:relative;overflow:hidden;transition:all .25s}
+.sb:hover{border-color:var(--orange);transform:translateY(-3px)}
+.sb::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;border-radius:0 0 var(--r) var(--r)}
+.sb:hover::after{transform:scaleX(1)}
+.sb-num{font-family:'Fraunces',serif;font-size:clamp(38px,5.5vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:8px}
+.sb-num .acc{color:var(--orange-dark)}
+.sb-label{font-size:12.5px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.sb-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ── HONEST BANNER ── */
+.honest{background:var(--cream);border:1.5px solid var(--line);border-left:4px solid var(--orange);border-radius:var(--rlg);padding:36px 40px;margin-top:28px}
+.honest h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.02em}
+.honest p{font-size:15px;color:var(--ink-soft);line-height:1.75}
+.honest p strong{color:var(--ink);font-weight:600}
+
+/* ── LEARNINGS ── */
+.learn-list{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.li{display:flex;gap:16px;padding:22px 24px;background:white;border:1.5px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+.li:hover{border-color:var(--orange)}
+.li-num{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--orange);line-height:1;flex-shrink:0;min-width:28px}
+.li h3{font-size:14.5px;font-weight:700;margin-bottom:5px}
+.li p{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+
+.cta-sec{padding:72px 0 80px;text-align:center;border-top:1px solid var(--line)}
+.cta-sec h2{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,44px);letter-spacing:-.025em;font-weight:600;margin-bottom:14px}
+.cta-sec p{font-size:16px;color:var(--ink-soft);margin-bottom:32px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:white;text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;transition:all .2s}
+.btn-p:hover{background:var(--orange-dark);transform:translateY(-2px)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--ink);text-decoration:none;padding:13px 24px;border-radius:100px;font-size:14px;font-weight:600;border:1.5px solid var(--line);transition:all .2s}
+.btn-o:hover{border-color:var(--orange);color:var(--orange-dark);transform:translateY(-2px)}
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center}
+footer p{font-size:12px;color:var(--muted)}
+.count{display:inline-block}
+
+/* ── HERO LOGO ── */
+.hero-logo-pill{display:inline-flex;align-items:center;background:rgba(255,255,255,0.96);border-radius:18px;padding:14px 20px;margin-bottom:28px;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.hero-logo-pill img{height:68px;width:auto;display:block}
+
+/* ── ACCOUNT PROOF STRIP ── */
+.proof-strip{background:var(--cream);border:1.5px solid var(--line);border-radius:var(--rlg);padding:36px 40px;margin-top:36px;display:flex;align-items:center;gap:36px}
+.proof-phone{flex-shrink:0;width:200px}
+.proof-phone img{width:100%;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,0.14)}
+.proof-text h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:-.02em}
+.proof-text p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+.proof-text p+p{margin-top:10px}
+
+/* ── PHONES ROW ── */
+.phones-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.phones-row img{width:100%;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,0.1);transition:transform .3s ease,box-shadow .3s ease}
+.phones-row img:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(0,0,0,0.16)}
+
+/* ── SOCIAL POSTS GRID ── */
+.social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+.social-grid img{width:100%;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);transition:transform .3s ease,box-shadow .3s ease}
+.social-grid img:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(0,0,0,0.14)}
+
+@media(max-width:580px){
+  .phones-row{grid-template-columns:1fr}
+  .social-grid{grid-template-columns:1fr}
+  .proof-strip{flex-direction:column;padding:28px 24px}
+  .proof-phone{width:100%;max-width:240px;margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-i">
+    <a href="portfolio.html" class="logo"><div class="logo-dot"></div>Elson 子洺</a>
+    <div class="nav-right">
+      <a href="case-study-double-bells-zh.html" class="lang-switch">中文</a>
+      <a href="portfolio.html" class="back">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Portfolio
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb a"></div>
+  <div class="hero-orb b"></div>
+  <div class="wrap hero-inner">
+    <div class="tag-row reveal">
+      <span class="tag o">🍦 Double Bells MY</span>
+      <span class="tag w">TikTok Management</span>
+      <span class="tag w">Team of 5</span>
+      <span class="tag w">Mar – Sep 2024</span>
+    </div>
+    <div class="hero-logo-pill reveal" style="transition-delay:.04s">
+      <img src="double bells/Logo.png" alt="Double Bells">
+    </div>
+    <h1 class="reveal" style="transition-delay:.08s">Double Bells —<br><em>Turned a stalled</em><br>account around.</h1>
+    <p class="hero-meta reveal" style="transition-delay:.16s">The account hit 160K on a lucky viral post — then stopped growing. I came in, diagnosed why, rebuilt the content strategy, and managed a 5-person team to take it from 160K to 244K in 6 months.</p>
+  </div>
+  <div class="hero-stats stagger">
+    <div class="hs"><div class="hs-num"><span class="count" data-target="160">0</span><span>K→</span></div><div class="hs-label">Starting Followers</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="244">0</span><span>K</span></div><div class="hs-label">End Followers</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="123">0</span><span class="acc">万</span></div><div class="hs-label">Top Video Views</div></div>
+    <div class="hs"><div class="hs-num"><span class="count" data-target="5">0</span><span>人</span></div><div class="hs-label">Team Size</div></div>
+  </div>
+</div>
+
+<!-- ACCOUNT PROOF -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Account</div>
+    <h2 class="sec-h2 reveal">243.9K followers. 485.2K likes.</h2>
+    <p class="sec-body reveal">Real numbers from the actual account — @lokes_aiskrim_malaysia — over the 6-month management period. Every figure is from live TikTok analytics.</p>
+    <div class="proof-strip reveal">
+      <div class="proof-phone">
+        <img src="double bells/Phone Screen.png" alt="Double Bells TikTok Profile">
+      </div>
+      <div class="proof-text">
+        <h3>@lokes_aiskrim_malaysia</h3>
+        <p>From a stalled account with declining daily views to a consistent content engine. Follower growth from 160K to 244K — driven by three content pillars applied methodically over 6 months, not luck.</p>
+        <p>Every number on that screen is the result of a deliberate format decision backed by bi-weekly data review.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- DIAGNOSIS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Diagnosis</div>
+    <h2 class="sec-h2 reveal">A lucky viral post isn't a strategy.</h2>
+    <p class="sec-body reveal">When I came in, the account had 160K followers from a single breakout video — but it had been stuck at that level for months. <strong>The first thing I did wasn't make content. It was pull data.</strong> Three months of content history, cross-referenced against growth data from the Rezeki Gang account I'd already built. The finding was clear.</p>
+    <div class="ba reveal">
+      <div class="ba-card before">
+        <div class="ba-label"><span class="ba-pill">Before</span></div>
+        <ul>
+          <li>Random comedy — trending memes, no consistent identity</li>
+          <li>No data analysis — team didn't know why the viral video worked</li>
+          <li>Content made for the creator, not the audience</li>
+          <li>Product push interspersed randomly with entertainment</li>
+          <li>Growth flatlined at 160K for months</li>
+        </ul>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label"><span class="ba-pill">After</span></div>
+        <ul>
+          <li>Street interview + interactive game formats — consistent identity</li>
+          <li>Bi-weekly data review — every decision backed by completion rate &amp; shares</li>
+          <li>Framework-first content — audience-centric approach</li>
+          <li>Brand woven naturally into engaging formats</li>
+          <li>244K followers, daily views restored to 50K–100K</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- STRATEGY -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Strategy</div>
+    <h2 class="sec-h2 reveal">Three formats. All audience-first.</h2>
+    <p class="sec-body reveal">The core shift: stop creating content the team found fun, and start creating content the audience <em>wanted to watch and share</em>. Three content pillars replaced the random posting schedule.</p>
+    <div class="strat-grid stagger">
+      <div class="sc">
+        <div class="sc-icon">🎤</div>
+        <h3>Random Street Interviews</h3>
+        <p>Approach strangers near the store and in public spaces. Ask about ice cream preferences, brand awareness. Real reactions create natural content. "Would that be me?" keeps viewers watching.</p>
+        <span class="sc-tag">Highest traffic</span>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">🎮</div>
+        <h3>Interactive Games & Giveaways</h3>
+        <p>Give away ice cream, cash challenges, mini competitions. People love watching others receive things — high entertainment value, strong brand association with generosity.</p>
+        <span class="sc-tag">RM50 Berapa Sajian hit 123万</span>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">🏆</div>
+        <h3>Themed Challenge Events</h3>
+        <p>"Find a makcik to cook a meal and win prizes" — narrative content with a real person, stakes, and a resolution. Has story arc, shareable ending, and human emotion.</p>
+        <span class="sc-tag">Community building</span>
+      </div>
+    </div>
+    <div class="phones-row reveal">
+      <img src="double bells/1.png" alt="TikTok content grid — batch 1">
+      <img src="double bells/2.png" alt="TikTok content grid — batch 2">
+      <img src="double bells/3.png" alt="TikTok content grid — batch 3">
+    </div>
+  </section>
+</div>
+
+<!-- TEAM -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">The Team</div>
+    <h2 class="sec-h2 reveal">5 people. Clear lanes. One gatekeeper.</h2>
+    <p class="sec-body reveal">Managing a content team is different from creating content solo. Every piece of content passed through my review before publishing. But making that work meant the workflow had to be clear enough that friction was minimal.</p>
+    <div class="team-row stagger">
+      <div class="tm tm-me">
+        <div class="tm-avi">🎯</div>
+        <div class="tm-info"><div class="name">Elson 子洺</div><div class="role">Strategy · Direction · Review · Data</div></div>
+      </div>
+      <div class="tm">
+        <div class="tm-avi">📷</div>
+        <div class="tm-info"><div class="name">Videographer</div><div class="role">Shoot + Edit</div></div>
+      </div>
+      <div class="tm">
+        <div class="tm-avi">🎭</div>
+        <div class="tm-info"><div class="name">On-Camera × 3</div><div class="role">Street presence + performance</div></div>
+      </div>
+    </div>
+    <div class="honest reveal" style="margin-top:28px">
+      <h3>The real challenge wasn't content — it was people.</h3>
+      <p>Some team members wanted to keep doing random comedy. <strong>My answer was data, not authority:</strong> "Let's run both approaches for two weeks and see what the numbers say." That conversation style — evidence over opinion — kept the team aligned without hierarchy friction. The lesson: <em>in creative teams, the most persuasive thing isn't seniority. It's a good A/B test.</em></p>
+    </div>
+  </section>
+</div>
+
+<!-- TOP CONTENT -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">Top Content</div>
+    <h2 class="sec-h2 reveal">The posts that moved numbers.</h2>
+    <div class="videos stagger">
+      <div class="vc">
+        <div class="vc-rank">01</div>
+        <div class="vc-dot high"></div>
+        <div class="vc-info">
+          <div class="vc-title">RM50 Berapa Sajian (Series)</div>
+          <div class="vc-meta">Brand IP series · Challenge format · Multiple episodes</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">123万</div><div class="vc-sub">Peak Views</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">02</div>
+        <div class="vc-dot high"></div>
+        <div class="vc-info">
+          <div class="vc-title">APA YANG JADI LEPAS DIA KONGSI?</div>
+          <div class="vc-meta">Community sharing reaction · High emotional resonance</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">59.7万</div><div class="vc-sub">Views</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">03</div>
+        <div class="vc-dot mid"></div>
+        <div class="vc-info">
+          <div class="vc-title">BENDA SIMPLE TAPI RAMAI KANTON!</div>
+          <div class="vc-meta">Street interview · Surprise reactions</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">39.7万</div><div class="vc-sub">Views</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">04</div>
+        <div class="vc-dot mid"></div>
+        <div class="vc-info">
+          <div class="vc-title">TAK SANGKA DIA SANGGUP TOLONG</div>
+          <div class="vc-meta">Social topic · Helping strangers story</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">29.1万</div><div class="vc-sub">Views</div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-rank">05</div>
+        <div class="vc-dot mid"></div>
+        <div class="vc-info">
+          <div class="vc-title">KAMI BAGI AIS KRIM SEBAB ADIK NI...</div>
+          <div class="vc-meta">Act of kindness · Emotional story</div>
+        </div>
+        <div class="vc-stat"><div class="vc-views">25.6万</div><div class="vc-sub">Views</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CAMPAIGN CONTENT -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">Campaign Content</div>
+    <h2 class="sec-h2 reveal">The work behind the numbers.</h2>
+    <p class="sec-body reveal">Branded campaign posts, product launches, and challenge announcements — designed and produced as part of the overall content strategy.</p>
+    <div class="social-grid stagger">
+      <img src="double bells/FB SOCIAL POST CASE1.jpg" alt="Cabaran RM50 Berapa Sajian — TikTok challenge launch">
+      <img src="double bells/FB SOCIAL POST CASE2.jpg" alt="Vico Didi &amp; Friends product campaign">
+      <img src="double bells/FB SOCIAL POST CASE3.jpg" alt="Monthly Star — Mango Frulato">
+      <img src="double bells/FB SOCIAL POST CASE4.jpg" alt="Didi &amp; Friends Crunchies launch">
+    </div>
+  </section>
+</div>
+
+<!-- RESULTS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">Results</div>
+    <h2 class="sec-h2 reveal">From stalled to 244K.</h2>
+    <div class="stats-g stagger">
+      <div class="sb">
+        <div class="sb-num"><span class="count" data-target="84">0</span><span class="acc">K</span></div>
+        <div class="sb-label">New Followers</div>
+        <div class="sb-desc">160K → 244K over 6 months of managed content.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num"><span class="count" data-target="485">0</span><span class="acc">K</span></div>
+        <div class="sb-label">Total Likes</div>
+        <div class="sb-desc">Cumulative engagement across all content on the account.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">50K<span class="acc">–</span>100K</div>
+        <div class="sb-label">Daily Views</div>
+        <div class="sb-desc">Restored from near zero back to stable daily range during the management period.</div>
+      </div>
+      <div class="sb">
+        <div class="sb-num">123<span class="acc">万</span></div>
+        <div class="sb-label">Top Video Views</div>
+        <div class="sb-desc">RM50 Berapa Sajian — a brand IP series that ran across multiple episodes.</div>
+      </div>
+    </div>
+
+    <div class="honest reveal">
+      <h3>Being honest about what the numbers didn't show.</h3>
+      <p>Followers grew. Daily views recovered. But <strong>sales conversion didn't move in measurable ways</strong> during the 6-month window. The gap between social growth and actual revenue is real — and building the bridge between them takes longer than one content cycle. The follower base was there. <strong>The content infrastructure was there. The conversion path was the missing piece.</strong> That's the honest read.</p>
+    </div>
+  </section>
+</div>
+
+<!-- LEARNINGS -->
+<div class="wrap">
+  <section>
+    <div class="sec-label reveal">What I Learned</div>
+    <h2 class="sec-h2 reveal">Managing people is harder than managing content.</h2>
+    <div class="learn-list stagger">
+      <div class="li">
+        <div class="li-num">01</div>
+        <div>
+          <h3>Data beats hierarchy in creative disagreements.</h3>
+          <p>When the team pushed back on the new direction, the answer was a 2-week test, not a command. Data from that test resolved the debate faster and cleaner than any argument about strategy could have. Build a culture where the numbers decide.</p>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">02</div>
+        <div>
+          <h3>A "lucky viral post" is a warning, not an asset.</h3>
+          <p>An account that grew on one unexplained breakout has no foundation — because no one knows why it worked. Before building on top of it, you have to figure out the mechanism. Otherwise you're building on luck.</p>
+        </div>
+      </div>
+      <div class="li">
+        <div class="li-num">03</div>
+        <div>
+          <h3>Social growth and sales conversion are two different jobs.</h3>
+          <p>Building an audience and building a revenue path both require dedicated work. 6 months was enough to fix the content engine. The sales funnel is a separate project — and one that deserves its own strategy from day one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="cta-sec reveal">
+    <h2>Want to see more?</h2>
+    <p>More case studies across content, brand, and growth.</p>
+    <div class="btns">
+      <a href="portfolio.html" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Portfolio
+      </a>
+      <a href="mailto:cht8987@gmail.com" class="btn-o">
+        Get in Touch
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+<footer><p>Elson 子洺 — Brand &amp; Content Integrator</p></footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.count[data-target]').forEach(el => animateCount(el));
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.12});
+document.querySelectorAll('.reveal,.stagger').forEach(el => io.observe(el));
+
+function animateCount(el){
+  if(el.dataset.done) return;
+  el.dataset.done='1';
+  const target = parseFloat(el.dataset.target);
+  const duration = 1500;
+  const start = performance.now();
+  function step(now){
+    const p = Math.min((now-start)/duration,1);
+    const ease = 1-Math.pow(1-p,3);
+    const val = Math.round(ease*target*10)/10;
+    el.textContent = val%1===0?val:val.toFixed(1);
+    if(p<1) requestAnimationFrame(step);
+    else el.textContent=target%1===0?target:target.toFixed(1);
+  }
+  requestAnimationFrame(step);
+}
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.hero-stats .count').forEach(el => animateCount(el));
+  document.querySelectorAll('.hero-stats,.hero .reveal').forEach(el => el.classList.add('visible'));
+});
+</script>
+</body>
+</html>

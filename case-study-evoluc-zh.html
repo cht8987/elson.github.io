@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evoluc Marketing · 案例研究</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #8B5CF6;
+    --purple-light: #A78BFA;
+    --purple-dark: #5B21B6;
+    --purple-dim: rgba(139,92,246,0.1);
+    --purple-border: rgba(139,92,246,0.22);
+    --indigo: #6366F1;
+    --bg: #05020f;
+    --bg2: #090515;
+    --surface: rgba(255,255,255,0.04);
+    --surface2: rgba(255,255,255,0.07);
+    --text: #f0eeff;
+    --text-muted: rgba(240,238,255,0.5);
+    --text-dim: rgba(240,238,255,0.3);
+    --red: #EF4444;
+    --red-dim: rgba(239,68,68,0.1);
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.1);
+    --yellow: #EAB308;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(5,2,15,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(139,92,246,0.1);
+  }
+  nav .back { color: var(--purple-light); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; transition: opacity 0.2s; }
+  nav .back:hover { opacity: 0.7; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .lang { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border: 1px solid rgba(139,92,246,0.2); border-radius: 100px; transition: all 0.2s; }
+  nav .lang:hover { border-color: var(--purple-light); color: var(--purple-light); }
+  nav .tag { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 8rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #0d0520 0%, #05020f 70%);
+  }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.28; animation: blobFloat 10s ease-in-out infinite; }
+  .blob1 { width: 600px; height: 600px; background: radial-gradient(circle, #8B5CF6, transparent); top: -20%; left: -15%; }
+  .blob2 { width: 400px; height: 400px; background: radial-gradient(circle, #6366F1, transparent); bottom: 0; right: -10%; animation-delay: -4s; }
+  .blob3 { width: 280px; height: 280px; background: radial-gradient(circle, #A78BFA, transparent); top: 35%; right: 20%; animation-delay: -7s; }
+  @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-30px) scale(1.05)} 66%{transform:translate(-15px,15px) scale(0.97)} }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; border-radius: 100px;
+    background: var(--purple-dim); border: 1px solid var(--purple-border);
+    font-size: 0.75rem; color: var(--purple-light); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2rem; position: relative; z-index: 1; animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.15s both;
+  }
+  .hero h1 .accent { color: var(--purple-light); }
+  .hero .subtitle {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--text-muted); max-width: 580px; margin: 1.5rem auto 3rem;
+    position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.45s both; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--purple-light); line-height: 1; }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .scroll-hint .arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--purple-light), transparent); animation: arrowPulse 2s ease-in-out infinite; }
+  @keyframes arrowPulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* LAYOUT */
+  .section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--purple-light); margin-bottom: 1rem; padding: 0.3rem 0.8rem;
+    background: var(--purple-dim); border: 1px solid var(--purple-border); border-radius: 4px;
+  }
+  h2 { font-family: 'Fraunces', 'PingFang SC', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  h3 { font-family: 'Fraunces', 'PingFang SC', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.6rem; }
+  p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--purple-border), transparent); margin: 5rem 0; }
+
+  /* CONTEXT STRIP */
+  .context-strip {
+    background: var(--surface); border: 1px solid var(--purple-border); border-radius: 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; overflow: hidden; margin-bottom: 3rem;
+  }
+  .context-item { padding: 1.2rem 1.5rem; border-right: 1px solid rgba(139,92,246,0.1); }
+  .context-item:last-child { border-right: none; }
+  .context-item .ci-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .context-item .ci-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* CARD */
+  .card { background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.8rem; transition: border-color 0.3s; }
+  .card:hover { border-color: var(--purple-border); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+
+  /* POWER STRUCTURE */
+  .power-visual {
+    background: var(--surface); border: 1px solid var(--purple-border); border-radius: 12px;
+    padding: 2rem; margin: 2rem 0; position: relative; overflow: hidden;
+  }
+  .power-visual::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--purple), var(--indigo));
+  }
+  .power-bars { display: flex; gap: 1rem; align-items: flex-end; justify-content: center; margin: 1.5rem 0; }
+  .power-bar-wrap { text-align: center; }
+  .power-bar { border-radius: 8px 8px 0 0; width: 80px; transition: height 1s ease; height: 0; }
+  .power-bar.partner { background: linear-gradient(to top, var(--purple-dark), var(--purple-light)); }
+  .power-bar.me { background: rgba(139,92,246,0.25); border: 1px solid rgba(139,92,246,0.3); }
+  .power-bar.animated.partner { height: 160px; }
+  .power-bar.animated.me { height: 75px; }
+  .power-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; }
+  .power-pct { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700; }
+  .power-pct.partner { color: var(--purple-light); }
+  .power-pct.me { color: var(--text-muted); }
+
+  /* PROJECT GRID */
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.7rem; margin-top: 1.5rem; }
+  .project-chip {
+    padding: 0.8rem 1rem; background: var(--surface); border: 1px solid rgba(139,92,246,0.15);
+    border-radius: 8px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.6rem;
+  }
+  .project-chip .chip-icon { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .project-chip .chip-icon.food { background: #F59E0B; }
+  .project-chip .chip-icon.tech { background: #38BDF8; }
+  .project-chip .chip-icon.med { background: #34D399; }
+
+  /* TRAP TABLE */
+  .trap-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.85rem; }
+  .trap-table th { text-align: left; padding: 0.8rem 1rem; background: rgba(139,92,246,0.08); color: var(--purple-light); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(139,92,246,0.15); }
+  .trap-table td { padding: 0.8rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); vertical-align: top; }
+  .trap-table tr:last-child td { border-bottom: none; }
+  .trap-table td:first-child { color: var(--text); font-weight: 500; }
+  .trap-table td.bad { color: #EF4444; }
+  .trap-table td.neutral { color: var(--yellow); }
+
+  /* LESSONS */
+  .lesson-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .lesson-col { background: var(--surface); border-radius: 10px; padding: 1.5rem; }
+  .lesson-col.good { border-top: 2px solid var(--green); }
+  .lesson-col.bad { border-top: 2px solid var(--red); }
+  .lesson-col h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lesson-col.good h4 { color: var(--green); }
+  .lesson-col.bad h4 { color: var(--red); }
+  .lesson-item { display: flex; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-muted); align-items: flex-start; }
+  .lesson-item .dot { flex-shrink: 0; margin-top: 0.35rem; width: 6px; height: 6px; border-radius: 50%; }
+  .lesson-col.good .dot { background: var(--green); }
+  .lesson-col.bad .dot { background: var(--red); }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: var(--purple-dim); border: 1px solid var(--purple-border); border-left: 4px solid var(--purple);
+    border-radius: 8px; padding: 1.5rem 2rem; margin-top: 2rem;
+  }
+  .takeaway p { color: var(--text); font-size: 1rem; line-height: 1.7; margin: 0; }
+
+  footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(139,92,246,0.1); color: var(--text-dim); font-size: 0.8rem; }
+  footer a { color: var(--purple-light); text-decoration: none; }
+  footer a:hover { opacity: 0.7; }
+
+  .reveal, .reveal-r, .stagger, .fade { opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal { transform: translateY(30px); }
+  .reveal-r { transform: translateX(30px); }
+  .stagger { transform: translateY(20px); }
+  .fade { transform: none; }
+  .reveal.visible, .reveal-r.visible, .stagger.visible, .fade.visible { opacity: 1; transform: none; }
+  .stagger:nth-child(1){transition-delay:0.05s} .stagger:nth-child(2){transition-delay:0.15s} .stagger:nth-child(3){transition-delay:0.25s} .stagger:nth-child(4){transition-delay:0.35s} .stagger:nth-child(5){transition-delay:0.45s} .stagger:nth-child(6){transition-delay:0.55s}
+
+  @media(max-width:600px){.lesson-row{grid-template-columns:1fr}.hero-stats{gap:1.5rem}.power-bars{gap:0.5rem}}
+
+  /* ── Evoluc 照片样式 ── */
+  .ev-hero-logo{display:flex;justify-content:center;margin-bottom:1.8rem;position:relative;z-index:1}
+  .ev-hero-logo img{height:72px;width:auto;object-fit:contain;opacity:0.9;filter:drop-shadow(0 0 32px rgba(139,92,246,0.4))}
+  .ev-artwork-grid{columns:4;column-gap:12px;margin-top:2rem}
+  .ev-artwork-grid img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(139,92,246,0.2);transition:transform .3s ease,box-shadow .3s;break-inside:avoid;margin-bottom:12px}
+  .ev-artwork-grid img:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(139,92,246,0.25)}
+  @media(max-width:600px){.ev-artwork-grid{columns:2}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="portfolio.html" class="back">← 返回作品集</a>
+  <div class="nav-right">
+    <a href="case-study-evoluc.html" class="lang">EN</a>
+    <span class="tag">案例研究 · 2021–2024</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="ev-hero-logo">
+    <img src="evoluc/logo.png" alt="Evoluc Marketing 标志" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-badge">🧬 多品牌 · 孵化平台 · 3年</div>
+  <h1><span class="accent">Evoluc</span><br>Marketing</h1>
+  <p class="subtitle">三年，从内部搭建一个多品牌孵化平台。5+ 个并行项目。33% 股份。0% 决策权。以及一个缓慢清醒的认知——身为 CEO，并不等于真正掌控。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">3年</div>
+      <div class="label">公司存续时间</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">5+</div>
+      <div class="label">孵化品牌数量</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">33%</div>
+      <div class="label">我的股权</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="arrow"></div>
+    向下滚动
+  </div>
+</section>
+
+<!-- 背景 -->
+<section class="section">
+  <div class="context-strip reveal">
+    <div class="context-item"><div class="ci-label">时间</div><div class="ci-val">2021–2024</div></div>
+    <div class="context-item"><div class="ci-label">周期</div><div class="ci-val">2–3 年</div></div>
+    <div class="context-item"><div class="ci-label">职位</div><div class="ci-val">CEO（33% 股权）</div></div>
+    <div class="context-item"><div class="ci-label">合伙人</div><div class="ci-val">67% 多数股</div></div>
+    <div class="context-item"><div class="ci-label">团队</div><div class="ci-val">2–5 人</div></div>
+  </div>
+
+  <div class="section-label reveal">起点</div>
+  <h2 class="reveal">一个用来孵化品牌的平台。由我搭建。由别人掌控。</h2>
+  <p class="reveal">我与一位相识近 10 年的商业伙伴共同创办了 Evoluc Marketing——他是一位拥有资本、热衷打造新品牌的食品创业者。他出资，我执行。33/67 的股权分配，签约时看似合理，最终却成为整个合作最核心的张力所在。</p>
+  <p class="reveal">模式是：一个<strong>设计 + 销售 + 孵化的综合平台</strong>。我们自主孵化品牌，委托第三方生产，通过渠道分销销售。我负责所有运营层面——品牌设计、产品规划、代理体系、社交媒体与日常执行。唯独除了最终决策。</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- 结构问题 -->
+<section class="section">
+  <div class="section-label reveal">结构性困境</div>
+  <h2 class="reveal">33% 的执行者。67% 的决定权。</h2>
+
+  <div class="power-visual reveal" id="power-chart">
+    <div class="power-bars">
+      <div class="power-bar-wrap">
+        <div class="power-bar partner"></div>
+        <div class="power-pct partner">67%</div>
+        <div class="power-label">合伙人<br>决策权</div>
+      </div>
+      <div class="power-bar-wrap">
+        <div class="power-bar me"></div>
+        <div class="power-pct me">33%</div>
+        <div class="power-label">我<br>执行权</div>
+      </div>
+    </div>
+    <p style="text-align:center; font-size:0.85rem; margin-top:1rem; color:var(--text-muted);">他出了钱。我建了它。谁都没有完整拥有结果。</p>
+  </div>
+
+  <p class="reveal">从纸面上看，这是一种常见的安排。在实际操作中，它意味着：每一个重要决策——新项目立项、预算分配、战略转向——都需要与一个不在一线的人对齐。决策进展缓慢，执行速度与审批速度之间的落差，一次次消耗掉本可积累的动能。</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- 项目 -->
+<section class="section">
+  <div class="section-label reveal">我们做了什么</div>
+  <h2 class="reveal">什么都做了。但没有任何一件做得足够深。</h2>
+  <p class="reveal">Evoluc 在食品、科技与医疗领域同时进行多个实验。每一个品牌都由我从零搭建：Logo、包装、网站、代理体系、社交内容。能力是真实的，聚焦是缺失的。</p>
+
+  <div class="project-grid">
+    <div class="project-chip stagger"><div class="chip-icon food"></div>WP: Chong &amp; Ho（公司网站）</div>
+    <div class="project-chip stagger"><div class="chip-icon food"></div>年饼产品目录</div>
+    <div class="project-chip stagger"><div class="chip-icon food"></div>月饼项目</div>
+    <div class="project-chip stagger"><div class="chip-icon food"></div>福安康食品（食品品牌）</div>
+    <div class="project-chip stagger"><div class="chip-icon tech"></div>SMARTTECH 管理系统</div>
+    <div class="project-chip stagger"><div class="chip-icon tech"></div>ESP（会员制销售平台）</div>
+    <div class="project-chip stagger"><div class="chip-icon tech"></div>外汇代理系统</div>
+    <div class="project-chip stagger"><div class="chip-icon med"></div>医疗产品代理</div>
+  </div>
+
+  <p class="reveal" style="margin-top:1.5rem;">三年间，八个独立项目。每一个都需要品牌设计、网站或系统、销售渠道和持续管理。我同时推进这一切——全公司 2 到 5 人，视季节而定。</p>
+
+  <!-- 品牌设计作品集 -->
+  <div class="section-label reveal" style="margin-top:3rem;">品牌设计作品集</div>
+  <p class="reveal">这些品牌的每一份视觉资产均由我们内部完成——从视觉识别系统、推广物料、包装概念到营销设计。</p>
+  <div class="ev-artwork-grid reveal">
+    <img src="evoluc/artwork/1.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/3.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/4.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/5.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/6.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/7.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/8.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/9.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/10.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/11.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/12.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/13.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/14.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+    <img src="evoluc/artwork/15.png" alt="Evoluc 品牌设计作品" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 陷阱 -->
+<section class="section">
+  <div class="section-label reveal">那些陷阱</div>
+  <h2 class="reveal">为什么「什么都做」最终等于「什么都没做成」。</h2>
+
+  <table class="trap-table reveal">
+    <thead>
+      <tr>
+        <th>陷阱</th>
+        <th>发生了什么</th>
+        <th>结果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>过度多元化</td>
+        <td>每隔几个月一个新项目，每次都从零开始</td>
+        <td class="bad">没有任何一个达到临界规模</td>
+      </tr>
+      <tr>
+        <td>决策落差</td>
+        <td>需要合伙人审批，他常常不在状态或意见不一致</td>
+        <td class="bad">战略反复停滞</td>
+      </tr>
+      <tr>
+        <td>收入模式</td>
+        <td>尝试客户服务（无利润），再试品牌孵化（持续烧钱）</td>
+        <td class="bad">始终没有可持续的收入来源</td>
+      </tr>
+      <tr>
+        <td>单点依赖</td>
+        <td>所有设计、运营、销售都经由我——没有任何系统能脱离我运转</td>
+        <td class="bad">处处成为瓶颈</td>
+      </tr>
+      <tr>
+        <td>资本回收</td>
+        <td>合伙人最终从各项目中收回了本金</td>
+        <td class="neutral">干净退出，没有收益</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- 离开 -->
+<section class="section">
+  <div class="section-label reveal">离开的那一刻</div>
+  <h2 class="reveal">三个原因。一个时机。</h2>
+  <p class="reveal">我在 2024 年离开了 Evoluc。不是因为某一件事彻底崩溃，而是三股力量同时汇聚：</p>
+
+  <div class="card-grid">
+    <div class="card stagger">
+      <h3>🧠 我想离开</h3>
+      <p>三年高强度执行、低度自主权之后，我需要搭建一些真正属于自己的东西——而不是顶着 CEO 的头衔，却没有最终话语权。</p>
+    </div>
+    <div class="card stagger">
+      <h3>🔭 更好的机会出现了</h3>
+      <p>Lokes 冰淇淋的创始人邀请我加入 Heewon APP 项目——一个体量更大、挑战更高的产品，结构不同，充满新鲜的能量。</p>
+    </div>
+    <div class="card stagger">
+      <h3>⚡ 文化已经破裂</h3>
+      <p>太多让我不舒服的时刻——没有我参与的决定、与贡献不匹配的认可、一个越来越难以共事的氛围。</p>
+    </div>
+  </div>
+
+  <p class="reveal" style="margin-top:2rem;">公司没有倒闭，它还在继续。但我离开时清楚地明白：顶着 CEO 头衔、持有少数股权、没有否决权，在功能上与一名高级员工没有本质区别——而这个差距，比任何营收数字都更重要。</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- 收获 -->
+<section class="section">
+  <div class="section-label reveal">学到了什么</div>
+  <h2 class="reveal">最重要的教训，不是关于生意，而是关于权力。</h2>
+
+  <div class="lesson-row">
+    <div class="lesson-col good reveal">
+      <h4>✓ 我积累的能力</h4>
+      <div class="lesson-item"><div class="dot"></div> 全链路品牌运营能力（设计 → 销售 → 系统搭建）</div>
+      <div class="lesson-item"><div class="dot"></div> 横跨食品、科技、医疗的多品牌并行管理经验</div>
+      <div class="lesson-item"><div class="dot"></div> 从零到完整品牌上线，数周内完成的执行力</div>
+      <div class="lesson-item"><div class="dot"></div> 代理体系设计与渠道管理的端到端经验</div>
+    </div>
+    <div class="lesson-col bad reveal">
+      <h4>✗ 失败的地方</h4>
+      <div class="lesson-item"><div class="dot"></div> 33/67 的股权 = 0 实际决策权——此后绝不再接受这种结构</div>
+      <div class="lesson-item"><div class="dot"></div> 多元化是早期公司的陷阱——应先专注一件事，把它做透</div>
+      <div class="lesson-item"><div class="dot"></div> 把「CEO 头衔」误认为真正的创始人权威——两者截然不同</div>
+      <div class="lesson-item"><div class="dot"></div> 始终没有不依赖持续烧钱就能运转的收入模式</div>
+    </div>
+  </div>
+
+  <div class="takeaway reveal">
+    <p>「股权结构即命运。一个持有 33%、凡事需要请示的 CEO，本质上是个有好听头衔的高级员工。在下一次创业之前，我会首先问的问题是：谁有最终决定权？如果不是我，我需要清楚地知道自己在签署什么。」</p>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">← <a href="portfolio.html">返回所有案例</a></p>
+  <p>Elson 子洺 · 品牌与内容策略师 · 马来西亚</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal,.reveal-r,.stagger,.fade').forEach(el=>obs.observe(el));
+
+  // Power chart bars animation
+  const powerObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.power-bar').forEach(b=>b.classList.add('animated'));
+        powerObs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  const pc = document.getElementById('power-chart');
+  if(pc) powerObs.observe(pc);
+</script>
+</body>
+</html>

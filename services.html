@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services — Elson 子洺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:        #1D1D1F;
+  --ink-soft:   #3D3D3F;
+  --ink-muted:  #6E6E73;
+  --bg:         #F5F5F7;
+  --white:      #FFFFFF;
+  --line:       rgba(0,0,0,0.08);
+  --green:      #34A853;
+  --green-dark: #1E7E34;
+  --green-dim:  rgba(52,168,83,0.1);
+  --radius:     20px;
+  --radius-lg:  28px;
+  --radius-xl:  40px;
+  --blob-pink:  #FFB3C6;
+  --blob-mint:  #A8F0C0;
+  --blob-blue:  #A8D4F5;
+  --blob-purple:#C8AAFF;
+  --blob-amber: #FFD199;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 36px; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 200; padding: 0;
+  background: rgba(245,245,247,0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.nav-inner { display: flex; justify-content: space-between; align-items: center; height: 52px; }
+.logo {
+  font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px;
+  letter-spacing: -0.03em; color: var(--ink); text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  color: var(--ink-muted); text-decoration: none; font-size: 14px;
+  font-weight: 500; transition: color .2s; letter-spacing: -0.01em;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--ink); }
+.nav-cta {
+  background: var(--ink) !important; color: white !important;
+  padding: 8px 16px; border-radius: 100px; font-size: 13px !important;
+  transition: opacity .2s !important;
+}
+.nav-cta:hover { opacity: .82 !important; }
+.nav-lang {
+  font-size: 12px !important; font-weight: 600 !important;
+  padding: 5px 12px; border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 100px; color: var(--ink-muted) !important;
+  transition: border-color .2s, color .2s !important;
+}
+.nav-lang:hover { border-color: var(--ink) !important; color: var(--ink) !important; }
+@media (max-width: 700px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+/* HERO */
+.services-hero {
+  padding: 100px 0 80px; position: relative; overflow: hidden;
+  text-align: center;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.hblob {
+  position: absolute; border-radius: 50%; filter: blur(110px);
+  animation: hblobFloat 12s ease-in-out infinite;
+}
+.hblob-1 { width: 500px; height: 500px; background: var(--blob-pink); top: -200px; right: -100px; opacity: .2; }
+.hblob-2 { width: 400px; height: 400px; background: var(--blob-mint); bottom: -100px; left: -80px; opacity: .18; animation-delay: -4s; }
+.hblob-3 { width: 300px; height: 300px; background: var(--blob-purple); top: 20%; left: 30%; opacity: .12; animation-delay: -8s; }
+@keyframes hblobFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(25px,-20px) scale(1.05); }
+  66%      { transform: translate(-15px,25px) scale(0.96); }
+}
+.services-hero .wrap { position: relative; z-index: 1; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; color: var(--green-dark);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;
+}
+.section-tag::before { content: ""; width: 20px; height: 2px; background: var(--green); }
+.services-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(52px, 7vw, 96px); font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1.0; margin-bottom: 20px;
+}
+.services-hero h1 em { font-style: italic; color: var(--green-dark); font-weight: 500; }
+.services-hero p {
+  font-size: 20px; color: var(--ink-muted); max-width: 560px;
+  margin: 0 auto 48px; line-height: 1.55;
+}
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--ink); color: white; padding: 14px 28px; border-radius: 100px;
+  font-size: 15px; font-weight: 600; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: opacity .2s, transform .25s ease;
+}
+.btn-primary:hover { opacity: .82; transform: translateY(-2px); }
+.btn-ghost {
+  background: rgba(0,0,0,0.06); color: var(--ink-soft); border: 1px solid var(--line);
+  padding: 14px 28px; border-radius: 100px; font-size: 15px; font-weight: 600;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  transition: background .2s, transform .25s ease;
+}
+.btn-ghost:hover { background: rgba(0,0,0,0.1); transform: translateY(-2px); }
+
+/* TRUST STRIP */
+.trust-strip {
+  background: var(--white); border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line); padding: 28px 0;
+}
+.trust-inner {
+  display: flex; gap: 40px; justify-content: center; align-items: center; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 600; color: var(--ink-soft);
+}
+.trust-icon { font-size: 20px; }
+
+/* SERVICES GRID */
+.services-section { padding: 100px 0; }
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; align-items: start;
+}
+.service-card {
+  background: var(--white); border-radius: var(--radius-xl);
+  padding: 44px 36px; position: relative; overflow: hidden;
+  border: 2px solid transparent;
+  transition: transform .35s cubic-bezier(.22,.68,0,1.2), box-shadow .35s ease, border-color .2s;
+}
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.1);
+}
+.service-card.featured {
+  background: var(--ink); color: white;
+  border-color: transparent;
+}
+.service-card.featured:hover { border-color: var(--green); }
+.service-card:not(.featured):hover { border-color: var(--green); }
+/* Top accent line */
+.service-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--green); border-radius: 3px 3px 0 0;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s ease;
+}
+.service-card:hover::before { transform: scaleX(1); }
+.service-card.featured::before { transform: scaleX(1); background: var(--green); }
+
+.service-icon {
+  width: 56px; height: 56px; border-radius: 18px;
+  background: var(--green); display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 24px;
+}
+.service-card.featured .service-icon { background: rgba(52,168,83,0.3); }
+.service-badge {
+  position: absolute; top: 24px; right: 24px;
+  padding: 5px 12px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--green); color: white;
+}
+.service-title {
+  font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 12px;
+}
+.service-card.featured .service-title { color: white; }
+.service-desc {
+  font-size: 15px; color: var(--ink-soft); margin-bottom: 28px; line-height: 1.65;
+}
+.service-card.featured .service-desc { color: rgba(255,255,255,0.7); }
+.service-includes {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ink-muted); margin-bottom: 12px;
+}
+.service-card.featured .service-includes { color: rgba(255,255,255,0.4); }
+.service-list {
+  list-style: none; margin-bottom: 32px;
+}
+.service-list li {
+  font-size: 14px; color: var(--ink-soft); padding: 10px 0 10px 24px;
+  border-bottom: 1px solid var(--line); position: relative; line-height: 1.4;
+}
+.service-card.featured .service-list li { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.1); }
+.service-list li::before {
+  content: "✓"; position: absolute; left: 0;
+  color: var(--green); font-weight: 700; font-size: 13px;
+}
+.service-list li:last-child { border-bottom: none; }
+.service-price {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-top: 24px; border-top: 1.5px solid var(--line);
+}
+.service-card.featured .service-price { border-color: rgba(255,255,255,0.15); }
+.service-price .from-label {
+  font-size: 11px; color: var(--ink-muted); text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 600; display: block; margin-bottom: 4px;
+}
+.service-card.featured .from-label { color: rgba(255,255,255,0.45); }
+.service-price .price-amt {
+  font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700;
+  color: var(--green-dark); letter-spacing: -0.03em; line-height: 1;
+}
+.service-card.featured .price-amt { color: white; }
+.service-price .price-note { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+.service-card.featured .price-note { color: rgba(255,255,255,0.4); }
+.service-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--green-dark);
+  text-decoration: none; margin-top: 16px;
+  transition: gap .2s;
+}
+.service-cta:hover { gap: 10px; }
+.service-card.featured .service-cta { color: var(--green); }
+
+@media (max-width: 960px) { .services-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; } }
+
+/* PROCESS SECTION */
+.process-section { padding: 100px 0; background: var(--white); }
+.process-section h2 {
+  font-family: 'Fraunces', serif; font-size: clamp(36px,4vw,52px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px;
+}
+.process-section .sub { font-size: 18px; color: var(--ink-muted); max-width: 500px; margin-bottom: 60px; }
+.process-steps { display: flex; flex-direction: column; gap: 0; max-width: 760px; }
+.process-step {
+  display: grid; grid-template-columns: 56px 1fr;
+  gap: 28px; padding-bottom: 48px; position: relative;
+}
+.process-step:last-child { padding-bottom: 0; }
+.process-step::before {
+  content: ''; position: absolute; left: 27px; top: 56px;
+  width: 2px; height: calc(100% - 56px);
+  background: linear-gradient(to bottom, var(--green), transparent);
+}
+.process-step:last-child::before { display: none; }
+.ps-num {
+  width: 56px; height: 56px; border-radius: 18px;
+  background: var(--green); display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: white;
+  flex-shrink: 0;
+}
+.ps-content h3 {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 8px; margin-top: 14px;
+}
+.ps-content p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+
+/* FAQ */
+.faq-section { padding: 100px 0; }
+.faq-section h2 {
+  font-family: 'Fraunces', serif; font-size: clamp(36px,4vw,52px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 48px;
+}
+.faq-list { max-width: 760px; display: flex; flex-direction: column; gap: 2px; }
+.faq-item {
+  background: var(--white); border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--line);
+}
+.faq-q {
+  padding: 22px 28px; font-size: 16px; font-weight: 600; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  transition: background .2s; user-select: none;
+}
+.faq-q:hover { background: rgba(0,0,0,0.02); }
+.faq-arrow {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 14px;
+  transition: transform .3s ease, background .2s;
+}
+.faq-item.open .faq-arrow { transform: rotate(45deg); background: var(--green); color: white; }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s cubic-bezier(.22,.68,0,1.2), padding .3s ease;
+  padding: 0 28px;
+  font-size: 15px; color: var(--ink-soft); line-height: 1.7;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 28px 22px; }
+
+/* CTA BAND */
+.cta-band {
+  background: var(--ink); color: white; border-radius: var(--radius-xl);
+  padding: 80px 72px; text-align: center; position: relative; overflow: hidden;
+  margin-bottom: 40px;
+}
+.cta-band::before {
+  content: ""; position: absolute; top: -100px; right: -80px;
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(52,168,83,0.4), transparent 70%);
+  border-radius: 50%;
+}
+.cta-band h2 {
+  font-family: 'Fraunces', serif; font-size: clamp(36px,4.5vw,56px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 16px; position: relative;
+}
+.cta-band h2 em { font-style: italic; color: var(--green); }
+.cta-band p {
+  font-size: 17px; color: rgba(255,255,255,0.65); max-width: 440px;
+  margin: 0 auto 40px; position: relative;
+}
+.cta-band-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+.btn-g { background: var(--green); color: white; padding: 16px 32px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: opacity .2s, transform .25s; }
+.btn-g:hover { opacity: .88; transform: translateY(-2px); }
+.btn-w { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; backdrop-filter: blur(8px); padding: 16px 32px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background .2s, transform .25s; }
+.btn-w:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+@media (max-width: 600px) { .cta-band { padding: 56px 28px; } }
+
+/* FOOTER */
+footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
+.foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--ink-muted); font-size: 13px; }
+.foot-links { display: flex; gap: 20px; }
+.foot-links a { color: var(--ink-soft); text-decoration: none; font-weight: 500; font-size: 13px; transition: color .2s; }
+.foot-links a:hover { color: var(--ink); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.22,.68,0,1.2), transform .8s cubic-bezier(.22,.68,0,1.2); }
+.reveal.visible { opacity: 1; transform: none; }
+.stagger-grid > * { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.stagger-grid > *.visible { opacity: 1; transform: none; }
+.stagger-grid > *:nth-child(1){transition-delay:.05s} .stagger-grid > *:nth-child(2){transition-delay:.15s} .stagger-grid > *:nth-child(3){transition-delay:.25s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="portfolio.html" class="logo"><div class="logo-dot"></div>Elson 子洺</a>
+    <div class="nav-links">
+      <a href="portfolio.html#about">About</a>
+      <a href="portfolio.html#gallery">Gallery</a>
+      <a href="portfolio.html#work">Work</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="services-zh.html" class="nav-lang">中文</a>
+      <a href="#contact" class="nav-cta">Let's talk →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="services-hero">
+  <div class="hero-bg">
+    <div class="hblob hblob-1"></div>
+    <div class="hblob hblob-2"></div>
+    <div class="hblob hblob-3"></div>
+  </div>
+  <div class="wrap">
+    <div class="section-tag">Services</div>
+    <h1>Three ways we can<br>work <em>together</em>.</h1>
+    <p>Pick the engagement that fits where you are. Pricing in MYR — happy to quote in SGD/USD for regional clients.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/60123456789" class="btn-primary">WhatsApp to inquire</a>
+      <a href="portfolio.html#work" class="btn-ghost">← View case studies</a>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="wrap">
+    <div class="trust-inner">
+      <div class="trust-item"><span class="trust-icon">🇲🇾</span> Based in KL · SEA market expertise</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> 14 years of hands-on experience</div>
+      <div class="trust-item"><span class="trust-icon">🎯</span> Strategy → design → content, one person</div>
+      <div class="trust-item"><span class="trust-icon">💬</span> Replies within 1 working day</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="wrap">
+    <div class="services-grid stagger-grid">
+
+      <!-- Card 1 -->
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <div class="service-title">Brand Identity</div>
+        <p class="service-desc">For founders who have a product but no brand yet. We define who you are, who you're for, and what you look and sound like — built to last.</p>
+        <div class="service-includes">What's included</div>
+        <ul class="service-list">
+          <li>Brand positioning &amp; story</li>
+          <li>Naming &amp; tagline (if needed)</li>
+          <li>Logo &amp; visual identity system</li>
+          <li>Colour, type &amp; photography direction</li>
+          <li>Brand guidelines document</li>
+        </ul>
+        <div class="service-price">
+          <div>
+            <span class="from-label">Starts from</span>
+            <div class="price-amt">RM 8K</div>
+            <div class="price-note">One-time project</div>
+          </div>
+          <a href="https://wa.me/60123456789" class="service-cta">Get a quote →</a>
+        </div>
+      </div>
+
+      <!-- Card 2 (Featured) -->
+      <div class="service-card featured">
+        <div class="service-badge">Most popular</div>
+        <div class="service-icon">🚀</div>
+        <div class="service-title">Content &amp; Social Growth</div>
+        <p class="service-desc">My favorite type of project. End-to-end content engine — strategy, production, posting, analytics. The reason most clients come back for more.</p>
+        <div class="service-includes">What's included</div>
+        <ul class="service-list">
+          <li>Channel strategy &amp; format design</li>
+          <li>Monthly content calendar &amp; scripts</li>
+          <li>Shoot, edit, copy &amp; scheduling</li>
+          <li>Community management</li>
+          <li>Monthly performance report</li>
+        </ul>
+        <div class="service-price">
+          <div>
+            <span class="from-label">From / month</span>
+            <div class="price-amt">RM 6K+</div>
+            <div class="price-note">Monthly retainer</div>
+          </div>
+          <a href="https://wa.me/60123456789" class="service-cta">Get a quote →</a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <div class="service-title">0 → 1 Launch Sprint</div>
+        <p class="service-desc">A 90-day, all-in package. Brand, content engine, and a launch moment — built together, shipped fast, then handed off cleanly with a full playbook.</p>
+        <div class="service-includes">What's included</div>
+        <ul class="service-list">
+          <li>Full brand identity package</li>
+          <li>3 months of content production</li>
+          <li>Launch campaign &amp; PR push</li>
+          <li>Agent/influencer seeding plan</li>
+          <li>Handoff playbook &amp; SOPs</li>
+        </ul>
+        <div class="service-price">
+          <div>
+            <span class="from-label">Project rate</span>
+            <div class="price-amt">RM 25K+</div>
+            <div class="price-note">90-day engagement</div>
+          </div>
+          <a href="https://wa.me/60123456789" class="service-cta">Get a quote →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">How it works</div>
+      <h2>From first message<br>to living brand.</h2>
+      <p class="sub">No long onboarding, no committee approvals. Here's what working together actually looks like.</p>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="ps-num">1</div>
+        <div class="ps-content">
+          <h3>Discovery call (30 min)</h3>
+          <p>We talk through where you are, what you're trying to build, and whether I'm the right fit. No pitch — just an honest conversation. I'll ask the hard questions early.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">2</div>
+        <div class="ps-content">
+          <h3>Proposal &amp; scope</h3>
+          <p>Based on the call, I'll send a clear scope document within 2 working days. Fixed scope or retainer — no surprise invoices, no scope creep without mutual agreement.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">3</div>
+        <div class="ps-content">
+          <h3>Kickoff &amp; strategy</h3>
+          <p>We lock in the direction before any creative work starts. You'll sign off on positioning, audience definition, and platform strategy before a single pixel is designed.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">4</div>
+        <div class="ps-content">
+          <h3>Build, review, refine</h3>
+          <p>I work fast. Most brand deliverables within 2 weeks of kickoff. Content retainers are reviewed monthly. You have a direct line to me — not an account manager.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">5</div>
+        <div class="ps-content">
+          <h3>Handoff or ongoing</h3>
+          <p>Project clients get a full handoff package so your team can run it independently. Retainer clients stay with me monthly — most end up long-term partners.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">FAQ</div>
+      <h2>Straight answers to the questions<br>everyone asks first.</h2>
+    </div>
+
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <div class="faq-q">
+          Do you work with clients outside Malaysia?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">Yes — the majority of my work is for Malaysian and Singapore-based clients, but I've also worked with brands across Southeast Asia. All communication is remote-friendly. I quote in MYR, SGD, or USD depending on where you are.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          What industries do you specialize in?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">F&amp;B, lifestyle, fashion, creator/IP brands, and tech startups. I work particularly well with brands targeting the Malay-speaking market, the Chinese community in Malaysia, and the broader SEA English-speaking audience. If you're targeting multiple segments, even better — that's where my multilingual edge helps.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          How many clients do you take on at once?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">I keep a tight roster — usually 2–3 active retainer clients plus 1 project at a time. This isn't a volume game. If I can't give your brand real attention, I won't take it on. That's why it's worth reaching out early if you're thinking Q3–Q4.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          What's the difference between you and an agency?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">With an agency, you're paying for overhead, account management, junior staff learning on your budget, and a deck every month. With me, you get the person who actually thinks about your brand every day — I write the strategy, design the identity, and produce the content. No middlemen, no telephone game.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          Can I start with just one service and add more later?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">Absolutely. Many clients start with a brand identity project and then move into a content retainer once the brand feels solid. Others start with content and realize they need the identity tightened up. There's no hard upsell — I'll tell you honestly what you actually need.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          How quickly can you start?
+          <span class="faq-arrow">+</span>
+        </div>
+        <div class="faq-a">Typically 2–4 weeks from signed agreement, depending on current capacity. For urgent launches I sometimes have a faster track available — mention it in your first message and I'll let you know what's possible.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section id="contact" style="padding: 40px 0 100px;">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Ready to build something <em>real</em>?</h2>
+      <p>I reply within 1 working day. No forms, no automated flows — just a direct conversation.</p>
+      <div class="cta-band-btns">
+        <a href="https://wa.me/60123456789" class="btn-g">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+          WhatsApp me
+        </a>
+        <a href="mailto:cht8987@gmail.com" class="btn-w">Send an email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Elson 子洺 · Brand &amp; Content Strategist · Kuala Lumpur</div>
+    <div class="foot-links">
+      <a href="portfolio.html">Portfolio</a>
+      <a href="portfolio.html#gallery">Gallery</a>
+      <a href="portfolio.html#work">Work</a>
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Reveal */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);} });
+}, {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+const sg = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ Array.from(e.target.children).forEach(c=>c.classList.add('visible')); sg.unobserve(e.target); }
+  });
+}, {threshold:.06});
+document.querySelectorAll('.stagger-grid').forEach(el=>sg.observe(el));
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

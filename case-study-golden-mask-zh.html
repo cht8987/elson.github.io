@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Mask · 案例研究 · Elson 子洺</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#F59E0B;--gold-light:#FCD34D;--gold-dark:#B45309;--gold-dim:rgba(245,158,11,0.12);--gold-border:rgba(245,158,11,0.25);--bg:#0a0800;--bg2:#110e00;--bg3:#1a1500;--surface:rgba(255,255,255,0.04);--surface2:rgba(255,255,255,0.07);--text:#f5f0e8;--text-muted:rgba(245,240,232,0.5);--text-dim:rgba(245,240,232,0.3);--red:#EF4444;--red-dim:rgba(239,68,68,0.12);--green:#22C55E;--green-dim:rgba(34,197,94,0.12);}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,8,0,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,0.1);}
+  nav .back{color:var(--gold);text-decoration:none;font-size:0.85rem;font-weight:500;letter-spacing:0.05em;display:flex;align-items:center;gap:0.5rem;transition:opacity 0.2s;}
+  nav .back:hover{opacity:0.7;}
+  nav .nav-right{display:flex;align-items:center;gap:1rem;}
+  nav .lang{color:var(--text-muted);text-decoration:none;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;padding:0.3rem 0.8rem;border:1px solid rgba(245,158,11,0.2);border-radius:100px;transition:all 0.2s;}
+  nav .lang:hover{border-color:var(--gold);color:var(--gold);}
+  nav .tag{font-size:0.75rem;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;}
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 40%,#1a1200 0%,#0a0800 70%);}
+  .hero-blobs{position:absolute;inset:0;pointer-events:none;}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.35;animation:blobFloat 8s ease-in-out infinite;}
+  .blob1{width:500px;height:500px;background:radial-gradient(circle,#F59E0B,transparent);top:-10%;left:-15%;animation-delay:0s;}
+  .blob2{width:400px;height:400px;background:radial-gradient(circle,#D97706,transparent);bottom:0;right:-10%;animation-delay:-3s;}
+  .blob3{width:300px;height:300px;background:radial-gradient(circle,#FCD34D,transparent);top:30%;right:20%;animation-delay:-6s;}
+  @keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(20px,-30px) scale(1.05)}66%{transform:translate(-15px,15px) scale(0.97)}}
+  .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;border-radius:100px;background:var(--gold-dim);border:1px solid var(--gold-border);font-size:0.75rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:2rem;position:relative;z-index:1;animation:fadeUp 0.8s ease both;}
+  .hero h1{font-family:'Fraunces',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:700;line-height:1.05;letter-spacing:-0.02em;position:relative;z-index:1;animation:fadeUp 0.8s ease 0.15s both;}
+  .hero h1 .accent{color:var(--gold);}
+  .hero .subtitle{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-muted);max-width:600px;margin:1.5rem auto 3rem;position:relative;z-index:1;animation:fadeUp 0.8s ease 0.3s both;}
+  .hero-stats{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;animation:fadeUp 0.8s ease 0.45s both;}
+  .hero-stat{text-align:center;}
+  .hero-stat .num{font-family:'Fraunces',serif;font-size:2.8rem;font-weight:700;color:var(--gold);line-height:1;}
+  .hero-stat .label{font-size:0.75rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.3rem;}
+  .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);color:var(--text-dim);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:0.5rem;z-index:1;animation:fadeUp 1s ease 1s both;}
+  .scroll-hint .arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:arrowPulse 2s ease-in-out infinite;}
+  @keyframes arrowPulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
+  .section-label{display:inline-block;font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;padding:0.3rem 0.8rem;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;}
+  h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin-bottom:1.5rem;}
+  h3{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;margin-bottom:0.75rem;}
+  p{color:var(--text-muted);line-height:1.8;margin-bottom:1rem;}p:last-child{margin-bottom:0;}
+  strong{color:var(--text);font-weight:600;}
+  .divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gold-border),transparent);margin:5rem 0;}
+  .context-strip{background:var(--surface);border:1px solid var(--gold-border);border-radius:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;overflow:hidden;margin-bottom:3rem;}
+  .context-item{padding:1.2rem 1.5rem;border-right:1px solid rgba(245,158,11,0.1);}
+  .context-item:last-child{border-right:none;}
+  .context-item .ci-label{font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;}
+  .context-item .ci-val{font-size:0.9rem;color:var(--text);font-weight:500;}
+  .card{background:var(--surface);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.8rem;transition:border-color 0.3s;}
+  .card:hover{border-color:var(--gold-border);}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+  .build-timeline{position:relative;padding-left:2.5rem;}
+  .build-timeline::before{content:'';position:absolute;left:0.7rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),var(--gold-dark));transform-origin:top;transform:scaleY(0);transition:transform 1.2s ease;}
+  .build-timeline.animated::before{transform:scaleY(1);}
+  .build-step{position:relative;margin-bottom:2rem;}
+  .build-step::before{content:'';position:absolute;left:-2.1rem;top:0.3rem;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);box-shadow:0 0 0 4px var(--gold-dim);}
+  .build-step .week{font-size:0.7rem;color:var(--gold);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;}
+  .build-step h4{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;}
+  .build-step p{font-size:0.9rem;color:var(--text-muted);margin:0;}
+  .pyramid{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:2rem 0;}
+  .pyramid-tier{display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--bg);height:52px;transition:width 1s ease;}
+  .pyramid-tier:nth-child(1){width:40%;background:var(--gold-light);}
+  .pyramid-tier:nth-child(2){width:60%;background:var(--gold);}
+  .pyramid-tier:nth-child(3){width:80%;background:#D97706;}
+  .pyramid-tier:nth-child(4){width:100%;background:var(--gold-dark);color:var(--text);}
+  .pyramid-tier span{position:relative;z-index:1;text-align:center;padding:0 1rem;}
+  .betrayal-card{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:2.5rem;margin:2rem 0;}
+  .betrayal-card h3{color:var(--red);margin-bottom:1rem;font-size:1.4rem;}
+  .betrayal-steps{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;}
+  .betrayal-step{display:flex;gap:1rem;align-items:flex-start;padding:1rem 1.2rem;background:rgba(239,68,68,0.05);border-radius:8px;border-left:3px solid rgba(239,68,68,0.4);}
+  .betrayal-step .icon{font-size:1.2rem;flex-shrink:0;margin-top:0.1rem;}
+  .betrayal-step .text{font-size:0.9rem;color:var(--text-muted);}
+  .betrayal-step .text strong{color:var(--text);}
+  .results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;}
+  .result-card{background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1.4rem;text-align:center;}
+  .result-card .r-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:0.3rem;}
+  .result-card .r-label{font-size:0.75rem;color:var(--text-muted);}
+  .lesson-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+  .lesson-col{background:var(--surface);border-radius:10px;padding:1.5rem;}
+  .lesson-col.good{border-top:2px solid var(--green);}
+  .lesson-col.bad{border-top:2px solid var(--red);}
+  .lesson-col h4{font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+  .lesson-col.good h4{color:var(--green);}
+  .lesson-col.bad h4{color:var(--red);}
+  .lesson-item{display:flex;gap:0.5rem;margin-bottom:0.6rem;font-size:0.85rem;color:var(--text-muted);align-items:flex-start;}
+  .lesson-item .dot{flex-shrink:0;margin-top:0.35rem;width:6px;height:6px;border-radius:50%;}
+  .lesson-col.good .dot{background:var(--green);}
+  .lesson-col.bad .dot{background:var(--red);}
+  .takeaway{background:var(--gold-dim);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:8px;padding:1.5rem 2rem;margin-top:2rem;}
+  .takeaway p{color:var(--text);font-size:1rem;line-height:1.7;margin:0;}
+  footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(245,158,11,0.1);color:var(--text-dim);font-size:0.8rem;}
+  footer a{color:var(--gold);text-decoration:none;}footer a:hover{opacity:0.7;}
+  .reveal,.stagger,.fade{opacity:0;transition:opacity 0.7s ease,transform 0.7s ease;}
+  .reveal{transform:translateY(30px);}
+  .stagger{transform:translateY(20px);}
+  .fade{transform:none;}
+  .reveal.visible,.stagger.visible,.fade.visible{opacity:1;transform:none;}
+  .stagger:nth-child(1){transition-delay:0.05s}.stagger:nth-child(2){transition-delay:0.15s}.stagger:nth-child(3){transition-delay:0.25s}.stagger:nth-child(4){transition-delay:0.35s}
+  @media(max-width:600px){.lesson-row{grid-template-columns:1fr}.hero-stats{gap:1.5rem}.context-strip{grid-template-columns:1fr 1fr}}
+  /* ── PHOTO INTEGRATION ── */
+  .gm-logo-pill{display:flex;justify-content:center;margin-bottom:2rem;position:relative;z-index:1}
+  .gm-logo-pill img{width:140px;height:140px;object-fit:cover;border-radius:50%;border:2px solid var(--gold-border);box-shadow:0 0 40px rgba(245,158,11,0.25)}
+  .gm-catalog{margin-top:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--gold-border)}
+  .gm-catalog img{width:100%;display:block}
+  .gm-color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:1.5rem}
+  .gm-color-grid img{width:100%;border-radius:10px;display:block;transition:transform .3s ease,box-shadow .3s}
+  .gm-color-grid img:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(245,158,11,0.15)}
+  .gm-model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:1.5rem}
+  .gm-model-grid img{width:100%;border-radius:12px;display:block;aspect-ratio:1/1;object-fit:cover}
+  .gm-banner{margin-top:1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--gold-border)}
+  .gm-banner img{width:100%;display:block}
+  .gm-duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+  .gm-duo img{width:100%;border-radius:12px;display:block}
+  .gm-fb-strip{display:flex;justify-content:center;margin-top:1.5rem}
+  .gm-fb-strip img{width:260px;border-radius:20px;box-shadow:0 16px 48px rgba(0,0,0,0.5)}
+  @media(max-width:600px){.gm-color-grid{grid-template-columns:repeat(2,1fr)}.gm-model-grid{grid-template-columns:repeat(2,1fr)}.gm-duo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="portfolio.html" class="back">← 返回作品集</a>
+  <div class="nav-right">
+    <a href="case-study-golden-mask.html" class="lang">EN</a>
+    <span class="tag">案例研究 · 2021</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-blobs"><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div></div>
+  <div class="gm-logo-pill">
+    <img src="golden mask/logo-profile-NEW.jpg" alt="Golden New Generation — 品牌徽章" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-badge">⚡ 品牌 · 电商 · 销售</div>
+  <h1>Golden<br><span class="accent">Mask</span></h1>
+  <p class="subtitle">3周内从零搭建一个新冠口罩品牌——月营收峰值RM20万，50–100名代理商，然后遭遇合伙人背叛，拉锯诉讼长达4年。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">RM20万</div><div class="label">月营收峰值</div></div>
+    <div class="hero-stat"><div class="num">100+</div><div class="label">招募代理数</div></div>
+    <div class="hero-stat"><div class="num">3周</div><div class="label">完整系统上线</div></div>
+  </div>
+  <div class="scroll-hint"><div class="arrow"></div>向下滚动</div>
+</section>
+
+<section class="section">
+  <div class="context-strip reveal">
+    <div class="context-item"><div class="ci-label">年份</div><div class="ci-val">2021</div></div>
+    <div class="context-item"><div class="ci-label">周期</div><div class="ci-val">8–10个月</div></div>
+    <div class="context-item"><div class="ci-label">公司</div><div class="ci-val">Golden Quality Trading</div></div>
+    <div class="context-item"><div class="ci-label">角色</div><div class="ci-val">品牌+技术+销售</div></div>
+    <div class="context-item"><div class="ci-label">团队</div><div class="ci-val">3名合伙人</div></div>
+  </div>
+  <div class="section-label reveal">背景</div>
+  <h2 class="reveal">一个市场窗口。一次大胆押注。与时间赛跑。</h2>
+  <p class="reveal">新冠期间，我协助父亲的工厂做口罩批发，销售的是别人的品牌。我摸清了供应链、买家、定价、利润——这个市场我比大多数人懂。当一位商业伙伴邀请我共同创立高端口罩品牌时，我立刻答应了。</p>
+  <p class="reveal">我们成立了 <strong>Golden Quality Trading</strong>，准备推出 <strong>GOLDEN MASK</strong>——一个高品质但价格亲民的医用口罩品牌。定位是：金质可靠，价格可达。三层和四层口罩，RM20–30一盒。</p>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="section-label reveal">搭建过程</div>
+  <h2 class="reveal">3周。完整品牌 + 电商 + 代理系统。一个人。</h2>
+  <p class="reveal">没有慢下来的余地。市场窗口开着，竞争对手已经蜂拥而入。我必须独自以最快速度把一切建起来。</p>
+  <div class="build-timeline reveal" id="timeline1">
+    <div class="build-step stagger">
+      <div class="week">第1周</div>
+      <h4>品牌识别与视觉体系</h4>
+      <p>设计 GOLDEN MASK 标志、包装和完整视觉识别系统。金色调 + 高端质感，在一片普通医用口罩中脱颖而出。</p>
+    </div>
+    <div class="build-step stagger">
+      <div class="week">第2周</div>
+      <h4>WordPress 电商 + 代理门户</h4>
+      <p>从零搭建完整网站——产品页面、结账流程，以及定制化多层级代理系统。代理可自助注册、查看等级、下单、自动计算利润分成。</p>
+    </div>
+    <div class="build-step stagger">
+      <div class="week">第3周</div>
+      <h4>销售渠道上线</h4>
+      <p>开放代理招募，设定分级定价，启动推广外联。利用我在批发时期积累的人脉，口碑传播很快——大家看得出品牌够专业、利润够吸引。</p>
+    </div>
+  </div>
+  <div class="card-grid" style="margin-top:2rem;">
+    <div class="card stagger">
+      <h3>🏆 为什么选WordPress很聪明</h3>
+      <p>不是定制开发——快速、灵活、低成本。代理分级系统用现有插件搭建，自动计算利润分成。整套系统上线时，竞争对手连需求方案都还没给代理商。</p>
+    </div>
+    <div class="card stagger">
+      <h3>💡 定价策略</h3>
+      <p>RM20–30一盒拿捏了甜蜜点——高到足以传递品质信号，低到让普通人买得起。代理在规模销售中能赚到有意义的利润，让招募形成口碑传播。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label reveal">品牌摄影</div>
+  <h2 class="reveal">高端口罩，需要高端视觉。</h2>
+  <p class="reveal">每个SKU都经过专业拍摄和设计，呼应品牌"黄金标准"的承诺。清晰的产品图 + 色系展示图，让代理乐于分享，让客户放心购买。</p>
+  <div class="gm-catalog reveal">
+    <img src="golden mask/Shooting&design/1.png" alt="Golden Mask — KF94 及 KF99 完整产品系列总览" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-color-grid stagger">
+    <img src="golden mask/Shooting&design/6.png" alt="KF99 莫兰迪猎人绿" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/8.png" alt="KF99 莫兰迪纯白" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/9.png" alt="KF99 月光黄" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/10.png" alt="KF99 暮光绿" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/11.png" alt="KF99 冷灰" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/12.png" alt="KF99 梦幻蓝" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/13.png" alt="KF99 焦糖橙" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/19.png" alt="高级外科口罩——蓝色" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-duo stagger">
+    <img src="golden mask/Shooting&design/20.png" alt="高级外科口罩——粉色" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/21.png" alt="高级外科口罩——金色" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="section-label reveal">代理系统</div>
+  <h2 class="reveal">50–100名代理。无销售团队。靠一套设计良好的系统。</h2>
+  <p class="reveal">代理金字塔不只是一个架构——它是一台激励机器。每升一级就解锁更好的进货价和更高的利润。代理有动力招募下级代理。系统自我生长。</p>
+  <div class="pyramid fade" id="pyramid1" style="max-width:500px;margin:2rem auto;">
+    <div class="pyramid-tier"><span>精英代理（顶级）</span></div>
+    <div class="pyramid-tier"><span>中级代理</span></div>
+    <div class="pyramid-tier"><span>基础代理</span></div>
+    <div class="pyramid-tier"><span>直接消费者</span></div>
+  </div>
+  <div class="results-grid reveal">
+    <div class="result-card"><div class="r-num">RM6万+</div><div class="r-label">首月营收</div></div>
+    <div class="result-card"><div class="r-num">RM20万</div><div class="r-label">月营收峰值</div></div>
+    <div class="result-card"><div class="r-num">~100</div><div class="r-label">活跃代理数</div></div>
+    <div class="result-card"><div class="r-num">8个月</div><div class="r-label">距崩盘时间</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label reveal">宣传拍摄</div>
+  <h2 class="reveal">模特、场景、一个能撑场面的品牌。</h2>
+  <p class="reveal">在充斥着廉价产品图的口罩市场里，我们投入专业模特拍摄，赋予品牌生活方式属性——让竞争对手那些清一色的产品图在对比之下黯然失色。</p>
+  <div class="gm-model-grid stagger">
+    <img src="golden mask/Shooting&design/3.png" alt="模特在豪华商场佩戴 Golden Mask Slim Face" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/4.png" alt="Slim Face 口罩模特特写" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/5.png" alt="两位模特在奢华环境中佩戴 Golden Mask" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/7.png" alt="男模手持 KF99 金色礼盒" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/14.png" alt="女模佩戴暮光绿口罩，手持金色礼盒" onerror="this.style.display='none'">
+    <img src="golden mask/Shooting&design/16.png" alt="宣传三人组——正式棚拍" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-banner reveal">
+    <img src="golden mask/Shooting&design/17.png" alt="KF94 新品到货宣传横幅——三人模特" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-banner reveal" style="margin-top:12px">
+    <img src="golden mask/Shooting&design/18.png" alt="莫兰迪系列新品到货——情侣宣传图" onerror="this.style.display='none'">
+  </div>
+  <div class="gm-fb-strip reveal">
+    <img src="golden mask/Shooting&design/25.png" alt="Golden Malaysia Facebook 主页——1,836 粉丝" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="section-label reveal" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--red);">转折点</div>
+  <h2 class="reveal">我建了品牌，他偷走了它。</h2>
+  <div class="betrayal-card reveal">
+    <h3>⚠ 我发现的事情</h3>
+    <p style="color:var(--text-muted);">大约第8–10个月，我开始觉得账目对不上。然后全貌浮出水面。</p>
+    <div class="betrayal-steps">
+      <div class="betrayal-step stagger">
+        <div class="icon">🕵️</div>
+        <div class="text"><strong>秘密经营：</strong>大股东以 GOLDEN MASK 品牌名私自生产销售口罩——没有告知其他合伙人，没有分享利润。</div>
+      </div>
+      <div class="betrayal-step stagger">
+        <div class="icon">📊</div>
+        <div class="text"><strong>财务黑洞：</strong>公司账目出现明显差异。我们聘请会计师审计。数字对不上。数十万交易金额无法解释。</div>
+      </div>
+      <div class="betrayal-step stagger">
+        <div class="icon">⚖️</div>
+        <div class="text"><strong>4年诉讼：</strong>我们委托律师起诉。案件从2021年拖到2025年。2025年我决定撤案——法律成本与时间精力已不值得追讨结果。</div>
+      </div>
+    </div>
+  </div>
+  <p class="reveal">他用我设计的品牌、我搭建的系统、我建立的声誉——经营了一条从未出现在共同账户里的平行生意。品牌是真实的，合伙关系是假的。</p>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="section-label reveal">核心收获</div>
+  <h2 class="reveal">品牌建对了，合伙方式建错了。</h2>
+  <p class="reveal">3周内我建起了完整品牌、电商和代理系统。3个月内月营收达到RM20万。但公司因为一件执行能力无法防护的事情崩溃了——一个在没有合适法律框架约束的情况下恶意行事的合伙人。</p>
+  <div class="lesson-row">
+    <div class="lesson-col good reveal">
+      <h4>✓ 做对了什么</h4>
+      <div class="lesson-item"><div class="dot"></div> 在正确时机识别并抓住真实市场窗口</div>
+      <div class="lesson-item"><div class="dot"></div> 清晰品牌定位：高端质感，亲民价格</div>
+      <div class="lesson-item"><div class="dot"></div> WordPress代理系统——快速、可扩展、低成本</div>
+      <div class="lesson-item"><div class="dot"></div> 首月营收RM6–10万超出所有预期</div>
+      <div class="lesson-item"><div class="dot"></div> 代理激励机制设计推动了网络的有机增长</div>
+    </div>
+    <div class="lesson-col bad reveal">
+      <h4>✗ 什么出了问题</h4>
+      <div class="lesson-item"><div class="dot"></div> 没有具有约束力的合伙协议——只有口头承诺</div>
+      <div class="lesson-item"><div class="dot"></div> 没有月度财务透明机制</div>
+      <div class="lesson-item"><div class="dot"></div> 所有关键系统都跑在一个人（我）身上</div>
+      <div class="lesson-item"><div class="dot"></div> 错过了合伙人不轨行为的早期信号</div>
+      <div class="lesson-item"><div class="dot"></div> 选择了诉讼——即使赢了也几乎总是输家</div>
+    </div>
+  </div>
+  <div class="takeaway reveal">
+    <p>"就算你是房间里最聪明的人，没有法律保障的33%股权意味着别人掌控着你的成果。品牌的生死不取决于你的能力——而取决于你是否能信任那些握有钥匙的人。"</p>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">← <a href="portfolio.html">返回全部案例</a></p>
+  <p>Elson 子洺 · 品牌 &amp; 内容策略师 · 马来西亚</p>
+</footer>
+<script>
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('.reveal,.stagger,.fade').forEach(el=>obs.observe(el));
+  const tlObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animated');tlObs.unobserve(e.target);}});},{threshold:0.2});
+  document.querySelectorAll('.build-timeline').forEach(el=>tlObs.observe(el));
+</script>
+</body>
+</html>
