@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal OS · Case Study — Elson 子洺</title>
+<meta name="description" content="Designed and shipped an open-source AI second-brain operating system — desktop core, mobile app, night-shift automation — built solo with AI agents as the dev team.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+<style>
+  :root {
+    --amber: #F59E0B;
+    --amber-light: #FBBF24;
+    --amber-dark: #B45309;
+    --amber-dim: rgba(245,158,11,0.1);
+    --amber-border: rgba(245,158,11,0.22);
+    --orange: #F97316;
+    --bg: #0c0700;
+    --bg2: #140d02;
+    --surface: rgba(255,255,255,0.04);
+    --surface2: rgba(255,255,255,0.07);
+    --text: #fdf6ec;
+    --text-muted: rgba(253,246,236,0.55);
+    --text-dim: rgba(253,246,236,0.3);
+    --red: #EF4444;
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.1);
+    --blue: #38BDF8;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(12,7,0,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,158,11,0.1);
+  }
+  nav .back { color: var(--amber-light); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; transition: opacity 0.2s; }
+  nav .back:hover { opacity: 0.7; }
+  nav .tag { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .lang { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border: 1px solid rgba(245,158,11,0.2); border-radius: 100px; transition: all 0.2s; }
+  nav .lang:hover { border-color: var(--amber-light); color: var(--amber-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 8rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a1003 0%, #0c0700 70%);
+  }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.25; animation: blobFloat 10s ease-in-out infinite; }
+  .blob1 { width: 600px; height: 600px; background: radial-gradient(circle, #F59E0B, transparent); top: -20%; left: -15%; }
+  .blob2 { width: 400px; height: 400px; background: radial-gradient(circle, #F97316, transparent); bottom: 0; right: -10%; animation-delay: -4s; }
+  .blob3 { width: 280px; height: 280px; background: radial-gradient(circle, #FBBF24, transparent); top: 35%; right: 20%; animation-delay: -7s; }
+  @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-30px) scale(1.05)} 66%{transform:translate(-15px,15px) scale(0.97)} }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; border-radius: 100px;
+    background: var(--amber-dim); border: 1px solid var(--amber-border);
+    font-size: 0.75rem; color: var(--amber-light); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2rem; position: relative; z-index: 1; animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.15s both;
+  }
+  .hero h1 .accent { color: var(--amber-light); }
+  .hero .subtitle {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--text-muted); max-width: 620px; margin: 1.5rem auto 3rem;
+    position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.45s both; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--amber-light); line-height: 1; }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .scroll-hint .arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--amber-light), transparent); animation: arrowPulse 2s ease-in-out infinite; }
+  @keyframes arrowPulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* LAYOUT */
+  .section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--amber-light); margin-bottom: 1rem; padding: 0.3rem 0.8rem;
+    background: var(--amber-dim); border: 1px solid var(--amber-border); border-radius: 4px;
+  }
+  h2 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.6rem; }
+  p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+  a.inline { color: var(--amber-light); text-decoration: none; border-bottom: 1px solid var(--amber-border); transition: opacity .2s; }
+  a.inline:hover { opacity: .7; }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--amber-border), transparent); margin: 5rem 0; }
+
+  /* CONTEXT STRIP */
+  .context-strip {
+    background: var(--surface); border: 1px solid var(--amber-border); border-radius: 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; overflow: hidden; margin-bottom: 3rem;
+  }
+  .context-item { padding: 1.2rem 1.5rem; border-right: 1px solid rgba(245,158,11,0.1); }
+  .context-item:last-child { border-right: none; }
+  .context-item .ci-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .context-item .ci-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* CARD */
+  .card { background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.8rem; transition: border-color 0.3s, transform .3s; }
+  .card:hover { border-color: var(--amber-border); transform: translateY(-3px); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+  .card .c-badge { display:inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-light); background: var(--amber-dim); padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.8rem; }
+
+  /* PIPELINE DEMO */
+  .pipeline {
+    background: var(--surface); border: 1px solid var(--amber-border); border-radius: 14px;
+    padding: 2.2rem; margin: 2rem 0; position: relative; overflow: hidden;
+  }
+  .pipeline::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--amber), var(--orange));
+  }
+  .pipe-input {
+    background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+    padding: 1.1rem 1.4rem; font-size: 0.95rem; color: var(--text);
+    font-family: 'Inter', sans-serif; position: relative;
+  }
+  .pipe-input::before { content: '✍️ One message into the Inbox'; display:block; font-size: 0.68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .pipe-arrow { text-align: center; color: var(--amber-light); font-size: 1.4rem; margin: 1rem 0; animation: arrowPulse 2s ease-in-out infinite; }
+  .pipe-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; }
+  .pipe-chip {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(245,158,11,0.18); border-radius: 10px;
+    padding: 1rem 1.2rem; font-size: 0.85rem; color: var(--text-muted);
+  }
+  .pipe-chip .pc-type { font-size: 0.68rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.35rem; }
+  .pipe-chip.diary .pc-type { color: var(--blue); }
+  .pipe-chip.todo .pc-type { color: var(--green); }
+  .pipe-chip.money .pc-type { color: var(--amber-light); }
+
+  /* NIGHT SHIFT TIMELINE */
+  .night {
+    background: var(--surface); border: 1px solid var(--amber-border); border-radius: 14px;
+    padding: 2.2rem; margin-top: 2rem;
+  }
+  .night-track { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .night-stop { position: relative; padding-top: 1.1rem; }
+  .night-stop::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--amber), rgba(245,158,11,0.15));
+  }
+  .night-stop .ns-time { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; color: var(--amber-light); }
+  .night-stop .ns-name { font-size: 0.85rem; color: var(--text); font-weight: 600; margin: 0.2rem 0; }
+  .night-stop .ns-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* LESSONS */
+  .lesson-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .lesson-col { background: var(--surface); border-radius: 10px; padding: 1.5rem; }
+  .lesson-col.good { border-top: 2px solid var(--green); }
+  .lesson-col.bad { border-top: 2px solid var(--red); }
+  .lesson-col h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lesson-col.good h4 { color: var(--green); }
+  .lesson-col.bad h4 { color: var(--red); }
+  .lesson-item { display: flex; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-muted); align-items: flex-start; }
+  .lesson-item .dot { flex-shrink: 0; margin-top: 0.35rem; width: 6px; height: 6px; border-radius: 50%; }
+  .lesson-col.good .dot { background: var(--green); }
+  .lesson-col.bad .dot { background: var(--red); }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: var(--amber-dim); border: 1px solid var(--amber-border); border-left: 4px solid var(--amber);
+    border-radius: 8px; padding: 1.5rem 2rem; margin-top: 2rem;
+  }
+  .takeaway p { color: var(--text); font-size: 1rem; line-height: 1.7; margin: 0; }
+
+  /* LINK BUTTONS */
+  .link-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem; }
+  .link-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1.5rem; border-radius: 100px; font-size: 0.88rem; font-weight: 600;
+    text-decoration: none; transition: transform .25s ease, opacity .2s;
+  }
+  .link-btn.solid { background: var(--amber); color: #1a1003; }
+  .link-btn.solid:hover { opacity: .85; transform: translateY(-2px); }
+  .link-btn.ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--amber-border); }
+  .link-btn.ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+  footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(245,158,11,0.1); color: var(--text-dim); font-size: 0.8rem; }
+  footer a { color: var(--amber-light); text-decoration: none; }
+  footer a:hover { opacity: 0.7; }
+
+  .reveal, .stagger { opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal { transform: translateY(30px); }
+  .stagger { transform: translateY(20px); }
+  .reveal.visible, .stagger.visible { opacity: 1; transform: none; }
+  .stagger:nth-child(1){transition-delay:0.05s} .stagger:nth-child(2){transition-delay:0.15s} .stagger:nth-child(3){transition-delay:0.25s} .stagger:nth-child(4){transition-delay:0.35s} .stagger:nth-child(5){transition-delay:0.45s} .stagger:nth-child(6){transition-delay:0.55s}
+
+  @media(max-width:600px){.lesson-row{grid-template-columns:1fr}.hero-stats{gap:1.5rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back">← Back to Portfolio</a>
+  <div class="nav-right">
+    <a href="case-study-personal-os-zh.html" class="lang">中文</a>
+    <span class="tag">Case Study · 2026</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-badge">🧠 AI Product · Open Source · Solo Build</div>
+  <h1>Personal <span class="accent">OS</span></h1>
+  <p class="subtitle">After 14 years building brands for other people, I built an operating system for my own mind — an AI second brain that turns one messy message into organized diary entries, todos, and expense records. Then I open-sourced the whole thing.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">6</div>
+      <div class="label">Ecosystem parts</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">0</div>
+      <div class="label">Engine dependencies</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">100%</div>
+      <div class="label">Data ownership</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">v0.7</div>
+      <div class="label">Open source</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="arrow"></div>
+    Scroll to read
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="section">
+  <div class="context-strip reveal">
+    <div class="context-item"><div class="ci-label">Period</div><div class="ci-val">2026 — ongoing</div></div>
+    <div class="context-item"><div class="ci-label">Role</div><div class="ci-val">Designer · PM · Builder</div></div>
+    <div class="context-item"><div class="ci-label">Team</div><div class="ci-val">Me + AI agents</div></div>
+    <div class="context-item"><div class="ci-label">Stack</div><div class="ci-val">Markdown · Obsidian · Python · Expo</div></div>
+    <div class="context-item"><div class="ci-label">Status</div><div class="ci-val">Live &amp; open source</div></div>
+  </div>
+
+  <div class="section-label reveal">The Problem</div>
+  <h2 class="reveal">Every note system asks you to think before you capture. That's backwards.</h2>
+  <p class="reveal">Fourteen years of brand work generates an absurd amount of loose thinking — campaign ideas at midnight, client todos in traffic, expenses scribbled into chat apps. Every productivity tool I tried made the same demand: <strong>decide where it goes first.</strong> Which folder. Which tag. Which template. The cognitive tax happens at exactly the moment you have the least attention to spend.</p>
+  <p class="reveal">So I inverted it. One inbox. Zero decisions. The system figures out the rest — and an AI night butler tidies up while I sleep.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE PIPELINE -->
+<section class="section">
+  <div class="section-label reveal">The Core Idea</div>
+  <h2 class="reveal">Throw it in. The OS sorts it out.</h2>
+  <p class="reveal">The only action the user ever needs is dropping a thought into the Inbox — by text, voice, PDF, or web clip, from desktop or phone. An AI pipeline splits each capture into structured entities and files them into the right place in a five-pillar Markdown vault.</p>
+
+  <div class="pipeline reveal">
+    <div class="pipe-input">"Locked the project architecture today. Remember to renew the server cert tomorrow. Lunch was RM38."</div>
+    <div class="pipe-arrow">↓</div>
+    <div class="pipe-out">
+      <div class="pipe-chip diary"><div class="pc-type">📓 Diary</div>Project architecture decision logged to today's note</div>
+      <div class="pipe-chip todo"><div class="pc-type">✅ Todo</div>"Renew server cert" — deadline auto-converted to tomorrow</div>
+      <div class="pipe-chip money"><div class="pc-type">💸 Expense</div>RM38 lunch entry added to the ledger</div>
+    </div>
+  </div>
+
+  <p class="reveal">Everything lives in plain Markdown files I own outright — no proprietary database, no subscription lock-in, readable in any editor for the next 30 years.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT I BUILT -->
+<section class="section">
+  <div class="section-label reveal">What I Built</div>
+  <h2 class="reveal">Not an app. An operating system with six organs.</h2>
+  <p class="reveal">Each layer is replaceable, extensible, and self-hostable. Designed like a brand system: every component has a clear job and a clear interface to the others.</p>
+
+  <div class="card-grid">
+    <div class="card stagger">
+      <div class="c-badge">Core · v0.7</div>
+      <h3>🧠 personal-os</h3>
+      <p>The desktop core: a five-pillar vault template, the zero-dependency <strong>rtk</strong> CLI engine, a custom Obsidian dashboard plugin, and a one-command installer.</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">Mobile</div>
+      <h3>📱 OSMIND App</h3>
+      <p>The capture terminal in your pocket — text, voice, PDF, and web pages delivered with one tap. Offline ledger, AI chat, installable as a PWA.</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">Gateway</div>
+      <h3>🔌 osmind-gateway</h3>
+      <p>The phone's single write-path into the vault: a local HTTP gateway with token-paired auth and a content extraction pipeline. Input never gets lost.</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">Memory</div>
+      <h3>🗄️ Memory engine</h3>
+      <p>Dual-track memory: a dynamic daily stream plus a curated static knowledge base, indexed into semantic memory banks the AI can recall from.</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">Night Butler</div>
+      <h3>🌙 Hermes</h3>
+      <p>The automation layer — four scheduled jobs that patrol the inbox, sync memory, back up to NAS, and distill raw notes into a wiki. All while I sleep.</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">Launch Site</div>
+      <h3>🌐 NP-OS</h3>
+      <p>The product's own bilingual landing page — positioning, copy, design, and build. Because a system this opinionated deserves a proper brand.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NIGHT SHIFT -->
+<section class="section">
+  <div class="section-label reveal">The Night Shift</div>
+  <h2 class="reveal">The best assistant works while you're asleep.</h2>
+  <p class="reveal">Four automated jobs run on a fixed schedule, every single day, without being asked. This is the part that makes it an <strong>operating system</strong> rather than a folder of notes.</p>
+
+  <div class="night reveal">
+    <div class="night-track">
+      <div class="night-stop">
+        <div class="ns-time">22:30</div>
+        <div class="ns-name">Backup</div>
+        <div class="ns-desc">Full vault snapshot to NAS, with 7-day rolling cleanup</div>
+      </div>
+      <div class="night-stop">
+        <div class="ns-time">23:30</div>
+        <div class="ns-name">Patrol</div>
+        <div class="ns-desc">Inbox triage — splits, routes, and archives every capture</div>
+      </div>
+      <div class="night-stop">
+        <div class="ns-time">23:50</div>
+        <div class="ns-name">Memory sync</div>
+        <div class="ns-desc">Incremental sync of new knowledge into semantic memory banks</div>
+      </div>
+      <div class="night-stop">
+        <div class="ns-time">SUN 22:00</div>
+        <div class="ns-name">Refine</div>
+        <div class="ns-desc">Weekly distillation — raw clippings become linked wiki entries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WAS BUILT -->
+<section class="section">
+  <div class="section-label reveal">How It Was Built</div>
+  <h2 class="reveal">One person. An AI dev team. Brand thinking applied to software.</h2>
+  <p class="reveal">I'm not a traditional software engineer — I'm a brand strategist who learned to direct AI agents the way I direct a creative team. I wrote the product vision, the information architecture, and the design system; AI agents wrote code under review, iteration by iteration. Every screen, every doc page, every line of onboarding copy went through the same standard I hold client work to.</p>
+  <p class="reveal">The result shipped: a versioned open-source release with an installer, documentation, a mobile app, and its own marketing site. The same playbook I use for brands — <strong>positioning → identity → content → distribution</strong> — works for products.</p>
+
+  <div class="link-row reveal">
+    <a class="link-btn solid" href="https://github.com/cht8987/personal-os" target="_blank" rel="noopener">★ Star on GitHub</a>
+    <a class="link-btn ghost" href="https://np-os.vercel.app" target="_blank" rel="noopener">Visit NP-OS site →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LESSONS -->
+<section class="section">
+  <div class="section-label reveal">What I Learned</div>
+  <h2 class="reveal">Building for yourself is the hardest client brief.</h2>
+
+  <div class="lesson-row">
+    <div class="lesson-col good reveal">
+      <h4>✓ What Worked</h4>
+      <div class="lesson-item"><div class="dot"></div> Subtraction as philosophy — one inbox beat every multi-folder system I'd tried</div>
+      <div class="lesson-item"><div class="dot"></div> Plain Markdown + zero dependencies = a product that can't be killed by a vendor</div>
+      <div class="lesson-item"><div class="dot"></div> Directing AI agents scales one person into a full product team</div>
+      <div class="lesson-item"><div class="dot"></div> Dogfooding daily — I am user #1, so feedback loops are instant</div>
+    </div>
+    <div class="lesson-col bad reveal">
+      <h4>✗ What Was Hard</h4>
+      <div class="lesson-item"><div class="dot"></div> Mobile is its own world — sync, auth, and offline cost more than all desktop features combined</div>
+      <div class="lesson-item"><div class="dot"></div> Automation that touches your real data demands paranoid backup design first</div>
+      <div class="lesson-item"><div class="dot"></div> Scope creep is brutal when the client is you — versioned releases forced discipline</div>
+    </div>
+  </div>
+
+  <div class="takeaway reveal">
+    <p>"For years I told clients that a brand is a system, not a logo. Building Personal OS proved the inverse: a product is a brand, not a codebase. Positioning, naming, onboarding, story — that's what makes software feel inevitable. And it's the same craft."</p>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">← <a href="index.html">Back to all cases</a></p>
+  <p>Elson 子洺 · Brand &amp; Content Strategist · Malaysia</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal,.stagger').forEach(el=>obs.observe(el));
+</script>
+<script>
+/* Remember language choice site-wide */
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a.lang, a.nav-lang');
+  if (!a) return;
+  try {
+    var zh = /-zh\.html|portfolio-zh/.test(a.getAttribute('href') || '');
+    localStorage.setItem('elson-lang', zh ? 'zh' : 'en');
+    sessionStorage.setItem('lang-no-redirect', '1');
+  } catch(_) {}
+});
+</script>
+</body>
+</html>

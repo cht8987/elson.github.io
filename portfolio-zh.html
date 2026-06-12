@@ -4,6 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Elson 子洺 — 品牌与内容策略师</title>
+<meta name="description" content="吉隆坡品牌与内容策略师。14 年帮助东南亚品牌从默默无闻到无可忽视——策略、设计、内容、社媒增长与 AI 产品。">
+<meta property="og:title" content="Elson 子洺 — 品牌与内容策略师">
+<meta property="og:description" content="一个人，完整的品牌能力：策略、设计、内容、社媒增长与 AI 产品。累计增长 36.7 万粉丝，从零打造 10+ 品牌。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%2334A853%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -162,7 +167,23 @@ nav {
 .hero h1 em {
   font-style: italic;
   font-weight: 500;
-  color: var(--green-dark);
+  background: linear-gradient(100deg, var(--green-dark), #34A853, #7C3AED, var(--green-dark));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradShift 7s ease-in-out infinite;
+}
+@keyframes gradShift {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2.5px; width: 0;
+  background: linear-gradient(to right, var(--green), #7C3AED);
+  z-index: 300; transition: width .1s linear;
 }
 .hero-sub {
   font-size: clamp(16px,1.5vw,20px);
@@ -432,6 +453,18 @@ nav {
 .case-cover.evoluc { background:linear-gradient(135deg,#1a0040 0%,#7C3AED 100%); }
 .case-cover.heewon { background:linear-gradient(135deg,#030b1a 0%,#3B82F6 100%); }
 .case-cover.lokes-ic { background:linear-gradient(135deg,#FF8A65 0%,#FFB88C 100%); }
+.case-cover.personalos { background:linear-gradient(135deg,#0c0700 0%,#F59E0B 100%); }
+
+/* Shine sweep on case cover hover */
+.case-cover::after {
+  content: ""; position: absolute; top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: skewX(-20deg);
+  transition: left .6s ease;
+  pointer-events: none;
+}
+.case-card:hover .case-cover::after { left: 130%; }
 
 .case-emoji {
   position:absolute;top:18px;right:18px;font-size:26px;
@@ -530,6 +563,8 @@ footer { padding:48px 0 56px;border-top:1px solid var(--line); }
 </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ══ NAV ══ -->
 <nav>
@@ -638,6 +673,7 @@ footer { padding:48px 0 56px;border-top:1px solid var(--line); }
         <h2>一个人。完整的品牌能力。</h2>
         <p>你好，我是 Elson 子洺。过去 14 年，我是那个创始人在「有好产品、不知道如何让它成为品牌」时第一个打电话来找的人——更别说让人主动观看、分享和购买。</p>
         <p>我介于策略师、创意总监和内容制作人之间。我写品牌定位、设计视觉识别，然后真正去拍摄、剪辑、运营社交账号。大多数机构给你一份 PPT，我给你一个已经在运转的品牌。</p>
+        <p>最近，我把同一套系统思维带进了软件——设计并交付自己的开源 AI 产品，由 AI 代理担任开发团队。品牌、内容、产品：同一门手艺，更大的画布。</p>
         <div class="about-meta">
           <div class="about-meta-item">
             <div class="m-label">所在地</div>
@@ -786,8 +822,8 @@ footer { padding:48px 0 56px;border-top:1px solid var(--line); }
   <div class="wrap">
     <div class="reveal">
       <div class="section-tag">精选案例</div>
-      <h2 style="font-family:'Fraunces','PingFang SC',serif; font-size:clamp(34px,4vw,52px); font-weight:700; letter-spacing:-0.03em; line-height:1.08; margin-bottom:12px;">几个从零开始的品牌。</h2>
-      <p style="font-size:18px; color:var(--ink-muted); max-width:560px; margin-bottom:48px;">行业各异，打法一致：精准定位、赢得注意力的内容、持续复利的增长。</p>
+      <h2 style="font-family:'Fraunces','PingFang SC',serif; font-size:clamp(34px,4vw,52px); font-weight:700; letter-spacing:-0.03em; line-height:1.08; margin-bottom:12px;">从零开始的品牌，与产品。</h2>
+      <p style="font-size:18px; color:var(--ink-muted); max-width:560px; margin-bottom:48px;">行业各异，打法一致：精准定位、赢得注意力的内容、持续复利的增长——从餐饮品牌到开源 AI 操作系统。</p>
     </div>
 
     <div class="case-grid stagger-grid">
@@ -805,6 +841,23 @@ footer { padding:48px 0 56px;border-top:1px solid var(--line); }
             <div class="case-stat"><div class="v">367K</div><div class="l">粉丝数</div></div>
             <div class="case-stat"><div class="v">361万</div><div class="l">最高单条播放</div></div>
             <div class="case-stat"><div class="v">12个月</div><div class="l">从 0 到规模化</div></div>
+          </div>
+        </div>
+      </a>
+
+      <a href="case-study-personal-os-zh.html" class="case-card" style="text-decoration:none;color:inherit">
+        <div class="case-cover personalos">
+          <div class="case-emoji">🧠</div>
+          <div class="case-headline">给自己造了一套 AI 操作系统，然后开源。</div>
+        </div>
+        <div class="case-body">
+          <div class="case-cat">AI 产品 · 开源 · 一人打造 · 2026</div>
+          <div class="case-name">Personal OS</div>
+          <div class="case-desc">设计并交付基于 Markdown 的 AI 第二大脑——桌面核心、手机 App、夜间自动化管家。一个人指挥 AI 代理团队完成开发，已在 GitHub 开源上线。</div>
+          <div class="case-stats">
+            <div class="case-stat"><div class="v">6</div><div class="l">大生态组件</div></div>
+            <div class="case-stat"><div class="v">v0.7</div><div class="l">开源版本</div></div>
+            <div class="case-stat"><div class="v">0</div><div class="l">第三方依赖</div></div>
           </div>
         </div>
       </a>
@@ -951,6 +1004,38 @@ footer { padding:48px 0 56px;border-top:1px solid var(--line); }
 </footer>
 
 <script>
+/* ── 语言偏好：记住选择，进站自动恢复 ── */
+(function() {
+  try {
+    if (localStorage.getItem('elson-lang') === 'en' && !sessionStorage.getItem('lang-no-redirect')) {
+      sessionStorage.setItem('lang-no-redirect', '1');
+      location.replace('index.html');
+      return;
+    }
+    localStorage.setItem('elson-lang', 'zh');
+    document.querySelectorAll('.nav-lang').forEach(a => {
+      a.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        localStorage.setItem('elson-lang', 'en');
+        sessionStorage.setItem('lang-no-redirect', '1');
+        document.body.style.transition = 'opacity .25s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => location.href = a.href, 240);
+      });
+    });
+  } catch(e) {}
+})();
+
+/* ── 滚动进度条 ── */
+(function() {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  }, { passive: true });
+})();
+
 /* 滚动显示 */
 const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {

@@ -322,5 +322,17 @@
   const tlObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animated');tlObs.unobserve(e.target);}});},{threshold:0.2});
   document.querySelectorAll('.build-timeline').forEach(el=>tlObs.observe(el));
 </script>
+<script>
+/* Remember language choice site-wide */
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a.lang, a.nav-lang');
+  if (!a) return;
+  try {
+    var zh = /-zh\.html|portfolio-zh/.test(a.getAttribute('href') || '');
+    localStorage.setItem('elson-lang', zh ? 'zh' : 'en');
+    sessionStorage.setItem('lang-no-redirect', '1');
+  } catch(_) {}
+});
+</script>
 </body>
 </html>

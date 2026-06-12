@@ -419,5 +419,17 @@ document.querySelectorAll('.reveal,.stagger').forEach(el=>io.observe(el));
 const tl=document.getElementById('tl-forest');if(tl)io.observe(tl);
 window.addEventListener('load',()=>{document.querySelectorAll('.hero .reveal,.hero-stats').forEach(el=>el.classList.add('visible'));});
 </script>
+<script>
+/* Remember language choice site-wide */
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a.lang, a.nav-lang');
+  if (!a) return;
+  try {
+    var zh = /-zh\.html|portfolio-zh/.test(a.getAttribute('href') || '');
+    localStorage.setItem('elson-lang', zh ? 'zh' : 'en');
+    sessionStorage.setItem('lang-no-redirect', '1');
+  } catch(_) {}
+});
+</script>
 </body>
 </html>

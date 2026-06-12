@@ -408,5 +408,17 @@ document.querySelectorAll('.reveal,.stagger').forEach(el=>io.observe(el));
 function animateCount(el){if(el.dataset.done)return;el.dataset.done='1';const target=parseFloat(el.dataset.target);const duration=1500;const start=performance.now();function step(now){const p=Math.min((now-start)/duration,1);const ease=1-Math.pow(1-p,3);const val=Math.round(ease*target*10)/10;el.textContent=val%1===0?val:val.toFixed(1);if(p<1)requestAnimationFrame(step);else el.textContent=target%1===0?target:target.toFixed(1);}requestAnimationFrame(step);}
 window.addEventListener('load',()=>{document.querySelectorAll('.hero-stats .count').forEach(el=>animateCount(el));document.querySelectorAll('.hero-stats,.hero .reveal').forEach(el=>el.classList.add('visible'));});
 </script>
+<script>
+/* Remember language choice site-wide */
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a.lang, a.nav-lang');
+  if (!a) return;
+  try {
+    var zh = /-zh\.html|portfolio-zh/.test(a.getAttribute('href') || '');
+    localStorage.setItem('elson-lang', zh ? 'zh' : 'en');
+    sessionStorage.setItem('lang-no-redirect', '1');
+  } catch(_) {}
+});
+</script>
 </body>
 </html>

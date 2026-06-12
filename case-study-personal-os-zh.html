@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal OS · 案例研究 — Elson 子洺</title>
+<meta name="description" content="设计并交付开源 AI 第二大脑操作系统——桌面核心、手机 App、夜间自动化管家，一个人指挥 AI 代理团队完成。">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+<style>
+  :root {
+    --amber: #F59E0B;
+    --amber-light: #FBBF24;
+    --amber-dark: #B45309;
+    --amber-dim: rgba(245,158,11,0.1);
+    --amber-border: rgba(245,158,11,0.22);
+    --orange: #F97316;
+    --bg: #0c0700;
+    --bg2: #140d02;
+    --surface: rgba(255,255,255,0.04);
+    --surface2: rgba(255,255,255,0.07);
+    --text: #fdf6ec;
+    --text-muted: rgba(253,246,236,0.55);
+    --text-dim: rgba(253,246,236,0.3);
+    --red: #EF4444;
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.1);
+    --blue: #38BDF8;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(12,7,0,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,158,11,0.1);
+  }
+  nav .back { color: var(--amber-light); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; transition: opacity 0.2s; }
+  nav .back:hover { opacity: 0.7; }
+  nav .tag { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .lang { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.8rem; border: 1px solid rgba(245,158,11,0.2); border-radius: 100px; transition: all 0.2s; }
+  nav .lang:hover { border-color: var(--amber-light); color: var(--amber-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 8rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a1003 0%, #0c0700 70%);
+  }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.25; animation: blobFloat 10s ease-in-out infinite; }
+  .blob1 { width: 600px; height: 600px; background: radial-gradient(circle, #F59E0B, transparent); top: -20%; left: -15%; }
+  .blob2 { width: 400px; height: 400px; background: radial-gradient(circle, #F97316, transparent); bottom: 0; right: -10%; animation-delay: -4s; }
+  .blob3 { width: 280px; height: 280px; background: radial-gradient(circle, #FBBF24, transparent); top: 35%; right: 20%; animation-delay: -7s; }
+  @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-30px) scale(1.05)} 66%{transform:translate(-15px,15px) scale(0.97)} }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; border-radius: 100px;
+    background: var(--amber-dim); border: 1px solid var(--amber-border);
+    font-size: 0.75rem; color: var(--amber-light); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2rem; position: relative; z-index: 1; animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.02em; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.15s both;
+  }
+  .hero h1 .accent { color: var(--amber-light); }
+  .hero .subtitle {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--text-muted); max-width: 620px; margin: 1.5rem auto 3rem;
+    position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.45s both; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--amber-light); line-height: 1; }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .scroll-hint .arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--amber-light), transparent); animation: arrowPulse 2s ease-in-out infinite; }
+  @keyframes arrowPulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* LAYOUT */
+  .section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--amber-light); margin-bottom: 1rem; padding: 0.3rem 0.8rem;
+    background: var(--amber-dim); border: 1px solid var(--amber-border); border-radius: 4px;
+  }
+  h2 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.6rem; }
+  p { color: var(--text-muted); line-height: 1.9; margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+  a.inline { color: var(--amber-light); text-decoration: none; border-bottom: 1px solid var(--amber-border); transition: opacity .2s; }
+  a.inline:hover { opacity: .7; }
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--amber-border), transparent); margin: 5rem 0; }
+
+  /* CONTEXT STRIP */
+  .context-strip {
+    background: var(--surface); border: 1px solid var(--amber-border); border-radius: 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; overflow: hidden; margin-bottom: 3rem;
+  }
+  .context-item { padding: 1.2rem 1.5rem; border-right: 1px solid rgba(245,158,11,0.1); }
+  .context-item:last-child { border-right: none; }
+  .context-item .ci-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .context-item .ci-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* CARD */
+  .card { background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.8rem; transition: border-color 0.3s, transform .3s; }
+  .card:hover { border-color: var(--amber-border); transform: translateY(-3px); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+  .card .c-badge { display:inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-light); background: var(--amber-dim); padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.8rem; }
+
+  /* PIPELINE DEMO */
+  .pipeline {
+    background: var(--surface); border: 1px solid var(--amber-border); border-radius: 14px;
+    padding: 2.2rem; margin: 2rem 0; position: relative; overflow: hidden;
+  }
+  .pipeline::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--amber), var(--orange));
+  }
+  .pipe-input {
+    background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+    padding: 1.1rem 1.4rem; font-size: 0.95rem; color: var(--text);
+    position: relative;
+  }
+  .pipe-input::before { content: '✍️ 往 Inbox 丢一句话'; display:block; font-size: 0.68rem; letter-spacing: .1em; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .pipe-arrow { text-align: center; color: var(--amber-light); font-size: 1.4rem; margin: 1rem 0; animation: arrowPulse 2s ease-in-out infinite; }
+  .pipe-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; }
+  .pipe-chip {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(245,158,11,0.18); border-radius: 10px;
+    padding: 1rem 1.2rem; font-size: 0.85rem; color: var(--text-muted);
+  }
+  .pipe-chip .pc-type { font-size: 0.68rem; letter-spacing: .08em; font-weight: 600; margin-bottom: 0.35rem; }
+  .pipe-chip.diary .pc-type { color: var(--blue); }
+  .pipe-chip.todo .pc-type { color: var(--green); }
+  .pipe-chip.money .pc-type { color: var(--amber-light); }
+
+  /* NIGHT SHIFT TIMELINE */
+  .night {
+    background: var(--surface); border: 1px solid var(--amber-border); border-radius: 14px;
+    padding: 2.2rem; margin-top: 2rem;
+  }
+  .night-track { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .night-stop { position: relative; padding-top: 1.1rem; }
+  .night-stop::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--amber), rgba(245,158,11,0.15));
+  }
+  .night-stop .ns-time { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; color: var(--amber-light); }
+  .night-stop .ns-name { font-size: 0.85rem; color: var(--text); font-weight: 600; margin: 0.2rem 0; }
+  .night-stop .ns-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* LESSONS */
+  .lesson-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+  .lesson-col { background: var(--surface); border-radius: 10px; padding: 1.5rem; }
+  .lesson-col.good { border-top: 2px solid var(--green); }
+  .lesson-col.bad { border-top: 2px solid var(--red); }
+  .lesson-col h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lesson-col.good h4 { color: var(--green); }
+  .lesson-col.bad h4 { color: var(--red); }
+  .lesson-item { display: flex; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-muted); align-items: flex-start; }
+  .lesson-item .dot { flex-shrink: 0; margin-top: 0.35rem; width: 6px; height: 6px; border-radius: 50%; }
+  .lesson-col.good .dot { background: var(--green); }
+  .lesson-col.bad .dot { background: var(--red); }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: var(--amber-dim); border: 1px solid var(--amber-border); border-left: 4px solid var(--amber);
+    border-radius: 8px; padding: 1.5rem 2rem; margin-top: 2rem;
+  }
+  .takeaway p { color: var(--text); font-size: 1rem; line-height: 1.8; margin: 0; }
+
+  /* LINK BUTTONS */
+  .link-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem; }
+  .link-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1.5rem; border-radius: 100px; font-size: 0.88rem; font-weight: 600;
+    text-decoration: none; transition: transform .25s ease, opacity .2s;
+  }
+  .link-btn.solid { background: var(--amber); color: #1a1003; }
+  .link-btn.solid:hover { opacity: .85; transform: translateY(-2px); }
+  .link-btn.ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--amber-border); }
+  .link-btn.ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+  footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(245,158,11,0.1); color: var(--text-dim); font-size: 0.8rem; }
+  footer a { color: var(--amber-light); text-decoration: none; }
+  footer a:hover { opacity: 0.7; }
+
+  .reveal, .stagger { opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal { transform: translateY(30px); }
+  .stagger { transform: translateY(20px); }
+  .reveal.visible, .stagger.visible { opacity: 1; transform: none; }
+  .stagger:nth-child(1){transition-delay:0.05s} .stagger:nth-child(2){transition-delay:0.15s} .stagger:nth-child(3){transition-delay:0.25s} .stagger:nth-child(4){transition-delay:0.35s} .stagger:nth-child(5){transition-delay:0.45s} .stagger:nth-child(6){transition-delay:0.55s}
+
+  @media(max-width:600px){.lesson-row{grid-template-columns:1fr}.hero-stats{gap:1.5rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="portfolio-zh.html" class="back">← 返回作品集</a>
+  <div class="nav-right">
+    <a href="case-study-personal-os.html" class="lang">EN</a>
+    <span class="tag">案例研究 · 2026</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-badge">🧠 AI 产品 · 开源 · 一人打造</div>
+  <h1>Personal <span class="accent">OS</span></h1>
+  <p class="subtitle">为别人做了 14 年品牌之后，我给自己的大脑造了一套操作系统——一个 AI 第二大脑：随手丢进一句话，自动变成日记、待办和账单。然后，我把它整个开源了。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">6</div>
+      <div class="label">大生态组件</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">0</div>
+      <div class="label">引擎第三方依赖</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">100%</div>
+      <div class="label">数据自有产权</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">v0.7</div>
+      <div class="label">开源版本</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="arrow"></div>
+    向下滚动阅读
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="section">
+  <div class="context-strip reveal">
+    <div class="context-item"><div class="ci-label">时间</div><div class="ci-val">2026 — 持续迭代</div></div>
+    <div class="context-item"><div class="ci-label">角色</div><div class="ci-val">设计 · 产品 · 开发</div></div>
+    <div class="context-item"><div class="ci-label">团队</div><div class="ci-val">我 + AI 代理</div></div>
+    <div class="context-item"><div class="ci-label">技术栈</div><div class="ci-val">Markdown · Obsidian · Python · Expo</div></div>
+    <div class="context-item"><div class="ci-label">状态</div><div class="ci-val">已上线并开源</div></div>
+  </div>
+
+  <div class="section-label reveal">问题</div>
+  <h2 class="reveal">所有笔记系统都要求你「先想清楚再记」。这是本末倒置。</h2>
+  <p class="reveal">14 年品牌工作产生的零散思考多到离谱——半夜冒出的营销点子、堵车时想起的客户待办、随手记在聊天软件里的开销。我试过的每一个效率工具都提出同样的要求：<strong>先决定放哪里。</strong>哪个文件夹、什么标签、用哪个模板。认知负担恰恰发生在你注意力最稀缺的那一刻。</p>
+  <p class="reveal">所以我把它反过来：一个收件箱，零决策。系统自己想清楚剩下的事——还有一位 AI 夜间管家，在我睡觉时把一切收拾干净。</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE PIPELINE -->
+<section class="section">
+  <div class="section-label reveal">核心理念</div>
+  <h2 class="reveal">只管丢进去，OS 替你分拣。</h2>
+  <p class="reveal">用户唯一需要的动作，就是把想法丢进 Inbox——文字、语音、PDF、网页，电脑或手机都行。AI 管线把每一条输入拆分成结构化实体，自动归档到五大支柱 Markdown 库的正确位置。</p>
+
+  <div class="pipeline reveal">
+    <div class="pipe-input">「今天定下了项目架构。记得明天给服务器换证书。午饭花了 38 块。」</div>
+    <div class="pipe-arrow">↓</div>
+    <div class="pipe-out">
+      <div class="pipe-chip diary"><div class="pc-type">📓 日记</div>项目架构决策，记入今日笔记</div>
+      <div class="pipe-chip todo"><div class="pc-type">✅ 待办</div>「服务器换证书」——截止日自动换算为明天</div>
+      <div class="pipe-chip money"><div class="pc-type">💸 账单</div>午餐 38 元，自动入账</div>
+    </div>
+  </div>
+
+  <p class="reveal">所有数据都存在我完全拥有的纯 Markdown 文件里——没有私有数据库，没有订阅锁定，未来 30 年用任何编辑器都能打开。</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT I BUILT -->
+<section class="section">
+  <div class="section-label reveal">我做了什么</div>
+  <h2 class="reveal">不是一个 App，是有六个器官的操作系统。</h2>
+  <p class="reveal">每一层都可替换、可扩展、可自托管。我用做品牌系统的方式来设计它：每个组件职责清晰，彼此接口分明。</p>
+
+  <div class="card-grid">
+    <div class="card stagger">
+      <div class="c-badge">核心 · v0.7</div>
+      <h3>🧠 personal-os</h3>
+      <p>桌面端核心：五大支柱 vault 模板、零依赖的 <strong>rtk</strong> CLI 引擎、自研 Obsidian 看板插件、一条命令完成安装。</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">移动端</div>
+      <h3>📱 OSMIND App</h3>
+      <p>口袋里的捕获终端——文字 / 语音 / PDF / 网页一键投递，离线账本，AI 聊天，PWA 直接装进主屏幕。</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">网关</div>
+      <h3>🔌 osmind-gateway</h3>
+      <p>手机写入 vault 的唯一通道：本地 HTTP 网关 + 配对 Token 鉴权 + 内容提取管线。输入永不丢失。</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">记忆引擎</div>
+      <h3>🗄️ 双轨记忆</h3>
+      <p>dynamic 动态日流 + static 静态知识库双轨并行，索引进语义记忆库，AI 随时召回。</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">夜间管家</div>
+      <h3>🌙 Hermes</h3>
+      <p>自动化层——四个定时任务：巡检收件箱、同步记忆、备份到 NAS、把生料笔记蒸馏成 Wiki。全部在我睡觉时完成。</p>
+    </div>
+    <div class="card stagger">
+      <div class="c-badge">官网</div>
+      <h3>🌐 NP-OS</h3>
+      <p>产品自己的双语官网——定位、文案、设计、开发一手包办。这么有态度的系统，配得上一个正经的品牌门面。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NIGHT SHIFT -->
+<section class="section">
+  <div class="section-label reveal">夜班时刻表</div>
+  <h2 class="reveal">最好的助理，在你睡着时工作。</h2>
+  <p class="reveal">四个自动化任务按固定时刻表运行，每天如此，无需吩咐。正是这一层，让它成为<strong>操作系统</strong>，而不只是一堆笔记文件夹。</p>
+
+  <div class="night reveal">
+    <div class="night-track">
+      <div class="night-stop">
+        <div class="ns-time">22:30</div>
+        <div class="ns-name">备份</div>
+        <div class="ns-desc">全库快照至 NAS，7 天滚动清理</div>
+      </div>
+      <div class="night-stop">
+        <div class="ns-time">23:30</div>
+        <div class="ns-name">巡检</div>
+        <div class="ns-desc">收件箱分拣——拆分、路由、归档每一条输入</div>
+      </div>
+      <div class="night-stop">
+        <div class="ns-time">23:50</div>
+        <div class="ns-name">记忆同步</div>
+        <div class="ns-desc">新知识增量同步进语义记忆库</div>
+      </div>
+      <div class="night-stop">
+        <div class="ns-time">周日 22:00</div>
+        <div class="ns-name">蒸馏</div>
+        <div class="ns-desc">每周精炼——生料剪藏变成带双链的 Wiki 词条</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WAS BUILT -->
+<section class="section">
+  <div class="section-label reveal">怎么做出来的</div>
+  <h2 class="reveal">一个人，一支 AI 开发团队，用品牌思维做软件。</h2>
+  <p class="reveal">我不是科班软件工程师——我是一个学会了「指挥 AI 代理」的品牌策略师，方式和指挥创意团队一模一样。产品愿景、信息架构、设计系统由我定；AI 代理在我的评审下写代码，一轮一轮迭代。每一个界面、每一页文档、每一句新手引导文案，都按我交付客户作品的标准来要求。</p>
+  <p class="reveal">结果是真实交付：带安装器的开源正式版、完整文档、手机 App，还有它自己的营销官网。我做品牌的那套打法——<strong>定位 → 识别 → 内容 → 分发</strong>——对产品同样成立。</p>
+
+  <div class="link-row reveal">
+    <a class="link-btn solid" href="https://github.com/cht8987/personal-os" target="_blank" rel="noopener">★ GitHub 点个 Star</a>
+    <a class="link-btn ghost" href="https://np-os.vercel.app" target="_blank" rel="noopener">访问 NP-OS 官网 →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LESSONS -->
+<section class="section">
+  <div class="section-label reveal">我学到了什么</div>
+  <h2 class="reveal">给自己做产品，是最难伺候的客户简报。</h2>
+
+  <div class="lesson-row">
+    <div class="lesson-col good reveal">
+      <h4>✓ 有效的</h4>
+      <div class="lesson-item"><div class="dot"></div> 做减法是美德——一个收件箱，胜过我试过的所有多文件夹系统</div>
+      <div class="lesson-item"><div class="dot"></div> 纯 Markdown + 零依赖 = 不会被任何厂商杀死的产品</div>
+      <div class="lesson-item"><div class="dot"></div> 指挥 AI 代理，能把一个人放大成一支完整的产品团队</div>
+      <div class="lesson-item"><div class="dot"></div> 每天吃自己的狗粮——我就是 1 号用户，反馈闭环即时生效</div>
+    </div>
+    <div class="lesson-col bad reveal">
+      <h4>✗ 艰难的</h4>
+      <div class="lesson-item"><div class="dot"></div> 移动端是另一个世界——同步、鉴权、离线的成本超过桌面端全部功能之和</div>
+      <div class="lesson-item"><div class="dot"></div> 碰真实数据的自动化，必须先有偏执级的备份设计</div>
+      <div class="lesson-item"><div class="dot"></div> 客户是自己时，需求蔓延最凶猛——版本化发布逼出了纪律</div>
+    </div>
+  </div>
+
+  <div class="takeaway reveal">
+    <p>「这些年我一直告诉客户：品牌是一个系统，不是一个 Logo。做 Personal OS 让我验证了反命题：产品是一个品牌，不是一堆代码。定位、命名、引导、叙事——这些才是让软件『理所当然』的东西。而这，是同一门手艺。」</p>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">← <a href="portfolio-zh.html">返回全部案例</a></p>
+  <p>Elson 子洺 · 品牌与内容策略师 · 马来西亚</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal,.stagger').forEach(el=>obs.observe(el));
+</script>
+<script>
+/* Remember language choice site-wide */
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a.lang, a.nav-lang');
+  if (!a) return;
+  try {
+    var zh = /-zh\.html|portfolio-zh/.test(a.getAttribute('href') || '');
+    localStorage.setItem('elson-lang', zh ? 'zh' : 'en');
+    sessionStorage.setItem('lang-no-redirect', '1');
+  } catch(_) {}
+});
+</script>
+</body>
+</html>
