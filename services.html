@@ -236,6 +236,30 @@ nav {
 
 @media (max-width: 960px) { .services-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; } }
 
+/* WHY ME */
+.why-section { padding: 100px 0; background: var(--white); }
+.why-section h2 {
+  font-family: 'Fraunces', serif; font-size: clamp(36px,4vw,52px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px;
+}
+.why-section .sub { font-size: 18px; color: var(--ink-muted); max-width: 500px; margin-bottom: 60px; }
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.why-card {
+  padding: 36px; border-radius: var(--radius-xl);
+  background: var(--bg); border: 1px solid var(--line);
+  transition: transform .35s cubic-bezier(.22,.68,0,1.2), box-shadow .35s ease;
+}
+.why-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+.why-card.full { grid-column: 1 / -1; }
+.why-emoji { font-size: 32px; margin-bottom: 16px; display: block; }
+.why-card h3 {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 10px;
+}
+.why-card p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+.why-card p strong { color: var(--ink); }
+@media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
+
 /* PROCESS SECTION */
 .process-section { padding: 100px 0; background: var(--white); }
 .process-section h2 {
@@ -396,20 +420,19 @@ footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
       <!-- Card 1 -->
       <div class="service-card">
         <div class="service-icon">✨</div>
-        <div class="service-title">Brand Identity</div>
-        <p class="service-desc">For founders who have a product but no brand yet. We define who you are, who you're for, and what you look and sound like — built to last.</p>
-        <div class="service-includes">What's included</div>
+        <div class="service-title">Brand Design</div>
+        <p class="service-desc">From strategy to visual identity — logo, packaging, brand guidelines, marketing collateral. Everything you need to look professional from day one.</p>
+        <div class="service-includes">Includes</div>
         <ul class="service-list">
-          <li>Brand positioning &amp; story</li>
-          <li>Naming &amp; tagline (if needed)</li>
+          <li>Brand strategy &amp; positioning</li>
           <li>Logo &amp; visual identity system</li>
-          <li>Colour, type &amp; photography direction</li>
-          <li>Brand guidelines document</li>
+          <li>Packaging &amp; product photography</li>
+          <li>Marketing materials &amp; brand book</li>
         </ul>
         <div class="service-price">
           <div>
-            <span class="from-label">Starts from</span>
-            <div class="price-amt">RM 8K</div>
+            <span class="from-label">From</span>
+            <div class="price-amt">RM 5K</div>
             <div class="price-note">One-time project</div>
           </div>
           <a href="https://wa.me/60123456789" class="service-cta">Get a quote →</a>
@@ -420,20 +443,19 @@ footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
       <div class="service-card featured">
         <div class="service-badge">Most popular</div>
         <div class="service-icon">🚀</div>
-        <div class="service-title">Content &amp; Social Growth</div>
-        <p class="service-desc">My favorite type of project. End-to-end content engine — strategy, production, posting, analytics. The reason most clients come back for more.</p>
-        <div class="service-includes">What's included</div>
+        <div class="service-title">Digital Marketing</div>
+        <p class="service-desc">Social media, paid ads, SEO, content calendar — end-to-end growth engine. This is where most clients see the fastest ROI and keep coming back.</p>
+        <div class="service-includes">Includes</div>
         <ul class="service-list">
-          <li>Channel strategy &amp; format design</li>
-          <li>Monthly content calendar &amp; scripts</li>
-          <li>Shoot, edit, copy &amp; scheduling</li>
-          <li>Community management</li>
-          <li>Monthly performance report</li>
+          <li>Social media management (FB / IG / TikTok)</li>
+          <li>Meta Ads strategy &amp; execution</li>
+          <li>SEO &amp; website optimisation</li>
+          <li>Monthly analytics &amp; reporting</li>
         </ul>
         <div class="service-price">
           <div>
             <span class="from-label">From / month</span>
-            <div class="price-amt">RM 6K+</div>
+            <div class="price-amt">RM 3.5K</div>
             <div class="price-note">Monthly retainer</div>
           </div>
           <a href="https://wa.me/60123456789" class="service-cta">Get a quote →</a>
@@ -442,25 +464,68 @@ footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
 
       <!-- Card 3 -->
       <div class="service-card">
-        <div class="service-icon">🎯</div>
-        <div class="service-title">0 → 1 Launch Sprint</div>
-        <p class="service-desc">A 90-day, all-in package. Brand, content engine, and a launch moment — built together, shipped fast, then handed off cleanly with a full playbook.</p>
-        <div class="service-includes">What's included</div>
+        <div class="service-icon">🎬</div>
+        <div class="service-title">Video Production</div>
+        <p class="service-desc">Brand films, product videos, short-form ads — cinematic quality that converts. Horizontal and vertical formats for every platform.</p>
+        <div class="service-includes">Includes</div>
         <ul class="service-list">
-          <li>Full brand identity package</li>
-          <li>3 months of content production</li>
-          <li>Launch campaign &amp; PR push</li>
-          <li>Agent/influencer seeding plan</li>
-          <li>Handoff playbook &amp; SOPs</li>
+          <li>Brand story film (3–5 min)</li>
+          <li>Product promo videos (per series)</li>
+          <li>Short-form ads (TikTok / Reels / Shorts)</li>
+          <li>Festival / seasonal video packages</li>
         </ul>
         <div class="service-price">
           <div>
-            <span class="from-label">Project rate</span>
-            <div class="price-amt">RM 25K+</div>
-            <div class="price-note">90-day engagement</div>
+            <span class="from-label">From</span>
+            <div class="price-amt">RM 3K</div>
+            <div class="price-note">Per project</div>
           </div>
           <a href="https://wa.me/60123456789" class="service-cta">Get a quote →</a>
         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why-section">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">Why Me</div>
+      <h2>Four reasons clients<br>choose me.</h2>
+      <p class="sub">Not an agency. Not a freelancer juggling 10 side gigs. Here's what actually sets me apart.</p>
+    </div>
+    <div class="why-grid stagger-grid reveal">
+
+      <div class="why-card">
+        <span class="why-emoji">🔗</span>
+        <h3>End-to-end, one person</h3>
+        <p><strong>Strategy, design, content, video — all in one pipeline.</strong> No handoffs between agencies, no account managers who've never touched a design tool. One brain, one vision, one invoice. You get coherence you can't buy from a team of specialists.</p>
+      </div>
+
+      <div class="why-card">
+        <span class="why-emoji">🌏</span>
+        <h3>Built for Malaysia, understood globally</h3>
+        <p><strong>I speak the languages your customers speak.</strong> Malay, Mandarin, English — not just translation, but cultural nuance. I know what makes each community tick, and I build brands that feel native to all of them. This isn't a template; it's lived experience.</p>
+      </div>
+
+      <div class="why-card full">
+        <span class="why-emoji">📈</span>
+        <h3>The compound effect of monthly partnerships</h3>
+        <p><strong>Month 1: we learn each other. Month 3: things click. Month 6: momentum is real.</strong> Every month builds on the last — content accumulates, ad data sharpens, SEO compounds. The more I know your brand, the less I have to guess. Most clients who switch from one-off projects to retainers say the only regret is they didn't start sooner.</p>
+      </div>
+
+      <div class="why-card">
+        <span class="why-emoji">🎯</span>
+        <h3>Design that serves business, not ego</h3>
+        <p><strong>Everything I create is measured by whether it moves the needle.</strong> Beautiful is nice. Beautiful that sells is what I aim for. Every pixel, every caption, every ad is built with conversion in mind — not just for your portfolio, but for your P&amp;L.</p>
+      </div>
+
+      <div class="why-card">
+        <span class="why-emoji">⚡</span>
+        <h3>Fast turnaround, no bureaucracy</h3>
+        <p><strong>You message me, I reply. No ticket numbers, no "let me circle back with my team."</strong> Most brand deliverables ship within 2 weeks. Urgent? I can often accommodate. Speed isn't about rushing — it's about removing friction.</p>
       </div>
 
     </div>

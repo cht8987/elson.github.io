@@ -235,6 +235,30 @@ nav {
 
 @media (max-width: 960px) { .services-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; } }
 
+/* WHY ME */
+.why-section { padding: 100px 0; background: var(--white); }
+.why-section h2 {
+  font-family: 'Fraunces', 'PingFang SC', serif; font-size: clamp(36px,4vw,52px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px;
+}
+.why-section .sub { font-size: 18px; color: var(--ink-muted); max-width: 500px; margin-bottom: 60px; }
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.why-card {
+  padding: 36px; border-radius: var(--radius-xl);
+  background: var(--bg); border: 1px solid var(--line);
+  transition: transform .35s cubic-bezier(.22,.68,0,1.2), box-shadow .35s ease;
+}
+.why-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+.why-card.full { grid-column: 1 / -1; }
+.why-emoji { font-size: 32px; margin-bottom: 16px; display: block; }
+.why-card h3 {
+  font-family: 'Fraunces', 'PingFang SC', serif; font-size: 22px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 10px;
+}
+.why-card p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+.why-card p strong { color: var(--ink); }
+@media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
+
 /* PROCESS SECTION */
 .process-section { padding: 100px 0; background: var(--white); }
 .process-section h2 {
@@ -395,21 +419,20 @@ footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
       <!-- 卡片 1 -->
       <div class="service-card">
         <div class="service-icon">✨</div>
-        <div class="service-title">品牌视觉系统</div>
-        <p class="service-desc">适合已有产品、尚未建立品牌的创业者。我们定义你是谁、你为谁服务、你的视觉与声音——打造经得起时间考验的品牌。</p>
-        <div class="service-includes">服务内容</div>
+        <div class="service-title">品牌设计</div>
+        <p class="service-desc">从策略到视觉识别——Logo、包装、品牌手册、营销物料。让你从第一天起就看起来专业。</p>
+        <div class="service-includes">包含</div>
         <ul class="service-list">
-          <li>品牌定位与品牌故事</li>
-          <li>品牌命名与 Tagline（如需）</li>
-          <li>标志设计与视觉识别系统</li>
-          <li>色彩、字体与摄影风格方向</li>
-          <li>品牌规范手册</li>
+          <li>品牌策略与定位</li>
+          <li>Logo 与视觉识别系统</li>
+          <li>包装设计 &amp; 产品展示摄影</li>
+          <li>营销物料 &amp; 品牌规范手册</li>
         </ul>
         <div class="service-price">
           <div>
             <span class="from-label">起步价</span>
-            <div class="price-amt">RM 8K</div>
-            <div class="price-note">单次项目收费</div>
+            <div class="price-amt">RM 5K</div>
+            <div class="price-note">单次项目</div>
           </div>
           <a href="https://wa.me/60123456789" class="service-cta">获取报价 →</a>
         </div>
@@ -419,21 +442,20 @@ footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
       <div class="service-card featured">
         <div class="service-badge">最受欢迎</div>
         <div class="service-icon">🚀</div>
-        <div class="service-title">内容与社媒增长</div>
-        <p class="service-desc">我最喜欢的项目类型。端对端内容运营——策略、制作、发布、数据分析全包。这也是大多数客户选择续约的核心原因。</p>
-        <div class="service-includes">服务内容</div>
+        <div class="service-title">数字营销</div>
+        <p class="service-desc">社媒运营、广告投放、SEO、内容日历——端到端的增长引擎。大多数客户在这里看到最快的回报，也是续约的核心。</p>
+        <div class="service-includes">包含</div>
         <ul class="service-list">
-          <li>频道策略与内容形式设计</li>
-          <li>每月内容日历与脚本撰写</li>
-          <li>拍摄、剪辑、文案与排期</li>
-          <li>社群管理</li>
-          <li>每月数据报告</li>
+          <li>社媒管理（FB / IG / TikTok）</li>
+          <li>Meta Ads 策略与执行</li>
+          <li>SEO &amp; 网站优化</li>
+          <li>月度数据分析与报告</li>
         </ul>
         <div class="service-price">
           <div>
             <span class="from-label">月费起</span>
-            <div class="price-amt">RM 6K+</div>
-            <div class="price-note">月度续约制</div>
+            <div class="price-amt">RM 3.5K</div>
+            <div class="price-note">月度续约</div>
           </div>
           <a href="https://wa.me/60123456789" class="service-cta">获取报价 →</a>
         </div>
@@ -441,25 +463,68 @@ footer { padding: 48px 0 56px; border-top: 1px solid var(--line); }
 
       <!-- 卡片 3 -->
       <div class="service-card">
-        <div class="service-icon">🎯</div>
-        <div class="service-title">0→1 品牌上线冲刺</div>
-        <p class="service-desc">90 天全包方案。品牌 + 内容引擎 + 上线时刻，三位一体，快速落地，交付时附完整运营手册，让你的团队可以独立接管。</p>
-        <div class="service-includes">服务内容</div>
+        <div class="service-icon">🎬</div>
+        <div class="service-title">视频制作</div>
+        <p class="service-desc">品牌故事片、产品宣传片、短视频广告——电影级质感，转化为导向。横版竖版全平台适配。</p>
+        <div class="service-includes">包含</div>
         <ul class="service-list">
-          <li>完整品牌视觉系统</li>
-          <li>3 个月内容制作</li>
-          <li>上线推广活动与 PR 曝光</li>
-          <li>KOL / 达人种草计划</li>
-          <li>运营手册与 SOP 交接</li>
+          <li>品牌故事片（3–5 分钟）</li>
+          <li>产品宣传片（每系列）</li>
+          <li>短视频广告（TikTok / Reels / Shorts）</li>
+          <li>节庆/季节性视频套餐</li>
         </ul>
         <div class="service-price">
           <div>
-            <span class="from-label">项目报价</span>
-            <div class="price-amt">RM 25K+</div>
-            <div class="price-note">90 天合作周期</div>
+            <span class="from-label">起步价</span>
+            <div class="price-amt">RM 3K</div>
+            <div class="price-note">按项目计费</div>
           </div>
           <a href="https://wa.me/60123456789" class="service-cta">获取报价 →</a>
         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why-section">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">为什么是我</div>
+      <h2>四个让你选择我的理由。</h2>
+      <p class="sub">不是代理公司，不是同时接十几单的自由职业者。这才是真正不一样的地方。</p>
+    </div>
+    <div class="why-grid stagger-grid reveal">
+
+      <div class="why-card">
+        <span class="why-emoji">🔗</span>
+        <h3>全链路整合，一个人搞定</h3>
+        <p><strong>策略、设计、内容、视频——一条龙打通。</strong> 不需要在多家代理之间传递需求，没有从未碰过设计工具的客户经理。一个大脑、一个视野、一张发票。你得到的是连贯性，不是碎片拼凑。</p>
+      </div>
+
+      <div class="why-card">
+        <span class="why-emoji">🌏</span>
+        <h3>扎根马来西亚，懂多元文化</h3>
+        <p><strong>你说的语言，就是你的客户说的语言。</strong> 马来语、华语、英语——不只是翻译，更是文化洞察。我知道每个族群的消费心理，打造出来的品牌让所有人都感到自然。这不是套用模板，是真实的经验。</p>
+      </div>
+
+      <div class="why-card full">
+        <span class="why-emoji">📈</span>
+        <h3>月度合作的复利效应</h3>
+        <p><strong>第一个月互相了解，第三个月开始默契，第六个月——势头来了。</strong> 每个月都在上个月的基础上积累：内容越积越多，广告数据越跑越准，SEO 效果复利增长。我越了解你的品牌，就越不需要猜测。大多数从一次性项目转为月度续约的客户都说，唯一后悔的就是没早点开始。</p>
+      </div>
+
+      <div class="why-card">
+        <span class="why-emoji">🎯</span>
+        <h3>为生意服务的设计，不为自我表达</h3>
+        <p><strong>我做的每一件事，都看它有没有推动业务指标。</strong> 好看是加分项，好看又能卖货才是目标。每一个像素、每一篇文案、每一条广告，都以转化为导向——不是为了你的作品集好看，而是为了你的利润表。</p>
+      </div>
+
+      <div class="why-card">
+        <span class="why-emoji">⚡</span>
+        <h3>速度快，零官僚</h3>
+        <p><strong>你发消息，我回复。没有工单号，没有"我跟团队确认一下"。</strong> 大多数品牌交付物两周内完成。紧急的话也可以沟通加急。快不是因为赶，是因为去掉了所有不必要的流程。</p>
       </div>
 
     </div>
